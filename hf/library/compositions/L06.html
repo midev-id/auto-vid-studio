@@ -1,0 +1,120 @@
+<!-- L06 3D / CGI (3D): Kubus 3D jatuh, lantai grid perspektif, bola mengorbit.
+     Palette #33276E #06050D #7C5CFF #E33DC8 - best for tech, produk, launch.
+     Ported from src/library/scenes/scenes1.tsx (CGI). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #33276E; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L06" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes1.tsx
+      var t = (f) => f / FPS;
+      var C30 = Math.cos(Math.PI / 6);
+      var CGI = ({ f }) => {
+        const tt = t(f);
+        const drop = sp(f, 0.05, 10, 110, 1);
+        const ry = 30 + tt * 70;
+        const rx = -22;
+        const size = 300;
+        const faces = [
+          { tr: `translateZ(${size / 2}px)`, n: 0 },
+          { tr: `rotateY(90deg) translateZ(${size / 2}px)`, n: 90 },
+          { tr: `rotateY(180deg) translateZ(${size / 2}px)`, n: 180 },
+          { tr: `rotateY(-90deg) translateZ(${size / 2}px)`, n: -90 }
+        ];
+        const orb = tt * 2.6;
+        const ox = Math.cos(orb) * 430;
+        const oz = Math.sin(orb);
+        const sphere = __h(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              left: 960 + ox - 55,
+              top: 470 + oz * 60 - 55,
+              width: 110,
+              height: 110,
+              borderRadius: 99,
+              transform: `scale(${(0.8 + oz * 0.25) * sp(f, 0.4)})`,
+              background: "radial-gradient(circle at 35% 30%, #FFFFFF 0%, #FFB3F0 12%, #E33DC8 45%, #4A0B5C 100%)",
+              boxShadow: "0 0 60px #E33DC880"
+            }
+          }
+        );
+        return __h(Full, { bg: "radial-gradient(ellipse at 50% 40%, #33276E 0%, #120E2A 55%, #06050D 100%)" }, __h(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              left: -600,
+              right: -600,
+              top: 640,
+              height: 900,
+              transform: "perspective(900px) rotateX(78deg)",
+              transformOrigin: "top",
+              backgroundImage: "linear-gradient(#7C5CFF55 2px, transparent 2px), linear-gradient(90deg, #7C5CFF55 2px, transparent 2px)",
+              backgroundSize: "120px 120px",
+              backgroundPosition: `0 ${tt * 120}px`,
+              opacity: 0.8
+            }
+          }
+        ), __h("div", { style: { position: "absolute", left: 960 - 260, top: 720, width: 520, height: 70, borderRadius: "50%", background: "radial-gradient(#000000AA, transparent 70%)", transform: `scale(${drop})` } }), oz < 0 && sphere, __h("div", { style: { position: "absolute", left: 960 - size / 2, top: 470 - size / 2 - (1 - drop) * 700, width: size, height: size, perspective: 1400 } }, __h("div", { style: { position: "absolute", inset: 0, transformStyle: "preserve-3d", transform: `rotateX(${rx}deg) rotateY(${ry}deg)` } }, faces.map((fc, i) => {
+          const shade = 0.45 + 0.55 * Math.max(0, Math.cos((ry + fc.n - 20) * Math.PI / 180));
+          return __h(
+            "div",
+            {
+              key: i,
+              style: {
+                position: "absolute",
+                inset: 0,
+                transform: fc.tr,
+                background: `linear-gradient(135deg, hsl(258 90% ${30 + shade * 45}%) 0%, hsl(${220 + i * 12} 85% ${18 + shade * 30}%) 100%)`,
+                border: "2px solid #C9B8FF66",
+                boxShadow: "inset 0 0 60px #FFFFFF22"
+              }
+            }
+          );
+        }), __h("div", { style: { position: "absolute", inset: 0, transform: `rotateX(90deg) translateZ(${size / 2}px)`, background: "linear-gradient(135deg,#E6DDFF,#9B82FF)", border: "2px solid #FFFFFF88" } }))), oz >= 0 && sphere, __h("div", { style: { position: "absolute", width: "100%", top: 130, textAlign: "center", color: "#E9E3FF", fontSize: 30, fontWeight: 700, letterSpacing: 18, opacity: ramp(f, 0.6, 1) } }, "REAL-TIME 3D"));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = CGI;
+    })();
+    (function () {
+      const V = {"s":1.35};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L06', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

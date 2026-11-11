@@ -1,0 +1,81 @@
+<!-- L26 Soft Kinetic (Custom): Kertas grid abu, kata tipis-tebal masuk blur per kata, kartu melayang ber-shadow, spark coral.
+     Palette #EEEEEC #161616 #6E6E6A #D97757 - best for promo, explainer, ai.
+     Ported from src/library/scenes/scenes4.tsx (SoftKinetic). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #EEEEEC; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L26" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes4.tsx
+      var t = (f) => f / FPS;
+      var SK = { bg: "#EEEEEC", ink: "#161616", mid: "#6E6E6A", coral: "#D97757" };
+      var SHADOW = "0 40px 70px rgba(0,0,0,0.16), 0 12px 24px rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.06)";
+      var SparkMark = ({ size, rot }) => __h("svg", { width: size, height: size, viewBox: "-12 -12 24 24", style: { transform: `rotate(${rot}deg)` } }, Array.from({ length: 10 }).map((_, i) => __h("rect", { key: i, x: -1.3, y: -11.5, width: 2.6, height: 10, rx: 1.3, fill: SK.coral, transform: `rotate(${i * 36})` })));
+      var Word = ({ f, at, w, size, heavy, color }) => {
+        const p = sp(f, at, 18, 170, 0.6);
+        const bl = (1 - ramp(f, at, at + 0.22, OUT)) * 12;
+        return __h("span", { style: { display: "inline-block", marginRight: size * 0.24, fontWeight: heavy ? 900 : 500, color: color ?? (heavy ? SK.ink : SK.mid), opacity: p, transform: `translateY(${(1 - p) * size * 0.35}px)`, filter: bl > 0.3 ? `blur(${bl}px)` : void 0 } }, w);
+      };
+      var SoftKinetic = ({ f }) => {
+        const tt = t(f);
+        const cards = ["L13", "L08", "L06", "L18"];
+        return __h(Full, { bg: SK.bg }, __h("div", { style: { position: "absolute", inset: -1400, backgroundImage: "linear-gradient(#00000009 2px, transparent 2px), linear-gradient(90deg, #00000009 2px, transparent 2px)", backgroundSize: "72px 72px", transform: `translateY(${tt * 6 % 72}px)` } }), __h("div", { style: { position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 45%, #FFFFFFB0 0%, #FFFFFF00 60%)" } }), [
+          { x: 300, y: 250, s: 170, at: 0.1 },
+          { x: 1620, y: 300, s: 210, at: 0.25 },
+          { x: 1560, y: 860, s: 150, at: 0.4 }
+        ].map((d, i) => {
+          const p = sp(f, d.at, 11, 160, 0.7);
+          return __h("div", { key: i, style: { position: "absolute", left: d.x - d.s / 2, top: d.y - d.s / 2 + Math.sin(tt * 1.6 + i) * 8, width: d.s, height: d.s, borderRadius: d.s, background: "radial-gradient(circle at 35% 30%, #FFFFFF, #E9E9E6)", boxShadow: SHADOW, transform: `scale(${p})`, display: "grid", placeItems: "center" } }, __h(SparkMark, { size: d.s * 0.62, rot: tt * 25 * (i % 2 ? -1 : 1) }));
+        }), __h("div", { style: { position: "absolute", left: 0, right: 0, top: 300, textAlign: "center", fontSize: 64, letterSpacing: -1.5 } }, __h(Word, { f, at: 0.2, w: "Motion", size: 64 }), __h(Word, { f, at: 0.32, w: "that", size: 64 }), __h(Word, { f, at: 0.44, w: "feels", size: 64 })), __h("div", { style: { position: "absolute", left: 0, right: 0, top: 380, textAlign: "center", fontSize: 170, letterSpacing: -5 } }, __h(Word, { f, at: 0.6, w: "Soft", size: 170, heavy: true }), __h(Word, { f, at: 0.75, w: "&", size: 170, color: SK.coral, heavy: true }), __h(Word, { f, at: 0.9, w: "Kinetic", size: 170, heavy: true })), cards.map((id, i) => {
+          const at = 1.15 + i * 0.12;
+          const p = sp(f, at, 15, 120, 0.8);
+          const v = Math.abs(p - sp(f - 1, at, 15, 120, 0.8)) * 60;
+          return __h("div", { key: id, style: { position: "absolute", left: 560 + i * 210, top: 640 + Math.sin(tt * 1.3 + i) * 6, width: 180, height: 320, borderRadius: 18, overflow: "hidden", boxShadow: SHADOW, transform: `translateY(${(1 - p) * 260}px) rotate(${[-4, 2, -2, 4][i] * p}deg)`, opacity: Math.min(1, p * 1.6), filter: v > 0.5 ? `blur(${Math.min(8, v * 0.6)}px)` : void 0 } }, __h(Img, { src: staticFile(`library/previews/${id}-v.jpg`), style: { width: "100%", height: "100%", objectFit: "cover" } }));
+        }), __h("div", { style: { position: "absolute", left: 140, top: 690, display: "flex", flexDirection: "column", gap: 26 } }, ["No keyframes", "Mixed weights", "Soft shadows"].map((s, i) => {
+          const p = sp(f, 1.5 + i * 0.15, 16, 170, 0.6);
+          return __h("div", { key: s, style: { display: "flex", alignItems: "center", gap: 20, opacity: p, transform: `translateX(${(1 - p) * -40}px)`, fontSize: 40, fontWeight: 500, color: SK.ink } }, __h("div", { style: { width: 20, height: 20, background: SK.ink, transform: "rotate(45deg)", borderRadius: 3 } }), s);
+        })), __h("div", { style: { position: "absolute", left: 0, right: 0, bottom: 60, textAlign: "center", fontSize: 26, fontWeight: 700, color: "#0000002E", opacity: ramp(f, 1.8, 2.1, Easing.linear) } }, "autovid.id"));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = SoftKinetic;
+    })();
+    (function () {
+      const V = {"s":0.62,"bleed":false};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L26', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

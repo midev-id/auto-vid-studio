@@ -1,0 +1,110 @@
+<!-- L11 Paper Cutout (Handmade): 12fps, lapisan bukit kertas, matahari & awan kertas, label sobek.
+     Palette #9ED0D6 #5FA36B #F4A259 #FFFDF7 - best for cerita, anak, edukasi.
+     Ported from src/library/scenes/scenes2.tsx (Paper). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #9ED0D6; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L11" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes2.tsx
+      var hill = (base, amp, seed) => {
+        let d = `M -40 1120 L -40 ${base}`;
+        for (let i = 0; i <= 8; i++) {
+          const x = i * 250;
+          const y = base - amp * (0.4 + rnd(`${seed}${i}`) * 0.6);
+          d += ` Q ${x + 125} ${y} ${x + 250} ${base - amp * 0.3}`;
+        }
+        return d + " L 1960 1120 Z";
+      };
+      var Paper = ({ f }) => {
+        const q = step(f, 5);
+        const layers = [
+          { d: hill(560, 160, "ha"), c: "#7FB069", a: 0.1 },
+          { d: hill(680, 140, "hb"), c: "#5B8E7D", a: 0.22 },
+          { d: hill(800, 120, "hc"), c: "#3F6C51", a: 0.34 },
+          { d: hill(920, 90, "hd"), c: "#2D4739", a: 0.46 }
+        ];
+        const sun = sp(q, 0.05, 14, 120, 0.9);
+        const tag = sp(q, 0.9, 10, 180, 0.7);
+        return __h(Full, { bg: "#F2E3C6" }, __h("div", { style: { position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 0%, #BFE3E0 0%, #9ED0D6 60%, #86BFC9 100%)" } }), __h(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              left: 1240,
+              top: 160 + (1 - sun) * 420,
+              width: 230,
+              height: 230,
+              borderRadius: 999,
+              background: "#F4A259",
+              boxShadow: "8px 12px 0 #00000026"
+            }
+          }
+        ), [0, 1].map((i) => {
+          const x = -400 + (q / FPS * 240 + i * 900) % 2400;
+          return __h("svg", { key: i, width: 340, height: 140, style: { position: "absolute", left: x, top: 150 + i * 90 } }, __h("path", { d: "M 30 110 Q 20 60 80 60 Q 100 10 170 30 Q 230 0 260 60 Q 330 60 310 110 Z", fill: "#00000022", transform: "translate(8 10)" }), __h("path", { d: "M 30 110 Q 20 60 80 60 Q 100 10 170 30 Q 230 0 260 60 Q 330 60 310 110 Z", fill: "#FFFDF7" }));
+        }), __h("svg", { width: 1920, height: 1080, style: { position: "absolute" } }, layers.map((l, i) => {
+          const p = sp(q, l.a, 13, 150, 0.8);
+          const y = (1 - p) * 520;
+          return __h("g", { key: i, transform: `translate(${Math.sin(q / 20 + i) * 6} ${y})` }, __h("path", { d: l.d, fill: "#00000030", transform: "translate(0 -14)" }), __h("path", { d: l.d, fill: l.c }));
+        })), __h("div", { style: { position: "absolute", left: 0, right: 0, top: 360, display: "flex", justifyContent: "center" } }, __h(
+          "div",
+          {
+            style: {
+              background: "#FFFDF7",
+              padding: "26px 60px",
+              fontSize: 96,
+              fontWeight: 900,
+              color: "#2D4739",
+              letterSpacing: -2,
+              clipPath: "polygon(0% 6%, 4% 0%, 12% 5%, 22% 0%, 34% 4%, 46% 0%, 58% 5%, 70% 1%, 82% 6%, 92% 0%, 100% 5%, 98% 50%, 100% 94%, 90% 100%, 78% 95%, 64% 100%, 50% 96%, 36% 100%, 22% 95%, 10% 100%, 0% 94%, 2% 50%)",
+              transform: `translateY(${(1 - tag) * -500}px) rotate(${-4 + (1 - tag) * 20}deg)`,
+              filter: "drop-shadow(6px 10px 0 #00000030)"
+            }
+          },
+          "PAPER WORLD"
+        )));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Paper;
+    })();
+    (function () {
+      const V = {"s":0.85};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L11', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

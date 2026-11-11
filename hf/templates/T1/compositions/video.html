@@ -1,0 +1,134 @@
+<!-- Ported from src/templates/MotionGraphicTemplate.tsx (MotionGraphicTemplate) by hf/tools/port-video.mjs.
+     The whole picture is one function of the frame (30fps), rendered by HFK.mount(); audio clips live in index.html. -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="video" data-width="1080" data-height="1920" data-layout-allow-overflow></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/font.js
+      var loadFont = () => ({ fontFamily: "'Noto Sans KR', sans-serif" });
+    
+      // src/templates/common.tsx
+      var { fontFamily: FONT } = loadFont("normal", { weights: ["400", "500", "700", "900"], subsets: ["latin"] });
+      var W = 1080;
+      var H = 1920;
+      var clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" };
+      var SMOOTH = Easing.bezier(0.7, 0, 0.3, 1);
+      var ramp = (f, a, b, easing = SMOOTH) => interpolate(f, [a, b], [0, 1], { ...clamp, easing });
+      var useSpring = () => {
+        const { fps } = useVideoConfig();
+        return (f, at = 0, damping = 16, stiffness = 140, mass = 0.7) => spring({ frame: f - at, fps, config: { damping, stiffness, mass } });
+      };
+      var drawOn = (p) => ({ pathLength: 1, strokeDasharray: 1, strokeDashoffset: 1 - p });
+      var Scenes = ({ scenes: scenes2, overlap = 12 }) => {
+        let at = 0;
+        return __h(Fragment, null, scenes2.map((s, i) => {
+          const from = at;
+          at += s.dur;
+          const len = s.dur + (i < scenes2.length - 1 ? overlap : 0);
+          return __h(Sequence, { key: i, from, durationInFrames: len, layout: "none" }, __h(SceneFrame, { render: s.render, dur: len }));
+        }));
+      };
+      var SceneFrame = ({ render, dur }) => {
+        const f = useCurrentFrame();
+        return __h(AbsoluteFill, null, render(f, dur));
+      };
+      var totalFrames = (scenes2) => scenes2.reduce((a, s) => a + s.dur, 0);
+      var Sfx = ({ at, src, v = 0.25 }) => __h(Sequence, { from: at, layout: "none" }, __h(Audio, { src: staticFile(`shared/sfx/${src}.wav`), volume: v }));
+    
+      // src/templates/MotionGraphicTemplate.tsx
+      var PAL = { bg: "#F4F1EA", ink: "#1B1B3A", a: "#FF5A36", b: "#3DDC97", c: "#5B6CFF" };
+      var COPY = { kicker: "MOTION GRAPHIC", title: ["BOLD", "SHAPES"], stat: 87, statLabel: "ENGAGEMENT", outro: "YOUR BRAND" };
+      var ShapeWipe = ({ f, dur, color }) => {
+        const p = ramp(f, dur - 14, dur);
+        return __h("div", { style: { position: "absolute", top: -200, bottom: -200, left: 0, width: W * 1.6, background: color, borderRadius: 400, transform: `translateX(${(p - 1) * W * 1.7}px) rotate(-8deg)` } });
+      };
+      var Title = ({ f, lines, size, color = PAL.ink }) => {
+        const sp = useSpring();
+        return __h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center" } }, lines.map((l, i) => __h("div", { key: i, style: { overflow: "hidden" } }, __h("div", { style: { fontSize: size, fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.03em", color: i ? PAL.a : color, transform: `translateY(${(1 - sp(f, 6 + i * 5, 18)) * 110}%)` } }, l))));
+      };
+      var scenes = [
+        {
+          dur: 75,
+          render: (f, dur) => __h(Intro, { f, dur })
+        },
+        {
+          dur: 80,
+          render: (f, dur) => __h(Stat, { f, dur })
+        },
+        {
+          dur: 85,
+          render: (f) => __h(Outro, { f })
+        }
+      ];
+      var Intro = ({ f, dur }) => {
+        const sp = useSpring();
+        const shapes = [
+          { x: 180, y: 360, s: 260, c: PAL.a, r: "50%", d: 0 },
+          { x: 820, y: 520, s: 200, c: PAL.b, r: "30px", d: 4 },
+          { x: 260, y: 1480, s: 220, c: PAL.c, r: "30px", d: 8 },
+          { x: 860, y: 1360, s: 300, c: PAL.ink, r: "50%", d: 12 }
+        ];
+        return __h(AbsoluteFill, { style: { background: PAL.bg, fontFamily: FONT, alignItems: "center", justifyContent: "center" } }, shapes.map((s, i) => {
+          const p = sp(f, s.d, 11, 160);
+          return __h(
+            "div",
+            {
+              key: i,
+              style: {
+                position: "absolute",
+                left: s.x - s.s / 2,
+                top: s.y - s.s / 2,
+                width: s.s,
+                height: s.s,
+                borderRadius: s.r,
+                background: s.c,
+                transform: `scale(${p}) rotate(${(1 - p) * 120 + f * (i % 2 ? 0.4 : -0.4)}deg)`
+              }
+            }
+          );
+        }), __h("div", { style: { fontSize: 34, fontWeight: 700, letterSpacing: "0.3em", color: PAL.ink, opacity: ramp(f, 4, 18), marginBottom: 20 } }, COPY.kicker), __h(Title, { f, lines: COPY.title, size: 230 }), __h(ShapeWipe, { f, dur, color: PAL.ink }));
+      };
+      var Stat = ({ f, dur }) => {
+        const sp = useSpring();
+        const n = Math.round(ramp(f, 10, 45) * COPY.stat);
+        const bars = [0.35, 0.55, 0.45, 0.75, 0.9];
+        return __h(AbsoluteFill, { style: { background: PAL.ink, fontFamily: FONT, alignItems: "center", justifyContent: "center", gap: 40 } }, __h("svg", { width: 520, height: 520, viewBox: "0 0 520 520" }, __h("circle", { cx: 260, cy: 260, r: 220, fill: "none", stroke: "rgba(255,255,255,0.12)", strokeWidth: 40 }), __h("circle", { cx: 260, cy: 260, r: 220, fill: "none", stroke: PAL.b, strokeWidth: 40, strokeLinecap: "round", transform: "rotate(-90 260 260)", pathLength: 100, strokeDasharray: `${n} 100` }), __h("text", { x: 260, y: 300, textAnchor: "middle", fontFamily: FONT, fontWeight: 900, fontSize: 140, fill: "#fff" }, n, "%")), __h("div", { style: { fontSize: 44, fontWeight: 700, letterSpacing: "0.25em", color: "#fff", opacity: ramp(f, 20, 34) } }, COPY.statLabel), __h("div", { style: { display: "flex", gap: 24, alignItems: "flex-end", height: 260 } }, bars.map((b, i) => __h("div", { key: i, style: { width: 110, height: 260 * b * sp(f, 24 + i * 4, 14), borderRadius: 24, background: i === 4 ? PAL.a : "rgba(255,255,255,0.18)" } }))), __h(ShapeWipe, { f, dur, color: PAL.a }));
+      };
+      var Outro = ({ f }) => {
+        const sp = useSpring();
+        const ring = ramp(f, 4, 30);
+        return __h(AbsoluteFill, { style: { background: PAL.a, fontFamily: FONT, alignItems: "center", justifyContent: "center", gap: 50 } }, __h("svg", { width: 360, height: 360, viewBox: "0 0 360 360", style: { transform: `scale(${sp(f, 0, 12)})` } }, __h("circle", { cx: 180, cy: 180, r: 160, fill: PAL.bg }), __h("path", { d: "M110 190 L160 240 L255 130", fill: "none", stroke: PAL.ink, strokeWidth: 30, strokeLinecap: "round", strokeLinejoin: "round", ...drawOn(ramp(f, 10, 28)) }), __h("circle", { cx: 180, cy: 180, r: 172, fill: "none", stroke: PAL.ink, strokeWidth: 6, ...drawOn(ring) })), __h(Title, { f: f - 6, lines: [COPY.outro], size: 150, color: PAL.bg }));
+      };
+      var MOTION_DURATION = totalFrames(scenes);
+      var MotionGraphicTemplate = () => __h(AbsoluteFill, { style: { width: W, height: H } }, __h(Scenes, { scenes, overlap: 0 }), __h(Sfx, { at: 0, src: "pop" }), __h(Sfx, { at: 61, src: "whoosh" }), __h(Sfx, { at: 141, src: "whoosh" }), __h(Sfx, { at: 160, src: "chime" }));
+    
+      // <stdin>
+      window.__HFK_SCENE = MotionGraphicTemplate;
+      window.__HFK_LEN = MOTION_DURATION;
+    })();
+    HFK.mount('video', window.__HFK_SCENE, {fps: 30, width: 1080, height: 1920, duration: 8});
+  </script>
+</template>

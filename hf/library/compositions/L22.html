@@ -1,0 +1,125 @@
+<!-- L22 Stop Motion (Handmade): 10fps, sticky note di meja kayu, pensil & koin, cahaya berkedip.
+     Palette #B07D4F #FFE066 #FF8FAB #8CE99A #74C0FC - best for tips, list, craft.
+     Ported from src/library/scenes/scenes3.tsx (StopMotion). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #B07D4F; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L22" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes3.tsx
+      var StopMotion = ({ f }) => {
+        const q = step(f, 6);
+        const jit = (k, a = 4) => (rnd(`${k}${q}`) - 0.5) * a;
+        const flick = rnd(`fl${q}`) * 0.06;
+        const notes = "STOP".split("").concat("MOTION".split(""));
+        const nc = ["#FFE066", "#FF8FAB", "#8CE99A", "#74C0FC"];
+        return __h(Full, { bg: "#B07D4F", style: { backgroundImage: "repeating-linear-gradient(92deg, #00000012 0 3px, transparent 3px 40px), repeating-linear-gradient(88deg, #FFFFFF0d 0 2px, transparent 2px 70px)" } }, notes.map((c, i) => {
+          const row = i < 4 ? 0 : 1;
+          const col = row ? i - 4 : i;
+          const tx = row ? 300 + col * 220 : 520 + col * 220;
+          const ty = row ? 560 : 260;
+          const a = 0.05 + i * 0.12;
+          const p = Math.min(1, Math.max(0, (q / FPS - a) / 0.3));
+          const ps = Math.floor(p * 4) / 4;
+          const sx = mix(tx + (rnd(`ox${i}`) - 0.5) * 1600, tx, ps);
+          const sy = mix(ty + (rnd(`oy${i}`) > 0.5 ? 900 : -900), ty, ps);
+          return __h(
+            "div",
+            {
+              key: i,
+              style: {
+                position: "absolute",
+                left: sx + jit(`x${i}`),
+                top: sy + jit(`y${i}`),
+                width: 190,
+                height: 190,
+                background: nc[i % 4],
+                boxShadow: "6px 12px 14px #3B220F66",
+                transform: `rotate(${(rnd(`nr${i}`) - 0.5) * 12 + jit(`r${i}`, 3)}deg)`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 130,
+                fontWeight: 900,
+                color: "#2B2B2B"
+              }
+            },
+            c
+          );
+        }), __h(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              left: mix(2e3, 1500, Math.floor(Math.min(1, Math.max(0, (q / FPS - 1) / 0.5)) * 5) / 5) + jit("px"),
+              top: 160,
+              width: 520,
+              height: 38,
+              background: "linear-gradient(#FFC93C 0 50%, #E8A800 50%)",
+              transform: `rotate(${-28 + jit("pr", 2)}deg)`,
+              clipPath: "polygon(0 50%, 10% 0, 100% 0, 100% 100%, 10% 100%)"
+            }
+          }
+        ), [0, 1, 2].map((i) => {
+          const p = Math.floor(Math.min(1, Math.max(0, (q / FPS - 1.4 - i * 0.12) / 0.3)) * 3) / 3;
+          return __h(
+            "div",
+            {
+              key: i,
+              style: {
+                position: "absolute",
+                left: 1620 + i * 60 + jit(`cx${i}`),
+                top: mix(1200, 760 - i * 20, p),
+                width: 110,
+                height: 110,
+                borderRadius: 99,
+                background: "radial-gradient(circle at 35% 30%, #FFF3B0, #E0A800 60%, #A87800)",
+                boxShadow: "4px 8px 10px #3B220F66"
+              }
+            }
+          );
+        }), __h("div", { style: { position: "absolute", inset: 0, background: "#000", opacity: flick } }));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = StopMotion;
+    })();
+    (function () {
+      const V = {"s":0.62};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L22', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

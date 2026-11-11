@@ -1,0 +1,68 @@
+<!-- L43 Map Route (Data): Rute peta tergambar, pesawat, pin bendera.
+     Palette #DCEBF5 #0B1B2F #FF5A36 - best for data.
+     Ported from src/library/scenes/scenes6.tsx (MapRoute). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #DCEBF5; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L43" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes6.tsx
+      var PTS = Array.from({ length: 22 }).map((_, i) => ({ x: 340 + rnd(`px${i}`) * 1240, y: 140 + rnd(`py${i}`) * 800 }));
+      var MapRoute = ({ f }) => {
+        const p = ramp(f, 0.4, 1.5, Easing.bezier(0.6, 0, 0.3, 1));
+        const A = { x: 470, y: 760 };
+        const B = { x: 1450, y: 330 };
+        const Q = { x: 860, y: 140 };
+        const pt = (u) => ({ x: (1 - u) ** 2 * A.x + 2 * (1 - u) * u * Q.x + u * u * B.x, y: (1 - u) ** 2 * A.y + 2 * (1 - u) * u * Q.y + u * u * B.y });
+        const pl = pt(p);
+        const nx = pt(Math.min(1, p + 0.01));
+        const ang = Math.atan2(nx.y - pl.y, nx.x - pl.x) * 180 / Math.PI;
+        const pin = (x, y, flag, at, label) => {
+          const s = sp(f, at, 10, 220);
+          return __h("div", { style: { position: "absolute", left: x - 70, top: y - 190, width: 140, transform: `scale(${s})`, transformOrigin: "bottom center", display: "flex", flexDirection: "column", alignItems: "center" } }, __h("div", { style: { width: 120, height: 90, borderRadius: 14, overflow: "hidden", border: "6px solid #fff", boxShadow: "0 12px 24px #0003" } }, __h(Img, { src: staticFile(`library/flags/${flag}.svg`), style: { width: "100%", height: "100%", objectFit: "cover" } })), __h("div", { style: { marginTop: 10, padding: "6px 16px", borderRadius: 999, background: "#0B1B2F", color: "#fff", fontSize: 26, fontWeight: 900 } }, label), __h("div", { style: { width: 20, height: 20, borderRadius: 10, background: "#FF5A36", marginTop: 8, boxShadow: "0 0 0 8px #FF5A3644" } }));
+        };
+        return __h(Full, { bg: "#DCEBF5" }, __h("div", { style: { position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, #9CB8CC 3px, transparent 3.5px)", backgroundSize: "30px 30px", opacity: 0.6 } }), __h("svg", { width: 1920, height: 1080, style: { position: "absolute" } }, __h("path", { d: "M200 620 Q 380 480 620 560 T 860 860 Q 700 1000 300 960 Z", fill: "#F5F0E1", stroke: "#C9BFA2", strokeWidth: 4 }), __h("path", { d: "M1180 180 Q 1420 100 1640 260 T 1560 560 Q 1340 640 1200 480 Z", fill: "#F5F0E1", stroke: "#C9BFA2", strokeWidth: 4 }), __h("mask", { id: "route-reveal" }, __h("path", { d: `M${A.x} ${A.y} Q ${Q.x} ${Q.y} ${B.x} ${B.y}`, fill: "none", stroke: "#fff", strokeWidth: 20, pathLength: 1, strokeDasharray: 1, strokeDashoffset: 1 - p })), __h("path", { d: `M${A.x} ${A.y} Q ${Q.x} ${Q.y} ${B.x} ${B.y}`, fill: "none", stroke: "#0B1B2F", strokeWidth: 6, strokeDasharray: "4 18", strokeLinecap: "round", mask: "url(#route-reveal)" })), pin(A.x, A.y, "id", 0.05, "JAKARTA"), pin(B.x, B.y, "jp", 1.35, "TOKYO"), __h("div", { style: { position: "absolute", left: pl.x - 40, top: pl.y - 40, width: 80, height: 80, fontSize: 70, lineHeight: "80px", textAlign: "center", transform: `rotate(${ang + 45}deg)`, opacity: p > 0 && p < 1 ? 1 : 0 } }, "âœˆ"), __h("div", { style: { position: "absolute", left: 1180, top: 760, padding: "22px 36px", borderRadius: 28, background: "#fff", boxShadow: "0 20px 40px #0B1B2F22", fontSize: 64, fontWeight: 900, color: "#0B1B2F", opacity: ramp(f, 0.4, 0.6) } }, Math.round(5800 * p).toLocaleString("id-ID"), " KM"));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = MapRoute;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L43', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

@@ -1,0 +1,58 @@
+<!-- L40 Aurora Gradient (Abstract): Pita aurora bergerak di balik judul.
+     Palette #060814 #22D3EE #A855F7 - best for abstract.
+     Ported from src/library/scenes/scenes6.tsx (Aurora). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #060814; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L40" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes6.tsx
+      var t = (f) => f / FPS;
+      var Aurora = ({ f }) => {
+        const tt = t(f);
+        return __h(Full, { bg: "#060814" }, [["#22D3EE", 0], ["#A855F7", 1.7], ["#34D399", 3.2]].map(([c, ph], i) => __h("div", { key: i, style: { position: "absolute", left: -200 + Math.sin(tt * 0.8 + ph) * 200, top: 120 + i * 140, width: 2400, height: 420, background: `radial-gradient(ellipse at 50% 50%, ${c}88, transparent 65%)`, transform: `skewY(${-8 + Math.sin(tt + i) * 4}deg)` } })), __h("div", { style: { position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, #ffffff22 1.5px, transparent 2px)", backgroundSize: "90px 90px" } }), __h("div", { style: { position: "absolute", left: 0, right: 0, top: 360, textAlign: "center", color: "#fff" } }, __h("div", { style: { fontSize: 70, fontWeight: 500, letterSpacing: 18, opacity: ramp(f, 0.2, 0.6) } }, "BEYOND THE"), __h("div", { style: { fontSize: 230, fontWeight: 900, letterSpacing: -6, lineHeight: 1, transform: `translateY(${(1 - sp(f, 0.45, 15, 140)) * 80}px)`, opacity: sp(f, 0.45), textShadow: "0 0 40px #A855F766" } }, "NORTH")));
+      };
+      var PTS = Array.from({ length: 22 }).map((_, i) => ({ x: 340 + rnd(`px${i}`) * 1240, y: 140 + rnd(`py${i}`) * 800 }));
+    
+      // <stdin>
+      window.__HFK_SCENE = Aurora;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L40', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

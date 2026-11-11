@@ -1,0 +1,60 @@
+<!-- L48 Duotone Split (Bold): Layar terbelah dua foto duotone, badge VS.
+     Palette #111111 #FF6A3D #5B3DF5 - best for bold.
+     Ported from src/library/scenes/scenes6.tsx (DuotoneSplit). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #111111; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L48" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes6.tsx
+      var C = { position: "absolute", display: "flex", alignItems: "center", justifyContent: "center" };
+      var PTS = Array.from({ length: 22 }).map((_, i) => ({ x: 340 + rnd(`px${i}`) * 1240, y: 140 + rnd(`py${i}`) * 800 }));
+      var DuotoneSplit = ({ f }) => {
+        const sl = sp(f, 0.05, 15, 130, 0.8);
+        const vs = sp(f, 0.8, 9, 260, 0.6);
+        const half = (side, tint, label, img) => __h("div", { style: { position: "absolute", top: 0, bottom: 0, left: side ? 960 : 0, width: 960, overflow: "hidden", transform: `translateY(${(1 - sl) * (side ? 1080 : -1080)}px)` } }, __h(Img, { src: staticFile(img), style: { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "grayscale(1) contrast(1.2)" } }), __h("div", { style: { position: "absolute", inset: 0, background: tint, mixBlendMode: "multiply" } }), __h("div", { style: { position: "absolute", left: side ? void 0 : 340, right: side ? 340 : void 0, top: 760, fontSize: 120, fontWeight: 900, color: "#fff", letterSpacing: -3, transform: `translateX(${(1 - sp(f, 0.4 + side * 0.12)) * (side ? 500 : -500)}px)` } }, label));
+        return __h(Full, { bg: "#111" }, half(0, "#FF6A3D", "THIS", "library/bg/mountain-landscape/6aa33366-dd8.jpg"), half(1, "#5B3DF5", "THAT", "library/bg/city-skyline-night/6bfdf321-93c.jpg"), __h("div", { style: { ...C, left: 860, top: 440, width: 200, height: 200, borderRadius: "50%", background: "#fff", fontSize: 84, fontWeight: 900, color: "#111", transform: `scale(${vs}) rotate(${(1 - vs) * 90}deg)`, boxShadow: "0 20px 40px #0008" } }, "VS"));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = DuotoneSplit;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L48', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

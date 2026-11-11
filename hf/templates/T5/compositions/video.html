@@ -1,0 +1,110 @@
+<!-- Ported from src/templates/GlassTemplate.tsx (GlassTemplate) by hf/tools/port-video.mjs.
+     The whole picture is one function of the frame (30fps), rendered by HFK.mount(); audio clips live in index.html. -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="video" data-width="1080" data-height="1920" data-layout-allow-overflow></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/font.js
+      var loadFont = () => ({ fontFamily: "'Noto Sans KR', sans-serif" });
+    
+      // src/templates/common.tsx
+      var { fontFamily: FONT } = loadFont("normal", { weights: ["400", "500", "700", "900"], subsets: ["latin"] });
+      var W = 1080;
+      var H = 1920;
+      var clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" };
+      var SMOOTH = Easing.bezier(0.7, 0, 0.3, 1);
+      var ramp = (f, a, b, easing = SMOOTH) => interpolate(f, [a, b], [0, 1], { ...clamp, easing });
+      var useSpring = () => {
+        const { fps } = useVideoConfig();
+        return (f, at = 0, damping = 16, stiffness = 140, mass = 0.7) => spring({ frame: f - at, fps, config: { damping, stiffness, mass } });
+      };
+      var Sfx = ({ at, src, v = 0.25 }) => __h(Sequence, { from: at, layout: "none" }, __h(Audio, { src: staticFile(`shared/sfx/${src}.wav`), volume: v }));
+    
+      // src/templates/GlassTemplate.tsx
+      var PAL = { bgA: "#150B3A", bgB: "#0B2A5C", orb1: "#7B5CFF", orb2: "#00D1FF", orb3: "#FF6FD8", text: "#FFFFFF" };
+      var COPY = { kicker: "GLASS UI", title: "CLEAR & CALM", value: 128400, valueLabel: "TOTAL VIEWS", chips: ["FAST", "CLEAN", "MODERN"] };
+      var GLASS_DURATION = 240;
+      var Orb = ({ x, y, r, c }) => __h("div", { style: { position: "absolute", left: x - r, top: y - r, width: r * 2, height: r * 2, borderRadius: "50%", background: `radial-gradient(circle, ${c} 0%, ${c}00 68%)`, opacity: 0.75 } });
+      var Glass = ({ children, style }) => __h(
+        "div",
+        {
+          style: {
+            position: "relative",
+            borderRadius: 48,
+            background: "linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.06) 100%)",
+            border: "2px solid rgba(255,255,255,0.35)",
+            boxShadow: "0 40px 80px rgba(5,0,30,0.45), inset 0 2px 0 rgba(255,255,255,0.45)",
+            overflow: "hidden",
+            ...style
+          }
+        },
+        __h("div", { style: { position: "absolute", inset: 0, background: "linear-gradient(115deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 38%)" } }),
+        __h("div", { style: { position: "relative" } }, children)
+      );
+      var GlassTemplate = () => {
+        const f = useCurrentFrame();
+        const sp = useSpring();
+        const t = f / 30;
+        const card1 = sp(f, 6, 18, 90);
+        const card2 = sp(f, 26, 18, 90);
+        const n = Math.round(ramp(f, 34, 80) * COPY.value);
+        const tilt = Math.sin(t * 0.8) * 4;
+        return __h(AbsoluteFill, { style: { width: W, height: H, background: `linear-gradient(160deg, ${PAL.bgA}, ${PAL.bgB})`, fontFamily: FONT, color: PAL.text, overflow: "hidden" } }, __h(Orb, { x: 250 + Math.sin(t * 0.5) * 120, y: 500 + Math.cos(t * 0.4) * 80, r: 520, c: PAL.orb1 }), __h(Orb, { x: 860 + Math.cos(t * 0.45) * 100, y: 1100 + Math.sin(t * 0.5) * 120, r: 480, c: PAL.orb2 }), __h(Orb, { x: 400 + Math.sin(t * 0.35) * 140, y: 1600, r: 420, c: PAL.orb3 }), __h(AbsoluteFill, { style: { perspective: 1800, alignItems: "center", paddingTop: 300, gap: 60 } }, __h(
+          Glass,
+          {
+            style: {
+              width: 880,
+              padding: "60px 64px",
+              transform: `translateY(${(1 - card1) * 400}px) rotateX(${(1 - card1) * 40 + tilt}deg) rotateY(${-tilt}deg)`,
+              opacity: card1
+            }
+          },
+          __h("div", { style: { fontSize: 30, fontWeight: 700, letterSpacing: "0.35em", opacity: 0.75 } }, COPY.kicker),
+          __h("div", { style: { fontSize: 120, fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.05, marginTop: 14 } }, COPY.title),
+          __h("div", { style: { display: "flex", gap: 18, marginTop: 40 } }, COPY.chips.map((c, i) => __h("div", { key: c, style: { padding: "14px 30px", borderRadius: 999, background: "rgba(255,255,255,0.16)", border: "1.5px solid rgba(255,255,255,0.4)", fontSize: 28, fontWeight: 700, letterSpacing: "0.1em", transform: `scale(${sp(f, 18 + i * 5, 12)})` } }, c)))
+        ), __h(
+          Glass,
+          {
+            style: {
+              width: 880,
+              padding: "56px 64px",
+              transform: `translateY(${(1 - card2) * 500}px) rotateX(${(1 - card2) * 40 - tilt}deg) rotateY(${tilt}deg)`,
+              opacity: card2
+            }
+          },
+          __h("div", { style: { fontSize: 30, fontWeight: 700, letterSpacing: "0.3em", opacity: 0.75 } }, COPY.valueLabel),
+          __h("div", { style: { fontSize: 150, fontWeight: 900, letterSpacing: "-0.03em", fontVariantNumeric: "tabular-nums" } }, n.toLocaleString("id-ID")),
+          __h("svg", { width: 750, height: 200, viewBox: "0 0 750 200", style: { marginTop: 10 } }, __h("defs", null, __h("linearGradient", { id: "glassArea", x1: "0", x2: "0", y1: "0", y2: "1" }, __h("stop", { offset: "0", stopColor: "#fff", stopOpacity: 0.45 }), __h("stop", { offset: "1", stopColor: "#fff", stopOpacity: 0 }))), __h("path", { d: "M0 170 C 120 160 160 110 260 120 C 360 130 400 60 500 70 C 600 80 640 30 750 20 L750 200 L0 200 Z", fill: "url(#glassArea)", opacity: ramp(f, 40, 70) }), __h("path", { d: "M0 170 C 120 160 160 110 260 120 C 360 130 400 60 500 70 C 600 80 640 30 750 20", fill: "none", stroke: "#fff", strokeWidth: 6, strokeLinecap: "round", pathLength: 1, strokeDasharray: 1, strokeDashoffset: 1 - ramp(f, 36, 76) }))
+        )), __h(Sfx, { at: 6, src: "whoosh", v: 0.2 }), __h(Sfx, { at: 26, src: "whoosh", v: 0.2 }), __h(Sfx, { at: 80, src: "chime", v: 0.2 }));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = GlassTemplate;
+      window.__HFK_LEN = GLASS_DURATION;
+    })();
+    HFK.mount('video', window.__HFK_SCENE, {fps: 30, width: 1080, height: 1920, duration: 8});
+  </script>
+</template>

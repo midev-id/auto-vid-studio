@@ -1,0 +1,96 @@
+<!-- L03 Isometric (3D): Kubus isometrik tumbuh bertahap, pin peta memantul.
+     Palette #EEF2FF #C8D3FF #5B6CFF #FFB547 - best for tech, proses, data.
+     Ported from src/library/scenes/scenes1.tsx (Isometric). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #EEF2FF; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L03" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes1.tsx
+      var t = (f) => f / FPS;
+      var C30 = Math.cos(Math.PI / 6);
+      var iso = (x, y, z) => [960 + (x - y) * C30, 560 + (x + y) * 0.5 - z];
+      var poly = (pts) => pts.map((p) => iso(p[0], p[1], p[2]).join(",")).join(" ");
+      var Isometric = ({ f }) => {
+        const cubes = [];
+        const pal = [
+          ["#7D93FF", "#4C6FFF", "#3550C8"],
+          ["#FFD27A", "#FFB020", "#D48A00"],
+          ["#8EF0D0", "#2EC4A0", "#1D9277"],
+          ["#FF9EB8", "#FF5C8A", "#D23A66"]
+        ];
+        for (let i = 0; i < 4; i++)
+          for (let j = 0; j < 4; j++) {
+            const r = rnd(`iso${i}-${j}`);
+            cubes.push({ x: -260 + i * 140, y: -260 + j * 140, h: 50 + r * 230, c: pal[Math.floor(rnd(`isoc${i}${j}`) * 4)], a: 0.1 + (i + j) * 0.07 });
+          }
+        cubes.sort((a, b) => a.x + a.y - (b.x + b.y));
+        const ground = sp(f, 0, 16, 140, 0.8);
+        const s = 110;
+        const pinY = Math.sin(t(f) * 6) * 14;
+        const tallest = cubes.reduce((m, c) => c.h > m.h ? c : m, cubes[0]);
+        const tp = iso(tallest.x + s / 2, tallest.y + s / 2, tallest.h * sp(f, tallest.a, 12, 150, 0.7));
+        return __h(Full, { bg: "linear-gradient(160deg,#EEF2FF 0%,#C8D3FF 100%)" }, __h("svg", { width: 1920, height: 1080, style: { position: "absolute" } }, __h("g", { transform: `translate(0 ${(1 - ground) * 200})`, opacity: ground }, __h("polygon", { points: poly([[-330, -330, 0], [330 + 80, -330, 0], [330 + 80, 330 + 80, 0], [-330, 330 + 80, 0]]), fill: "#FFFFFF" }), __h("polygon", { points: poly([[-330, 330 + 80, 0], [330 + 80, 330 + 80, 0], [330 + 80, 330 + 80, -30], [-330, 330 + 80, -30]]), fill: "#B5C2F5" }), __h("polygon", { points: poly([[330 + 80, -330, 0], [330 + 80, 330 + 80, 0], [330 + 80, 330 + 80, -30], [330 + 80, -330, -30]]), fill: "#9AAAE8" })), cubes.map((c, k) => {
+          const h = c.h * sp(f, c.a, 12, 150, 0.7);
+          if (h < 1) return null;
+          return __h("g", { key: k }, __h("polygon", { points: poly([[c.x, c.y + s, 0], [c.x + s, c.y + s, 0], [c.x + s, c.y + s, h], [c.x, c.y + s, h]]), fill: c.c[1] }), __h("polygon", { points: poly([[c.x + s, c.y, 0], [c.x + s, c.y + s, 0], [c.x + s, c.y + s, h], [c.x + s, c.y, h]]), fill: c.c[2] }), __h("polygon", { points: poly([[c.x, c.y, h], [c.x + s, c.y, h], [c.x + s, c.y + s, h], [c.x, c.y + s, h]]), fill: c.c[0] }));
+        })), __h(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              left: tp[0] - 34,
+              top: tp[1] - 120 + pinY,
+              width: 68,
+              height: 68,
+              borderRadius: "50% 50% 50% 0",
+              transform: `rotate(-45deg) scale(${sp(f, 1.2)})`,
+              background: "#FF3D6E",
+              boxShadow: "inset 0 0 0 18px #FF3D6E, inset 0 0 0 40px #fff"
+            }
+          }
+        ));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Isometric;
+    })();
+    (function () {
+      const V = {"s":1.25};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L03', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

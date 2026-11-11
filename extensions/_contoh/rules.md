@@ -1,0 +1,2 @@
+- Kalau project pakai template dari extension ini, pertahankan palet dan easing-nya.
+- (Contoh aturan. Tulis aturan Claude kamu sendiri di sini, satu poin per baris.)

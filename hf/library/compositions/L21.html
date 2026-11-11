@@ -1,0 +1,112 @@
+<!-- L21 Claymation (Handmade): 12fps, huruf tanah liat jatuh squash, bola memantul.
+     Palette #FBEFE2 #F28C38 #6BBF59 #4A90E2 #FF7EB6 - best for fun, anak, produk.
+     Ported from src/library/scenes/scenes3.tsx (Clay). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #FBEFE2; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L21" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes3.tsx
+      var t = (f) => f / FPS;
+      var clay = (base, light, dark) => ({
+        background: `radial-gradient(circle at 34% 28%, ${light} 0%, ${base} 45%, ${dark} 100%)`,
+        boxShadow: `inset -18px -26px 40px ${dark}AA, inset 10px 12px 24px ${light}88, 0 24px 30px -12px #5A3A2266`
+      });
+      var Clay = ({ f }) => {
+        const q = step(f, 5);
+        const tt = t(q);
+        const jit = (k) => (rnd(`${k}${q}`) - 0.5) * 3;
+        const bt = tt * 2.6 % 1;
+        const by = 4 * bt * (1 - bt);
+        const squash = bt < 0.08 || bt > 0.92 ? 1.35 : 1 - by * 0.12;
+        const bx = mix(250, 1650, ramp(q, 0, 2.4, Easing.linear));
+        const letters = "CLAY".split("");
+        const cols = [
+          ["#FF8C61", "#FFC2A6", "#C5532B"],
+          ["#6BCB77", "#B7F0BE", "#2F8A3D"],
+          ["#4D96FF", "#AFCDFF", "#1F5BB8"],
+          ["#FFD93D", "#FFF0A8", "#C9A200"]
+        ];
+        return __h(Full, { bg: "radial-gradient(ellipse at 50% 30%, #FBEFE2 0%, #EAD3BC 100%)" }, __h("div", { style: { position: "absolute", left: 0, right: 0, top: 820, bottom: 0, background: "#D9B999", boxShadow: "inset 0 20px 40px #B9906A" } }), __h("div", { style: { position: "absolute", left: 0, right: 0, top: 220, display: "flex", justifyContent: "center", gap: 26 } }, letters.map((c, i) => {
+          const p = sp(q, 0.05 + i * 0.12, 8, 180, 0.7);
+          return __h(
+            "div",
+            {
+              key: i,
+              style: {
+                width: 230,
+                height: 270,
+                borderRadius: 80,
+                ...clay(cols[i][0], cols[i][1], cols[i][2]),
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 190,
+                fontWeight: 900,
+                color: cols[i][1],
+                textShadow: `4px 6px 0 ${cols[i][2]}, -2px -2px 0 #FFFFFF66`,
+                transform: `translateY(${(1 - p) * -600}px) rotate(${jit(`r${i}`) + (i - 1.5) * 3}deg) scale(${1 + jit(`s${i}`) * 0.01}, ${p < 0.98 ? mix(1.2, 1, p) : 1})`
+              }
+            },
+            c
+          );
+        })), __h("div", { style: { position: "absolute", left: bx - 70, top: 830 - 20, width: 140 * (1 + by * -0.4), height: 30, marginLeft: by * 28, borderRadius: "50%", background: "#7A553566" } }), __h(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              left: bx - 70,
+              top: 820 - 140 - by * 260,
+              width: 140,
+              height: 140,
+              borderRadius: 999,
+              ...clay("#FF5D8F", "#FFB3CB", "#B8245A"),
+              transform: `scale(${squash}, ${2 - squash})`,
+              transformOrigin: "bottom"
+            }
+          }
+        ));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Clay;
+    })();
+    (function () {
+      const V = {"s":0.85};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L21', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

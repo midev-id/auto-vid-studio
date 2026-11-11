@@ -1,0 +1,59 @@
+<!-- L33 Vaporwave (Retro): Matahari bergaris, grid perspektif, teks chrome.
+     Palette #1A0B3B #B5179E #00F0FF - best for retro.
+     Ported from src/library/scenes/scenes5.tsx (Vaporwave). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #1A0B3B; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L33" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes5.tsx
+      var t = (f) => f / FPS;
+      var C = { position: "absolute", display: "flex", alignItems: "center", justifyContent: "center" };
+      var Vaporwave = ({ f }) => {
+        const tt = t(f);
+        const sun = sp(f, 0.05, 16, 90, 0.9);
+        return __h(Full, { bg: "#1A0B3B" }, __h("div", { style: { position: "absolute", inset: 0, background: "linear-gradient(180deg, #2B0F5E 0%, #B5179E 52%, #1A0B3B 52%)" } }), __h("div", { style: { position: "absolute", left: 660, top: 140 + (1 - sun) * 300, width: 600, height: 600, borderRadius: "50%", background: "linear-gradient(180deg, #FFE66D 0%, #FF6B9A 70%)", overflow: "hidden" } }, Array.from({ length: 7 }).map((_, i) => __h("div", { key: i, style: { position: "absolute", left: 0, right: 0, top: 330 + i * 40, height: 6 + i * 3, background: "#B5179E" } }))), __h("div", { style: { position: "absolute", left: -1e3, top: 562, width: 3920, height: 1200, transform: "perspective(500px) rotateX(70deg)", transformOrigin: "top", backgroundImage: "linear-gradient(#00F0FF 3px, transparent 3px), linear-gradient(90deg, #00F0FF 3px, transparent 3px)", backgroundSize: "120px 120px", backgroundPosition: `0 ${tt * 260 % 120}px`, opacity: 0.85 } }), __h("div", { style: { ...C, left: 0, right: 0, top: 380, fontSize: 190, fontWeight: 900, letterSpacing: 24, background: "linear-gradient(180deg, #FFFFFF 0%, #A7F3FF 45%, #3A2C8C 50%, #FFB3E6 100%)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent", transform: `scale(${sp(f, 0.4, 12, 160)})`, filter: "drop-shadow(6px 6px 0 #FF2E88)" } }, "AESTHETIC"));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Vaporwave;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L33', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

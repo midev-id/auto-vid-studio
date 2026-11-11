@@ -1,0 +1,675 @@
+<!-- X11 Day Series · Pixel Block. Edit window.DAYCFG for each episode (day, numbers, comments, scene times, captions).
+     The drawing engine below is generated from extensions/day-series/src/engine.js. -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="video" data-width="1080" data-height="1920" data-layout-allow-overflow></div>
+  <script>
+    window.DAYCFG = {
+      "style": "pixel",
+      "day": 2,
+      "title": "KOTA YANG DIATUR NETIZEN",
+      "handle": "@netizencity.id",
+      "mayor": "Mayor NetizenCity",
+      "bio": "Kota yang isinya diatur netizen.",
+      "followers": [
+        0,
+        103
+      ],
+      "population": [
+        1,
+        104
+      ],
+      "comment": {
+        "user": "@cha_cha_awk",
+        "text": "bangun rumah dan jalanan!",
+        "likes": 87
+      },
+      "request": {
+        "user": "anonim",
+        "text": "buat dapur MBG!",
+        "think": "?"
+      },
+      "cta": [
+        "JELASIN DI KOMEN",
+        "FOLLOW & SHARE",
+        "AJAK TEMANMU PINDAH"
+      ],
+      "timelapse": [
+        "07:00",
+        "13:00"
+      ],
+      "scenes": [
+        {
+          "id": "intro",
+          "start": 0,
+          "dur": 3.5
+        },
+        {
+          "id": "stats",
+          "start": 3.5,
+          "dur": 5.5
+        },
+        {
+          "id": "crowd",
+          "start": 9,
+          "dur": 4
+        },
+        {
+          "id": "comment",
+          "start": 13,
+          "dur": 5
+        },
+        {
+          "id": "build",
+          "start": 18,
+          "dur": 6.5
+        },
+        {
+          "id": "request",
+          "start": 24.5,
+          "dur": 4
+        },
+        {
+          "id": "cta",
+          "start": 28.5,
+          "dur": 2.5
+        },
+        {
+          "id": "outro",
+          "start": 31,
+          "dur": 3
+        }
+      ],
+      "captions": [
+        {
+          "t": 4.5,
+          "d": 1.5,
+          "text": "KEMARIN: 0"
+        },
+        {
+          "t": 6,
+          "d": 2.5,
+          "text": "HARI INI 103!",
+          "big": true
+        },
+        {
+          "t": 9.5,
+          "d": 3,
+          "text": "SEKARANG RAME"
+        },
+        {
+          "t": 15.5,
+          "d": 2.5,
+          "text": "RUMAH + JALAN"
+        },
+        {
+          "t": 22.5,
+          "d": 2,
+          "text": "SEJUK & ESTETIK"
+        },
+        {
+          "t": 26.5,
+          "d": 2,
+          "text": "DAPUR APA?"
+        }
+      ]
+    };
+  </script>
+  <script>
+// Day Series engine: "Day N — kota yang diatur netizen" episodes, drawn in 2D (no 3D).
+// One pure function of time -> SVG + HTML. Everything editable lives in window.DAYCFG (see the template's video.html).
+// Styles: anime | pixel | avatar | brick | paper. Each style changes palette, outlines, characters, buildings,
+// text treatment, transitions and motion feel, on the same story beats.
+(() => {
+  const CFG = window.DAYCFG;
+  const W = 1080, H = 1920;
+  const SAFE = {l: 80, r: 1000, t: 200, b: 1600};
+  // seeded random (string seed -> 0..1) and a damped spring that starts at t0 (seconds), overshoot included
+  const random = (seed) => {
+    let h = 2166136261;
+    for (const ch of String(seed)) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+    h += h << 13; h ^= h >>> 7; h += h << 3; h ^= h >>> 17; h += h << 5;
+    return ((h >>> 0) % 100000) / 100000;
+  };
+  const spS = (t, t0 = 0, damping = 12, stiffness = 180) => {
+    const u = t - t0;
+    if (u <= 0) return 0;
+    const w = Math.sqrt(stiffness), z = damping / (2 * w);
+    if (z >= 1) return 1 - Math.exp(-w * u) * (1 + w * u);
+    const wd = w * Math.sqrt(1 - z * z);
+    return 1 - Math.exp(-z * w * u) * (Math.cos(wd * u) + ((z * w) / wd) * Math.sin(wd * u));
+  };
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+  const easeOut = (k) => 1 - Math.pow(1 - clamp(k, 0, 1), 3);
+  const hex = (c, amt) => {
+    const n = parseInt(c.slice(1), 16);
+    const f = (x) => clamp(Math.round(x + amt * 255), 0, 255);
+    return '#' + [f(n >> 16), f((n >> 8) & 255), f(n & 255)].map((x) => x.toString(16).padStart(2, '0')).join('');
+  };
+
+  // ---------------- styles ----------------
+  const STYLES = {
+    anime: {
+      sky: ['#9FD8FF', '#FFE7F3'], night: ['#1B1F4B', '#5A3D7A'], hill: '#8ED67A', hill2: '#6CC25E', ground: '#A6E08F',
+      road: '#7A8193', line: '#FFFFFF', ink: '#2B2340', stroke: 6, radius: 18, accent: '#FF5C8A', accent2: '#FFD23F',
+      card: '#FFFFFF', cardInk: '#2B2340', font: 900, people: ['#FF8FB1', '#7EC8FF', '#FFD86B', '#B69CFF', '#7FE0B8', '#FF9F6B'],
+      walls: ['#FFF4E0', '#FFE1EC', '#E3F1FF', '#FFF0C9'], roofs: ['#FF6F61', '#5B8CFF', '#B06BFF', '#FF9F43'],
+      fps: 30, wipe: 'speed', text: 'outline',
+    },
+    pixel: {
+      sky: ['#7EC0FF', '#B8E2FF'], night: ['#0E1430', '#26305C'], hill: '#5DA130', hill2: '#4A8A26', ground: '#6DB33F', dirt: '#8B5A2B',
+      road: '#7D7D7D', line: '#E8E8E8', ink: '#1E1E1E', stroke: 0, radius: 0, accent: '#3FD44A', accent2: '#FFDD33',
+      card: '#C6C6C6', cardInk: '#1E1E1E', font: 900, people: ['#3B7DD8', '#D84B3B', '#3BB273', '#E0A82E', '#8A4BD8', '#2EB6C9'],
+      walls: ['#B98A55', '#A0A0A0', '#D9C08A', '#9C6B3C'], roofs: ['#6B4423', '#4E4E4E', '#8C2F2F', '#2F5F8C'],
+      fps: 12, wipe: 'blocks', text: 'pixel', grid: 12,
+    },
+    avatar: {
+      sky: ['#8FD3FF', '#E6F6FF'], night: ['#101935', '#2C3B6E'], hill: '#57C46A', hill2: '#3FAE57', ground: '#5ACB6E',
+      road: '#5E6470', line: '#F4F4F4', ink: '#1C2230', stroke: 3, radius: 10, accent: '#00A2FF', accent2: '#FFC400',
+      card: '#FFFFFF', cardInk: '#1C2230', font: 900, people: ['#00A2FF', '#FF3B3B', '#21C55D', '#FFC400', '#A855F7', '#FF7A00'],
+      walls: ['#F1F1F1', '#D9E7F7', '#F7E3D9', '#E5F7D9'], roofs: ['#E53935', '#1E88E5', '#43A047', '#6D4C41'],
+      fps: 30, wipe: 'iris', text: 'bold', baseplate: true,
+    },
+    brick: {
+      sky: ['#9CD7FF', '#E8F7FF'], night: ['#121A3A', '#323E73'], hill: '#3FA34D', hill2: '#2F8A3D', ground: '#4CB05A',
+      road: '#5B5F66', line: '#FFFFFF', ink: '#1A1A1A', stroke: 3, radius: 6, accent: '#E3000B', accent2: '#FFD500',
+      card: '#FFFFFF', cardInk: '#1A1A1A', font: 900, people: ['#E3000B', '#0055BF', '#00852B', '#FFD500', '#FF7E14', '#A0BCAC'],
+      walls: ['#F2CD37', '#E4E4DA', '#C91A09', '#0A3463'], roofs: ['#C91A09', '#0055BF', '#237841', '#582A12'],
+      fps: 30, wipe: 'bricks', text: 'brick', studs: true,
+    },
+    paper: {
+      sky: ['#F6E9D2', '#F9F1E2'], night: ['#2A2440', '#4A3B5E'], hill: '#9CC98A', hill2: '#7FB46F', ground: '#B5D69E',
+      road: '#8D8579', line: '#FBF5EA', ink: '#3A3128', stroke: 0, radius: 22, accent: '#E86A4A', accent2: '#F2B33D',
+      card: '#FFFDF8', cardInk: '#3A3128', font: 900, people: ['#E86A4A', '#5B9BD5', '#F2B33D', '#9C7BD3', '#6CBF8B', '#E58FB1'],
+      walls: ['#FFF7E8', '#F7E0D2', '#E2EEF5', '#F4E9C9'], roofs: ['#D9614A', '#5B8FC9', '#8E6CC0', '#E39B3B'],
+      fps: 30, wipe: 'tear', text: 'paper', shadow: true,
+    },
+  };
+  const S = STYLES[CFG.style] || STYLES.anime;
+  const SNAP = S.grid || 0;
+  const sn = (v) => (SNAP ? Math.round(v / SNAP) * SNAP : v);
+  // pixel style moves in steps (12 fps feel) while the render stays at the project fps
+  const qt = (t) => (S.fps < 30 ? Math.floor(t * S.fps) / S.fps : t);
+
+  // ---------------- primitives (styled) ----------------
+  const shadowOf = (x, y, w, h, r) => (S.shadow ? `<rect x="${x + 8}" y="${y + 10}" width="${w}" height="${h}" rx="${r}" fill="rgba(58,49,40,.18)"/>` : '');
+  const R = (x, y, w, h, fill, o = {}) => {
+    x = sn(x); y = sn(y); w = sn(w) || w; h = sn(h) || h;
+    const r = o.r ?? S.radius * 0.5;
+    const st = S.stroke ? `stroke="${S.ink}" stroke-width="${S.stroke}" stroke-linejoin="round"` : '';
+    let s = shadowOf(x, y, w, h, r) + `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${fill}" ${st}/>`;
+    if (CFG.style === 'anime' && !o.flat) s += `<rect x="${x + w * 0.62}" y="${y + S.stroke / 2}" width="${w * 0.38 - S.stroke / 2}" height="${h - S.stroke}" rx="${Math.max(0, r - 3)}" fill="${hex(fill, -0.08)}"/>`;
+    if (CFG.style === 'avatar' && !o.flat) s += `<rect x="${x}" y="${y + h - 10}" width="${w}" height="10" rx="${r}" fill="${hex(fill, -0.12)}"/>`;
+    if (S.studs && o.studs !== false) {
+      const n = Math.max(1, Math.floor(w / 34));
+      for (let i = 0; i < n; i++) {
+        const cx = x + (w / n) * (i + 0.5);
+        s += `<rect x="${cx - 11}" y="${y - 9}" width="22" height="10" rx="3" fill="${hex(fill, 0.06)}" stroke="${S.ink}" stroke-width="2"/>`;
+      }
+    }
+    if (CFG.style === 'pixel' && !o.flat) {
+      // pixel texture: a few darker squares, seeded per block
+      for (let i = 0; i < Math.min(14, (w * h) / 2600); i++) {
+        const px = x + Math.floor(random(`px${x}${y}${i}`) * (w / 12)) * 12;
+        const py = y + Math.floor(random(`py${x}${y}${i}`) * (h / 12)) * 12;
+        s += `<rect x="${px}" y="${py}" width="12" height="12" fill="${hex(fill, -0.1)}"/>`;
+      }
+    }
+    return s;
+  };
+  const tri = (x, y, w, h, fill) => {
+    if (CFG.style === 'pixel') {
+      let s = '';
+      for (let i = 0; i < h; i += 12) {
+        const ww = sn((w * (i + 12)) / h);
+        s += `<rect x="${sn(x + (w - ww) / 2)}" y="${sn(y + i)}" width="${ww}" height="12" fill="${i % 24 ? fill : hex(fill, -0.08)}"/>`;
+      }
+      return s;
+    }
+    const st = S.stroke ? `stroke="${S.ink}" stroke-width="${S.stroke}" stroke-linejoin="round"` : '';
+    return (S.shadow ? `<path d="M${x + 8} ${y + h + 10} L${x + w / 2 + 8} ${y + 10} L${x + w + 8} ${y + h + 10} Z" fill="rgba(58,49,40,.18)"/>` : '') +
+      `<path d="M${x - 10} ${y + h} L${x + w / 2} ${y} L${x + w + 10} ${y + h} Z" fill="${fill}" ${st}/>`;
+  };
+  const circ = (cx, cy, r, fill, o = {}) => {
+    if (CFG.style === 'pixel') return R(cx - r, cy - r, r * 2, r * 2, fill, {flat: true, ...o});
+    const st = S.stroke && !o.noStroke ? `stroke="${S.ink}" stroke-width="${S.stroke}"` : '';
+    return (S.shadow ? `<circle cx="${cx + 7}" cy="${cy + 9}" r="${r}" fill="rgba(58,49,40,.18)"/>` : '') + `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" ${st}/>`;
+  };
+  const pop = (t, t0, d = 12, k = 180) => (t < t0 ? 0 : spS(t, t0, d, k));
+  const g = (x, y, s, inner, extra = '') => `<g transform="translate(${x} ${y}) scale(${Math.max(0.0001, s)})" ${extra}>${inner}</g>`;
+
+  // ---------------- characters ----------------
+  // size ~ 1 = 120px tall. opts: mayor (hat + glasses), tag, blink, look
+  const person = (color, t, seed, o = {}) => {
+    const blink = Math.floor((t + random(seed) * 3) * 10) % 37 === 0;
+    const bob = Math.sin((t + random(seed + 'b') * 6) * 5) * 3;
+    const sty = CFG.style;
+    let s = '';
+    if (sty === 'anime') {
+      s += `<g transform="translate(0 ${bob})">`;
+      s += `<path d="M-38 0 Q-44 -70 0 -78 Q44 -70 38 0 Z" fill="${color}" stroke="${S.ink}" stroke-width="5"/>`;
+      s += `<path d="M10 -74 Q40 -66 38 0 L18 0 Q26 -40 10 -74Z" fill="${hex(color, -0.1)}"/>`;
+      s += `<circle cx="0" cy="-104" r="40" fill="#FFE9DA" stroke="${S.ink}" stroke-width="5"/>`;
+      s += `<path d="M-42 -106 Q-40 -150 0 -148 Q44 -150 42 -104 Q30 -128 8 -122 Q-14 -132 -42 -106Z" fill="${hex(color, -0.18)}" stroke="${S.ink}" stroke-width="5" stroke-linejoin="round"/>`;
+      s += blink ? `<path d="M-20 -100 h12 M8 -100 h12" stroke="${S.ink}" stroke-width="4"/>`
+        : `<ellipse cx="-14" cy="-98" rx="7" ry="10" fill="${S.ink}"/><ellipse cx="14" cy="-98" rx="7" ry="10" fill="${S.ink}"/><circle cx="-11" cy="-102" r="3" fill="#fff"/><circle cx="17" cy="-102" r="3" fill="#fff"/>`;
+      s += `<ellipse cx="-26" cy="-86" rx="7" ry="4" fill="#FF9DB5" opacity=".8"/><ellipse cx="26" cy="-86" rx="7" ry="4" fill="#FF9DB5" opacity=".8"/>`;
+      if (o.mayor) s += `<rect x="-26" y="-112" width="20" height="16" rx="7" fill="none" stroke="#C9A227" stroke-width="3"/><rect x="6" y="-112" width="20" height="16" rx="7" fill="none" stroke="#C9A227" stroke-width="3"/>`;
+      s += '</g>';
+      if (o.mayor) s += hat(-34, -176 + bob, 68);
+    } else if (sty === 'pixel') {
+      const b = Math.round(bob / 6) * 6;
+      s += `<g transform="translate(0 ${b})" shape-rendering="crispEdges">`;
+      s += `<rect x="-24" y="-60" width="48" height="60" fill="${color}"/><rect x="-24" y="-60" width="48" height="12" fill="${hex(color, -0.1)}"/>`;
+      s += `<rect x="-36" y="-60" width="12" height="48" fill="#C69C6D"/><rect x="24" y="-60" width="12" height="48" fill="#C69C6D"/>`;
+      s += `<rect x="-30" y="-120" width="60" height="60" fill="#C69C6D"/><rect x="-30" y="-120" width="60" height="18" fill="${hex(color, -0.35)}"/>`;
+      s += blink ? `<rect x="-18" y="-90" width="12" height="4" fill="#3B2412"/><rect x="6" y="-90" width="12" height="4" fill="#3B2412"/>`
+        : `<rect x="-18" y="-96" width="12" height="12" fill="#fff"/><rect x="-12" y="-96" width="6" height="12" fill="#3B2412"/><rect x="6" y="-96" width="12" height="12" fill="#fff"/><rect x="6" y="-96" width="6" height="12" fill="#3B2412"/>`;
+      s += `<rect x="-6" y="-78" width="12" height="6" fill="#8A5A3B"/>`;
+      s += '</g>';
+      if (o.mayor) s += `<g shape-rendering="crispEdges"><rect x="-36" y="${-132 + b}" width="72" height="12" fill="#2B2B2B"/><rect x="-24" y="${-168 + b}" width="48" height="36" fill="#2B2B2B"/><rect x="-24" y="${-144 + b}" width="48" height="6" fill="#B03A2E"/></g>`;
+    } else if (sty === 'avatar') {
+      s += `<g transform="translate(0 ${bob})">`;
+      s += `<rect x="-22" y="-26" width="20" height="26" rx="3" fill="#2F3B52" stroke="${S.ink}" stroke-width="3"/><rect x="2" y="-26" width="20" height="26" rx="3" fill="#2F3B52" stroke="${S.ink}" stroke-width="3"/>`;
+      s += `<rect x="-32" y="-74" width="64" height="50" rx="4" fill="${color}" stroke="${S.ink}" stroke-width="3"/>`;
+      s += `<rect x="-50" y="-74" width="18" height="46" rx="4" fill="#F5CD30" stroke="${S.ink}" stroke-width="3"/><rect x="32" y="-74" width="18" height="46" rx="4" fill="#F5CD30" stroke="${S.ink}" stroke-width="3"/>`;
+      s += `<rect x="-28" y="-126" width="56" height="52" rx="12" fill="#F5CD30" stroke="${S.ink}" stroke-width="3"/>`;
+      s += blink ? `<path d="M-14 -104 h8 M6 -104 h8" stroke="${S.ink}" stroke-width="4"/>` : `<ellipse cx="-10" cy="-104" rx="4" ry="6" fill="${S.ink}"/><ellipse cx="10" cy="-104" rx="4" ry="6" fill="${S.ink}"/>`;
+      s += `<path d="M-12 -90 Q0 -80 12 -90" stroke="${S.ink}" stroke-width="3.5" fill="none" stroke-linecap="round"/>`;
+      if (o.mayor) s += `<circle cx="-10" cy="-104" r="9" fill="none" stroke="#C9A227" stroke-width="3"/><circle cx="10" cy="-104" r="9" fill="none" stroke="#C9A227" stroke-width="3"/>`;
+      s += '</g>';
+      if (o.mayor) s += hat(-32, -190 + bob, 64);
+    } else if (sty === 'brick') {
+      s += `<g transform="translate(0 ${bob})">`;
+      s += `<rect x="-24" y="-30" width="22" height="30" rx="3" fill="#2E3A59" stroke="${S.ink}" stroke-width="3"/><rect x="2" y="-30" width="22" height="30" rx="3" fill="#2E3A59" stroke="${S.ink}" stroke-width="3"/>`;
+      s += `<path d="M-28 -32 L-22 -80 L22 -80 L28 -32 Z" fill="${color}" stroke="${S.ink}" stroke-width="3" stroke-linejoin="round"/>`;
+      s += `<path d="M-22 -78 L-38 -44 L-30 -40 Z" fill="${color}" stroke="${S.ink}" stroke-width="3" stroke-linejoin="round"/><path d="M22 -78 L38 -44 L30 -40 Z" fill="${color}" stroke="${S.ink}" stroke-width="3" stroke-linejoin="round"/>`;
+      s += `<circle cx="-34" cy="-38" r="7" fill="#FFD500" stroke="${S.ink}" stroke-width="3"/><circle cx="34" cy="-38" r="7" fill="#FFD500" stroke="${S.ink}" stroke-width="3"/>`;
+      s += `<rect x="-24" y="-126" width="48" height="46" rx="12" fill="#FFD500" stroke="${S.ink}" stroke-width="3"/>`;
+      s += `<rect x="-12" y="-136" width="24" height="12" rx="3" fill="#FFD500" stroke="${S.ink}" stroke-width="3"/>`;
+      s += blink ? `<path d="M-12 -106 h6 M6 -106 h6" stroke="${S.ink}" stroke-width="4"/>` : `<circle cx="-9" cy="-106" r="4.5" fill="${S.ink}"/><circle cx="9" cy="-106" r="4.5" fill="${S.ink}"/>`;
+      s += `<path d="M-11 -94 Q0 -86 11 -94" stroke="${S.ink}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+      if (o.mayor) s += `<circle cx="-9" cy="-106" r="8" fill="none" stroke="${S.ink}" stroke-width="2.5"/><circle cx="9" cy="-106" r="8" fill="none" stroke="${S.ink}" stroke-width="2.5"/>`;
+      s += '</g>';
+      if (o.mayor) s += hat(-30, -196 + bob, 60);
+    } else {
+      // paper: flat cut-out blob people, slight wobble
+      const rot = Math.sin((t + random(seed) * 5) * 3) * 3;
+      s += `<g transform="translate(0 ${bob}) rotate(${rot})">`;
+      s += `<path d="M-40 4 Q-46 -110 0 -116 Q46 -110 40 4 Z" fill="rgba(58,49,40,.18)" transform="translate(7 9)"/>`;
+      s += `<path d="M-40 4 Q-46 -110 0 -116 Q46 -110 40 4 Z" fill="${color}"/>`;
+      s += `<path d="M-34 -4 Q-38 -96 0 -104" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="4" stroke-dasharray="6 7"/>`;
+      s += blink ? `<path d="M-16 -74 h10 M6 -74 h10" stroke="${S.ink}" stroke-width="4"/>` : `<circle cx="-12" cy="-74" r="6" fill="${S.ink}"/><circle cx="12" cy="-74" r="6" fill="${S.ink}"/>`;
+      if (o.mayor) s += `<circle cx="-12" cy="-74" r="12" fill="none" stroke="#B88A2E" stroke-width="3"/><circle cx="12" cy="-74" r="12" fill="none" stroke="#B88A2E" stroke-width="3"/>`;
+      s += '</g>';
+      if (o.mayor) s += hat(-32, -168 + bob, 64);
+    }
+    if (o.tag) {
+      const tw = o.tag.length * 15 + 30;
+      s += `<g transform="translate(0 ${-(o.mayor ? 240 : 190) + bob})"><rect x="${-tw / 2}" y="-22" width="${tw}" height="40" rx="${S.radius ? 20 : 0}" fill="${S.accent2}" ${S.stroke ? `stroke="${S.ink}" stroke-width="3"` : ''}/><text x="0" y="6" text-anchor="middle" font-size="22" font-weight="900" fill="${S.ink}" font-family="Noto Sans KR">${esc(o.tag)}</text></g>`;
+    }
+    return s;
+  };
+  const hat = (x, y, w) => {
+    if (CFG.style === 'pixel') return '';
+    const st = S.stroke ? `stroke="${S.ink}" stroke-width="${Math.max(3, S.stroke - 1)}"` : '';
+    return `<rect x="${x - 12}" y="${y + 56}" width="${w + 24}" height="12" rx="6" fill="#3A3A40" ${st}/><rect x="${x}" y="${y}" width="${w}" height="60" rx="6" fill="#3A3A40" ${st}/><rect x="${x}" y="${y + 40}" width="${w}" height="10" fill="${S.accent}"/>`;
+  };
+  const crowdColor = (i) => S.people[Math.floor(random('c' + i) * S.people.length)];
+
+  // ---------------- buildings & props ----------------
+  const house = (x, y, w, i, lit = 0) => {
+    const wall = S.walls[i % S.walls.length], roof = S.roofs[i % S.roofs.length];
+    const h = w * 0.72;
+    let s = R(x, y - h, w, h, wall) + tri(x, y - h - w * 0.5, w, w * 0.5, roof);
+    const win = (wx, wy) => R(wx, wy, w * 0.22, w * 0.2, lit ? `rgba(255,214,102,${0.4 + 0.6 * lit})` : '#9BD3F0', {flat: true, studs: false, r: 4});
+    s += win(x + w * 0.12, y - h + w * 0.18) + win(x + w * 0.66, y - h + w * 0.18);
+    s += R(x + w * 0.4, y - w * 0.34, w * 0.2, w * 0.34, hex(roof, -0.15), {flat: true, studs: false, r: 4});
+    return s;
+  };
+  const townHall = (x, y, w, t, lit = 0) => {
+    const h = w * 0.62;
+    let s = R(x, y - h, w, h, S.walls[0]) + tri(x, y - h - w * 0.42, w, w * 0.42, S.roofs[0]);
+    s += R(x + w * 0.36, y - h - w * 0.78, w * 0.28, w * 0.4, S.walls[0], {studs: false}) + tri(x + w * 0.33, y - h - w * 1.0, w * 0.34, w * 0.24, S.roofs[0]);
+    // clock
+    const cx = x + w / 2, cy = y - h - w * 0.58, r = w * 0.09;
+    s += circ(cx, cy, r, '#fff');
+    const a = t * 2.4;
+    s += `<path d="M${cx} ${cy} L${cx + Math.sin(a) * r * 0.75} ${cy - Math.cos(a) * r * 0.75} M${cx} ${cy} L${cx + Math.sin(a / 12) * r * 0.5} ${cy - Math.cos(a / 12) * r * 0.5}" stroke="${S.ink}" stroke-width="5" stroke-linecap="round"/>`;
+    s += R(x + w * 0.22, y - h + w * 0.08, w * 0.56, w * 0.12, S.accent2, {flat: true, studs: false, r: 6});
+    s += `<text x="${x + w / 2}" y="${y - h + w * 0.17}" text-anchor="middle" font-size="${w * 0.07}" font-weight="900" fill="${S.ink}" font-family="Noto Sans KR">MAYOR</text>`;
+    s += R(x + w * 0.1, y - h * 0.62, w * 0.18, w * 0.16, lit ? '#FFD666' : '#9BD3F0', {flat: true, studs: false, r: 4}) + R(x + w * 0.72, y - h * 0.62, w * 0.18, w * 0.16, lit ? '#FFD666' : '#9BD3F0', {flat: true, studs: false, r: 4});
+    s += R(x + w * 0.42, y - w * 0.26, w * 0.16, w * 0.26, hex(S.roofs[0], -0.2), {flat: true, studs: false, r: 4});
+    return s;
+  };
+  const tree = (x, y, s0, i) => {
+    if (CFG.style === 'pixel') return R(x - 12, y - 60, 24, 60, '#6B4423', {flat: true}) + R(x - 48, y - 132, 96, 84, '#3E8E2E');
+    if (CFG.style === 'brick') return R(x - 10, y - 50, 20, 50, '#582A12', {studs: false}) + circ(x, y - 82, 44, '#237841') + circ(x, y - 82, 14, '#2E9450', {noStroke: true});
+    return R(x - 10, y - 54, 20, 54, '#8A5A3B', {studs: false, flat: true}) + circ(x, y - 96, 50, i % 2 ? S.hill2 : hex(S.hill, -0.05)) + (CFG.style === 'anime' ? `<circle cx="${x - 16}" cy="${y - 112}" r="14" fill="rgba(255,255,255,.35)"/>` : '');
+  };
+  const lamp = (x, y, lit = 0) => R(x - 6, y - 150, 12, 150, '#3E4250', {studs: false, flat: true}) + R(x - 22, y - 172, 44, 26, lit ? '#FFD666' : '#EDEDED', {studs: false}) +
+    (lit ? `<circle cx="${x}" cy="${y - 150}" r="${90 * lit}" fill="rgba(255,214,102,.18)"/>` : '');
+  const ground = (y0) => {
+    let s = R(-20, y0, W + 40, H - y0 + 20, S.ground, {flat: true, studs: false, r: 0});
+    if (S.studs || S.baseplate) {
+      const step = S.studs ? 54 : 108;
+      for (let yy = y0 + 30; yy < H; yy += step) for (let xx = 27; xx < W; xx += step)
+        s += S.studs ? `<circle cx="${xx}" cy="${yy}" r="12" fill="${hex(S.ground, 0.05)}" stroke="${hex(S.ground, -0.12)}" stroke-width="3"/>` : `<rect x="${xx - 52}" y="${yy - 52}" width="104" height="104" fill="none" stroke="${hex(S.ground, -0.06)}" stroke-width="3"/>`;
+    }
+    if (CFG.style === 'pixel') {
+      s += `<rect x="0" y="${y0}" width="${W}" height="24" fill="${hex(S.ground, 0.06)}"/>`;
+      for (let i = 0; i < 90; i++) s += `<rect x="${Math.floor(random('g' + i) * 90) * 12}" y="${y0 + 24 + Math.floor(random('h' + i) * 60) * 12}" width="12" height="12" fill="${hex(S.ground, -0.07)}"/>`;
+    }
+    if (CFG.style === 'paper') for (let i = 0; i < 40; i++) s += `<path d="M${random('pg' + i) * W} ${y0 + 40 + random('ph' + i) * (H - y0)} q6 -14 12 0" stroke="${hex(S.ground, -0.15)}" stroke-width="3" fill="none"/>`;
+    return s;
+  };
+  const sky = (night) => {
+    const c = night > 0 ? [mixC(S.sky[0], S.night[0], night), mixC(S.sky[1], S.night[1], night)] : S.sky;
+    return `<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c[0]}"/><stop offset="1" stop-color="${c[1]}"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#sky)"/>`;
+  };
+  const mixC = (a, b, k) => {
+    const pa = parseInt(a.slice(1), 16), pb = parseInt(b.slice(1), 16);
+    const ch = (sh) => Math.round(lerp((pa >> sh) & 255, (pb >> sh) & 255, k));
+    return '#' + [16, 8, 0].map((sh) => ch(sh).toString(16).padStart(2, '0')).join('');
+  };
+  const clouds = (t, night = 0) => {
+    let s = '';
+    for (let i = 0; i < 4; i++) {
+      const x = ((random('cl' + i) * 1400 + t * (14 + i * 6)) % 1500) - 250, y = 260 + i * 120;
+      const c = night ? 'rgba(255,255,255,.12)' : 'rgba(255,255,255,.85)';
+      if (CFG.style === 'pixel') s += `<rect x="${sn(x)}" y="${sn(y)}" width="216" height="48" fill="${c}"/><rect x="${sn(x + 48)}" y="${sn(y - 24)}" width="120" height="24" fill="${c}"/>`;
+      else s += `<g opacity="${night ? 0.5 : 1}"><ellipse cx="${x}" cy="${y}" rx="110" ry="34" fill="${c}"/><ellipse cx="${x + 40}" cy="${y - 26}" rx="62" ry="40" fill="${c}"/></g>`;
+    }
+    return s;
+  };
+  const hills = (y0) => {
+    if (CFG.style === 'pixel') {
+      let s = '';
+      for (let x = 0; x < W; x += 48) {
+        const h = 72 + Math.round(Math.sin(x / 140) * 3 + 3) * 24;
+        s += `<rect x="${x}" y="${y0 - h}" width="48" height="${h}" fill="${S.hill2}"/>`;
+      }
+      return s;
+    }
+    const st = S.stroke ? `stroke="${S.ink}" stroke-width="${S.stroke}"` : '';
+    return `<path d="M-40 ${y0} Q240 ${y0 - 230} 520 ${y0 - 60} Q760 ${y0 - 260} 1120 ${y0 - 40} L1120 ${y0 + 40} L-40 ${y0 + 40}Z" fill="${S.hill2}" ${st}/>` +
+      `<path d="M-40 ${y0 + 20} Q300 ${y0 - 120} 640 ${y0 + 10} Q900 ${y0 - 100} 1120 ${y0 + 10} L1120 ${y0 + 60} L-40 ${y0 + 60}Z" fill="${S.hill}" ${st}/>`;
+  };
+  const sparkles = (t, n, cx, cy, spread, t0) => {
+    let s = '';
+    const u = t - t0;
+    if (u < 0 || u > 1.4) return '';
+    for (let i = 0; i < n; i++) {
+      const a = random('sp' + i) * Math.PI * 2, d = easeOut(u / 0.9) * spread * (0.5 + random('sd' + i) * 0.6);
+      const x = cx + Math.cos(a) * d, y = cy + Math.sin(a) * d + u * u * 160, o = clamp(1.4 - u, 0, 1);
+      const c = [S.accent, S.accent2, '#7EC8FF', '#7FE0B8'][i % 4];
+      s += CFG.style === 'anime' || CFG.style === 'paper' ? `<path d="M${x} ${y - 14} L${x + 4} ${y} L${x} ${y + 14} L${x - 4} ${y}Z M${x - 14} ${y} L${x} ${y - 4} L${x + 14} ${y} L${x} ${y + 4}Z" fill="${c}" opacity="${o}"/>`
+        : `<rect x="${sn(x)}" y="${sn(y)}" width="14" height="14" fill="${c}" opacity="${o}" transform="rotate(${CFG.style === 'pixel' ? 0 : u * 300 + i * 40} ${x + 7} ${y + 7})"/>`;
+    }
+    return s;
+  };
+  const puff = (x, y, t, t0) => {
+    const u = t - t0;
+    if (u < 0 || u > 0.6) return '';
+    let s = '';
+    for (let i = 0; i < 6; i++) {
+      const a = Math.PI + (i / 5) * Math.PI, d = easeOut(u / 0.6) * 90;
+      s += circ(x + Math.cos(a) * d * 1.4, y + Math.sin(a) * d * 0.3, 18 * (1 - u / 0.6) + 2, 'rgba(255,255,255,.8)', {noStroke: true});
+    }
+    return s;
+  };
+
+  // ---------------- HTML overlays (cards, text) ----------------
+  const cardCss = () => {
+    const b = CFG.style === 'pixel' ? `border:6px solid ${S.ink};box-shadow:inset -6px -6px 0 #8B8B8B, inset 6px 6px 0 #fff;border-radius:0;`
+      : CFG.style === 'brick' ? `border:4px solid ${S.ink};border-radius:10px;box-shadow:0 8px 0 ${S.ink};`
+      : CFG.style === 'avatar' ? `border:3px solid ${S.ink};border-radius:16px;box-shadow:0 8px 0 rgba(28,34,48,.25);`
+      : CFG.style === 'paper' ? 'border-radius:24px;box-shadow:8px 10px 0 rgba(58,49,40,.18);'
+      : `border:5px solid ${S.ink};border-radius:26px;box-shadow:0 10px 0 ${S.ink};`;
+    return `position:absolute;background:${S.card};color:${S.cardInk};${b}font-family:'Noto Sans KR',sans-serif;`;
+  };
+  const textCss = (size, color = '#fff') => {
+    const m = {
+      outline: `color:${color};-webkit-text-stroke:${size * 0.12}px ${S.ink};paint-order:stroke fill;text-shadow:0 ${size * 0.08}px 0 ${S.ink};`,
+      pixel: `color:${color};-webkit-text-stroke:${size * 0.1}px ${S.ink};paint-order:stroke fill;text-shadow:${size * 0.08}px ${size * 0.08}px 0 ${S.ink};letter-spacing:.04em;`,
+      bold: `color:${color};-webkit-text-stroke:${size * 0.1}px ${S.ink};paint-order:stroke fill;`,
+      brick: `color:${S.accent2};-webkit-text-stroke:${size * 0.12}px ${S.ink};paint-order:stroke fill;text-shadow:0 ${size * 0.1}px 0 ${S.ink};`,
+      paper: `color:${S.ink};background:${S.card};padding:.1em .45em;border-radius:.3em;box-shadow:6px 8px 0 rgba(58,49,40,.18);`,
+    }[S.text];
+    return `font-family:'Noto Sans KR',sans-serif;font-weight:${S.font};font-size:${size}px;line-height:1.08;text-transform:uppercase;${m}`;
+  };
+  // keyword caption: 1-3 words, bounce in, sits above the bottom safe line
+  const caption = (t) => {
+    const c = (CFG.captions || []).find((x) => t >= x.t && t < x.t + x.d);
+    if (!c) return '';
+    const u = t - c.t;
+    const k = pop(qt(t), c.t, 10, 200);
+    const out = clamp((c.d - u) / 0.15, 0, 1);
+    const rot = CFG.style === 'paper' ? -2 : 0;
+    return `<div style="position:absolute;left:${SAFE.l}px;right:${W - SAFE.r}px;top:1390px;display:flex;justify-content:center;opacity:${out}">
+      <div style="${textCss(c.big ? 112 : 84)}max-width:${SAFE.r - SAFE.l}px;text-align:center;transform:scale(${k}) rotate(${rot}deg);transform-origin:50% 100%">${esc(c.text)}</div></div>`;
+  };
+  const dayBadge = () => `<div style="position:absolute;left:${SAFE.l}px;top:${SAFE.t}px;${cardCss()}padding:10px 22px;font-weight:900;font-size:34px;${CFG.style === 'pixel' ? '' : `background:${S.ink};color:#fff;`}">DAY ${esc(CFG.day)}</div>`;
+
+  // ---------------- scenes ----------------
+  // each returns {svg, html}; u = seconds inside the scene, t = global
+  const SCENES = {
+    intro(u, t) {
+      const z = lerp(0.88, 1, easeOut(u / 2.5));
+      let w = sky(0) + clouds(t) + hills(1180) + ground(1180);
+      const kh = pop(u, 0.5), km = pop(u, 1.0);
+      w += g(540, 1300, kh, townHall(-170, 0, 340, t));
+      w += puff(540, 1300, u, 0.5);
+      w += g(760, 1310, km, person(S.people[1], t, 'mayor', {mayor: true}));
+      const svg = `<g transform="translate(540 1200) scale(${z}) translate(-540 -1200)">${w}</g>`;
+      const kt = pop(u, 0.3, 10, 160), ks = pop(u, 0.9, 12, 180);
+      const html = `<div style="position:absolute;left:${SAFE.l}px;right:${W - SAFE.r}px;top:430px;text-align:center">
+        <div style="${textCss(190)}transform:scale(${kt}) rotate(${(1 - kt) * -8}deg);display:inline-block">DAY ${esc(CFG.day)}</div>
+        <div style="margin-top:28px;${textCss(64, S.accent2)}transform:translateY(${(1 - ks) * 60}px);opacity:${clamp(ks, 0, 1)}">${esc(CFG.title)}</div></div>`;
+      return {svg, html};
+    },
+    stats(u, t) {
+      const f = Math.round(lerp(CFG.followers[0], CFG.followers[1], easeOut((u - 0.9) / 1.4)));
+      const p = Math.round(lerp(CFG.population[0], CFG.population[1], easeOut((u - 2.6) / 1.0)));
+      let svg = sky(0) + clouds(t) + hills(1240) + ground(1240);
+      // signboard
+      const ks = pop(u, 0.2);
+      const bump = u > 2.6 && u < 3.8 ? 1 + 0.06 * Math.sin((u - 2.6) * 30) * (3.8 - u) : 1;
+      const board = R(-30, -330, 18, 330, '#8A5A3B', {studs: false}) + R(392, -330, 18, 330, '#8A5A3B', {studs: false}) +
+        R(-60, -360, 500, 40, '#A86B3C', {studs: false}) + R(0, -300, 380, 130, S.card, {studs: false}) +
+        `<text x="190" y="-218" text-anchor="middle" font-family="Noto Sans KR" font-weight="900" font-size="50" fill="${S.cardInk}">POPULASI: ${p}</text>`;
+      svg += g(350, 1250, ks, `<g transform="scale(${bump})">${board}</g>`);
+      svg += g(540, 1360, pop(u, 0.5) * 1.6, person(S.people[1], t, 'mayor', {mayor: true}));
+      svg += sparkles(t, 16, 540, 560, 260, CFG.scenes.find((s) => s.id === 'stats').start + 2.3);
+      const kc = pop(u, 0.3, 11, 170);
+      const html = `<div style="${cardCss()}left:130px;top:330px;width:820px;padding:28px 34px;transform:translateY(${(1 - kc) * -260}px) rotate(${(1 - kc) * -4}deg)">
+        <div style="text-align:center;font-weight:900;font-size:30px">${esc(CFG.handle)}</div>
+        <div style="display:flex;align-items:center;gap:34px;margin-top:18px">
+          <div style="width:120px;height:120px;border-radius:${S.radius ? '50%' : '0'};background:${S.people[1]};border:5px solid ${S.ink};flex:none;display:grid;place-items:center;font-size:56px;font-weight:900;color:#fff">${esc((CFG.mayor || 'M')[0])}</div>
+          ${[['1', 'postingan'], [String(f), 'pengikut'], ['0', 'mengikuti']].map(([n, l], i) => `<div style="flex:1;text-align:center"><div style="font-size:${i === 1 ? 64 : 52}px;font-weight:900;${i === 1 ? `color:${S.accent};transform:scale(${u > 0.9 && u < 2.4 ? 1.08 : 1})` : ''}">${n}</div><div style="font-size:22px;opacity:.7">${l}</div></div>`).join('')}
+        </div>
+        <div style="margin-top:14px;font-weight:900;font-size:26px">${esc(CFG.mayor)}</div><div style="font-size:22px;opacity:.75">${esc(CFG.bio)}</div></div>`;
+      return {svg, html};
+    },
+    crowd(u, t) {
+      let svg = sky(0) + clouds(t) + hills(900) + ground(900);
+      svg += g(540, 1040, 1, townHall(-210, 0, 420, t));
+      svg += g(540, 1110, 1, R(-50, -60, 100, 60, S.accent2, {studs: true}) + `<g transform="translate(0 -60)">${person(S.people[1], t, 'mayor', {mayor: true})}</g>`);
+      const rows = 5, cols = 9;
+      for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+        const i = r * cols + c;
+        const x = 100 + c * 110 + (r % 2) * 55 - 30, y = 1250 + r * 92;
+        const k = pop(u, 0.2 + r * 0.22 + random('d' + i) * 0.25, 10, 220);
+        if (k > 0.01) svg += g(x, y, k * (0.9 + r * 0.05), person(crowdColor(i), t, 'p' + i));
+      }
+      return {svg, html: ''};
+    },
+    comment(u, t) {
+      let svg = sky(0) + hills(760) + ground(760);
+      svg += g(540, 1000, 1.2, townHall(-210, 0, 420, t));
+      for (let r = 0; r < 4; r++) for (let c = 0; c < 7; c++) {
+        const i = r * 7 + c, x = 90 + c * 150 + (r % 2) * 75 - 40, y = 1180 + r * 120;
+        const me = i === 10;
+        const jump = me ? -Math.abs(Math.sin(u * 7)) * 50 * (u > 0.5 ? 1 : 0) : 0;
+        svg += g(x, y + jump, 1.25, person(me ? S.accent : crowdColor(i + 7), t, 'q' + i, me ? {tag: CFG.comment.user} : {}));
+      }
+      const typed = Math.floor(clamp((u - 0.5) / 1.3, 0, 1) * CFG.comment.text.length);
+      const kc = pop(u, 0.2, 11, 170), kh = pop(u, 2.2, 8, 260);
+      const likes = u > 2.2 ? CFG.comment.likes : 0;
+      const html = `<div style="${cardCss()}left:110px;top:400px;width:860px;padding:24px 30px;display:flex;gap:22px;align-items:center;transform:scale(${kc});transform-origin:50% 0">
+        <div style="width:78px;height:78px;border-radius:${S.radius ? '50%' : '0'};background:${S.accent};flex:none"></div>
+        <div style="flex:1;min-width:0"><div style="font-weight:900;font-size:26px">${esc(CFG.comment.user)} <span style="opacity:.5;font-weight:500;font-size:20px">1 mnt</span></div>
+        <div style="font-size:38px;font-weight:700;margin-top:4px">${esc(CFG.comment.text.slice(0, typed))}<span style="opacity:${typed < CFG.comment.text.length && Math.floor(u * 4) % 2 ? 1 : 0}">|</span></div>
+        <div style="font-size:20px;opacity:.5;margin-top:4px">Balas</div></div>
+        <div style="text-align:center;flex:none"><div style="font-size:46px;color:${likes ? hex(S.accent, -0.3) : '#555'};transform:scale(${1 + (kh > 0 ? 0.4 * Math.max(0, 1 - (u - 2.2) * 3) : 0)})">${likes ? '♥' : '♡'}</div><div style="font-size:20px;font-weight:700">${likes}</div></div></div>`;
+      return {svg, html};
+    },
+    build(u, t, sc) {
+      const night = 0;
+      let svg = sky(night) + clouds(t) + hills(700) + ground(700);
+      // road + plaza
+      const kr = easeOut((u - 0.2) / 0.6);
+      svg += R(80, 1200, 920 * kr, 110, S.road, {studs: false, flat: true, r: 0});
+      for (let x = 110; x < 80 + 920 * kr - 40; x += 90) svg += R(x, 1250, 50, 10, S.line, {studs: false, flat: true, r: 2});
+      svg += R(470, 1310, 140 * clamp((u - 0.5) / 0.4, 0, 1), 290, S.road, {studs: false, flat: true, r: 0});
+      const items = [
+        ['house', 110, 1180, 200, 0, 1.0], ['house', 380, 1180, 180, 1, 1.5], ['tree', 640, 1180, 1, 0, 1.9], ['house', 760, 1180, 220, 2, 2.3],
+        ['lamp', 330, 1330, 0, 0, 2.8], ['lamp', 760, 1330, 0, 0, 3.0], ['tree', 200, 1560, 1, 1, 3.3], ['house', 680, 1600, 230, 3, 3.7], ['tree', 940, 1560, 1, 2, 4.1],
+      ];
+      for (const [kind, x, y, w, i, at] of items) {
+        const k = pop(qt(u), at, 9, 220);
+        if (k <= 0.001) continue;
+        const inner = kind === 'house' ? house(0, 0, w, i) : kind === 'tree' ? tree(0, 0, 1, i) : lamp(0, 0);
+        const ox = kind === 'house' ? w / 2 : 0;
+        svg += g(x + ox, y, k, `<g transform="translate(${-ox} 0)">${inner}</g>`) + puff(x + ox, y, u, at);
+      }
+      // walkers
+      for (let i = 0; i < 4; i++) {
+        const x = ((u * (60 + i * 25) + i * 260) % 1100) - 40;
+        svg += g(x, 1290 + (i % 2) * 20, 0.75, person(crowdColor(i + 30), t, 'w' + i));
+      }
+      // HUD clock
+      const [h0, h1] = CFG.timelapse.map((s) => s.split(':').map(Number)).map(([h, m]) => h * 60 + m);
+      const mins = Math.round(lerp(h0, h1, clamp(u / sc.dur, 0, 1)));
+      const hh = String(Math.floor(mins / 60)).padStart(2, '0'), mm = String(mins % 60).padStart(2, '0');
+      const html = `<div style="position:absolute;left:${SAFE.l}px;top:${SAFE.t + 76}px;${cardCss()}padding:10px 20px;${CFG.style === 'pixel' ? '' : `background:${S.ink};color:#fff;`}">
+        <div style="font-size:52px;font-weight:900;line-height:1">${hh}:${mm}</div><div style="font-size:18px;font-weight:900;color:${S.accent2}">x24 TIME-LAPSE</div></div>`;
+      return {svg, html};
+    },
+    request(u, t) {
+      let svg = sky(0) + hills(860) + ground(860);
+      svg += g(540, 1200, 1.5, townHall(-210, 0, 420, t));
+      const tilt = u > 1.6 ? Math.sin((u - 1.6) * 3) * 8 : 0;
+      svg += g(540, 1500, 2.1, `<g transform="rotate(${tilt})">${person(S.people[1], t, 'mayor', {mayor: true})}</g>`);
+      for (let c = 0; c < 8; c++) svg += g(60 + c * 140, 1780, 1.6, person(crowdColor(c + 50), t, 'r' + c));
+      // thought bubble
+      const kb = pop(u, 1.6, 10, 200);
+      if (kb > 0.01) {
+        const b = circ(0, 0, 90, '#fff') + circ(-110, 110, 22, '#fff') + circ(-140, 150, 12, '#fff') +
+          `<text x="0" y="34" text-anchor="middle" font-family="Noto Sans KR" font-weight="900" font-size="110" fill="${S.ink}">${esc(CFG.request.think)}</text>`;
+        svg += g(760, 1000, kb, b);
+      }
+      const typed = Math.floor(clamp((u - 0.3) / 1.0, 0, 1) * CFG.request.text.length);
+      const kc = pop(u, 0.1, 11, 170);
+      const html = `<div style="${cardCss()}left:110px;top:360px;width:860px;padding:24px 30px;display:flex;gap:22px;align-items:center;transform:scale(${kc});transform-origin:50% 0">
+        <div style="width:78px;height:78px;border-radius:${S.radius ? '50%' : '0'};background:#BDBDBD;flex:none;display:grid;place-items:center;font-size:40px;font-weight:900;color:#fff">?</div>
+        <div><div style="font-weight:900;font-size:26px">${esc(CFG.request.user)} <span style="opacity:.5;font-weight:500;font-size:20px">1 mnt</span></div>
+        <div style="font-size:40px;font-weight:700;margin-top:4px">${esc(CFG.request.text.slice(0, typed))}</div></div></div>`;
+      return {svg, html};
+    },
+    cta(u, t) {
+      let svg = sky(0) + hills(900) + ground(900);
+      svg += g(540, 1180, 1.4, townHall(-210, 0, 420, t));
+      svg += g(540, 1450, 1.9, person(S.people[1], t, 'mayor', {mayor: true}));
+      const icons = ['↓', '↻', '✈'];
+      const html = CFG.cta.map((c, i) => {
+        const k = pop(qt(u), 0.2 + i * 0.5, 10, 210);
+        return `<div style="position:absolute;left:0;right:0;top:${360 + i * 118}px;display:flex;justify-content:center"><div style="${cardCss()}position:relative;padding:14px 34px;font-weight:900;font-size:40px;background:${[S.accent2, '#DDF0FF', '#EADCFF'][i % 3]};transform:scale(${k});max-width:${SAFE.r - SAFE.l}px">${icons[i % 3]}&nbsp; ${esc(c)}</div></div>`;
+      }).join('');
+      return {svg, html};
+    },
+    outro(u, t) {
+      const n = clamp(u / 1.2, 0, 1);
+      let svg = sky(n) + clouds(t, n);
+      for (let i = 0; i < 40; i++) {
+        const tw = 0.5 + 0.5 * Math.sin(t * 3 + i);
+        svg += CFG.style === 'pixel' ? `<rect x="${sn(random('s' + i) * W)}" y="${sn(random('t' + i) * 800 + 200)}" width="12" height="12" fill="#fff" opacity="${n * tw}"/>` : `<circle cx="${random('s' + i) * W}" cy="${random('t' + i) * 800 + 200}" r="${2 + random('r' + i) * 3}" fill="#fff" opacity="${n * tw}"/>`;
+      }
+      svg += hills(1100) + ground(1100);
+      svg += `<rect width="${W}" height="${H}" fill="${S.night[0]}" opacity="${n * 0.35}"/>`;
+      svg += g(540, 1240, 1, townHall(-200, 0, 400, t, n));
+      svg += house(80, 1250, 200, 1, n) + house(800, 1250, 200, 2, n) + lamp(330, 1300, n) + lamp(750, 1300, n);
+      const ks = pop(u, 1.0, 10, 190);
+      const html = `<div style="position:absolute;left:0;right:0;top:620px;display:flex;justify-content:center"><div style="${cardCss()}position:relative;padding:22px 44px;font-weight:900;font-size:66px;transform:scale(${ks})">POPULASI: ${esc(CFG.population[1])} → ?</div></div>`;
+      return {svg, html};
+    },
+  };
+
+  // ---------------- transitions between scenes (0.5 s, centred on the cut) ----------------
+  const wipe = (k, seed) => {
+    if (k <= 0 || k >= 1) return '';
+    const c = Math.sin(k * Math.PI); // 0 -> 1 -> 0
+    if (S.wipe === 'blocks') {
+      let s = '';
+      for (let y = 0; y < H; y += 120) for (let x = 0; x < W; x += 120) if (random(seed + x + 'x' + y) < c) s += `<rect x="${x}" y="${y}" width="120" height="120" fill="${S.ink}"/>`;
+      return s;
+    }
+    if (S.wipe === 'bricks') {
+      let s = '';
+      for (let r = 0; r < 16; r++) {
+        const fall = clamp(c * 1.6 - r * 0.04, 0, 1);
+        for (let x = (r % 2) * -60; x < W; x += 120) s += `<rect x="${x + 2}" y="${-130 + (r * 120 + 130) * fall}" width="116" height="116" rx="8" fill="${S.roofs[(r + x / 120) & 3]}" stroke="${S.ink}" stroke-width="3" opacity="${fall > 0 ? 1 : 0}"/>`;
+      }
+      return s;
+    }
+    if (S.wipe === 'iris') return `<path d="M0 0H${W}V${H}H0Z M540 960 m-${(1 - c) * 1200} 0 a${(1 - c) * 1200} ${(1 - c) * 1200} 0 1 0 ${(1 - c) * 2400} 0 a${(1 - c) * 1200} ${(1 - c) * 1200} 0 1 0 -${(1 - c) * 2400} 0" fill="${S.ink}" fill-rule="evenodd"/>`;
+    if (S.wipe === 'tear') return `<path d="M${-200 + k * 1600 - 600} -50 L${-200 + k * 1600} -50 ${Array.from({length: 20}, (_, i) => `L${-200 + k * 1600 - 300 + (i % 2) * 60} ${i * 105}`).join(' ')} L${-200 + k * 1600 - 900} ${H + 50}Z" fill="${S.card}"/>`;
+    // speed lines (anime)
+    let s = `<rect width="${W}" height="${H}" fill="#fff" opacity="${c * 0.85}"/>`;
+    for (let i = 0; i < 26; i++) {
+      const y = random(seed + 'l' + i) * H, len = 300 + random(seed + 'm' + i) * 700, x = lerp(-len, W + len, k) + (random(seed + 'n' + i) - 0.5) * 600;
+      s += `<rect x="${x - len}" y="${y}" width="${len}" height="${4 + random(seed + i) * 10}" fill="${S.ink}" opacity="${c}"/>`;
+    }
+    return s;
+  };
+
+  // ---------------- frame ----------------
+  const root = document.querySelector('[data-composition-id="video"]:not([data-composition-src])');
+  const out = document.createElement('div');
+  out.style.cssText = 'position:absolute;inset:0;overflow:hidden';
+  root.appendChild(out);
+  const draw = (t) => {
+    const sc = CFG.scenes.find((s) => t >= s.start && t < s.start + s.dur) || CFG.scenes[CFG.scenes.length - 1];
+    const fn = SCENES[sc.id] || SCENES.intro;
+    const {svg, html} = fn(qt(t - sc.start), t, sc);
+    // transition around every cut
+    let tr = '';
+    for (const s of CFG.scenes) if (s.start > 0 && Math.abs(t - s.start) < 0.25) tr = wipe((t - s.start + 0.25) / 0.5, s.id);
+    const grain = `<div style="position:absolute;inset:0;opacity:${CFG.style === 'paper' ? 0.1 : 0.05};background-image:url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='.9' seed='${Math.floor(t * 12) % 8}'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>&quot;);pointer-events:none"></div>`;
+    out.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" style="position:absolute;inset:0" ${CFG.style === 'pixel' ? 'shape-rendering="crispEdges"' : ''}>${svg}</svg>` +
+      `<div style="position:absolute;inset:0">${html}${sc.id === 'intro' ? '' : dayBadge()}${caption(t)}</div>` +
+      `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" style="position:absolute;inset:0">${tr}</svg>` + grain;
+  };
+  const dur = CFG.scenes.reduce((m, s) => Math.max(m, s.start + s.dur), 0);
+  const tl = window.gsap.timeline({paused: true});
+  const st = {t: 0};
+  let last = -1;
+  tl.to(st, {t: dur, duration: dur, ease: 'none', onUpdate: () => {
+    const f = Math.round(st.t * 30);
+    if (f !== last) { last = f; draw(st.t); }
+  }}, 0);
+  draw(0);
+  window.__timelines = window.__timelines || {};
+  window.__timelines.video = tl;
+})();
+
+  </script>
+</template>

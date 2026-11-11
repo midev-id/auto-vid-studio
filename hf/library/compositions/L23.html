@@ -1,0 +1,86 @@
+<!-- L23 Parallax / 2.5D (3D): Lapisan bukit beda kecepatan, judul di antara lapisan, kabut & bulan.
+     Palette #0B132B #5B6C8F #8EC5FF - best for cerita, travel, intro.
+     Ported from src/library/scenes/scenes3.tsx (Parallax). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0B132B; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L23" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes3.tsx
+      var t = (f) => f / FPS;
+      var ridge = (base, amp, seed, w = 3200) => {
+        let d = `M 0 1080 L 0 ${base}`;
+        for (let x = 0; x <= w; x += 160) d += ` L ${x} ${base - amp * rnd(`${seed}${x}`)}`;
+        return d + ` L ${w} 1080 Z`;
+      };
+      var Parallax = ({ f }) => {
+        const tt = t(f);
+        const cam = tt * 260;
+        const push = 1 + tt * 0.03;
+        const layers = [
+          { d: ridge(560, 220, "pa"), c: "#3A506B", k: 0.15 },
+          { d: ridge(660, 200, "pb"), c: "#2C3E5A", k: 0.35 },
+          { d: ridge(770, 180, "pc"), c: "#1F2D47", k: 0.6 },
+          { d: ridge(880, 150, "pd"), c: "#141E33", k: 1 }
+        ];
+        const title = sp(f, 0.2, 14, 120, 0.8);
+        return __h(Full, { bg: "linear-gradient(#0B132B 0%, #1C2541 55%, #5B6C8F 100%)" }, __h("div", { style: { position: "absolute", inset: 0, transform: `scale(${push})` } }, Array.from({ length: 70 }, (_, i) => __h(
+          "div",
+          {
+            key: i,
+            style: {
+              position: "absolute",
+              left: rnd(`sx${i}`) * 1920 - cam * 0.03,
+              top: rnd(`sy${i}`) * 520,
+              width: 3,
+              height: 3,
+              borderRadius: 9,
+              background: "#FFFFFF",
+              opacity: 0.4 + 0.6 * Math.abs(Math.sin(tt * 3 + i))
+            }
+          }
+        )), __h("div", { style: { position: "absolute", left: 1300 - cam * 0.06, top: 140, width: 170, height: 170, borderRadius: 999, background: "radial-gradient(circle at 40% 40%, #FFFFFF, #DCE6FF 60%, #AFC2EE)", boxShadow: "0 0 80px #DCE6FF88" } }), __h("svg", { width: 1920, height: 1080, style: { position: "absolute" } }, __h("path", { d: layers[0].d, fill: layers[0].c, transform: `translate(${-cam * layers[0].k} 0)` }), __h("path", { d: layers[1].d, fill: layers[1].c, transform: `translate(${-cam * layers[1].k} 0)` })), __h("div", { style: { position: "absolute", left: 0, right: 0, top: 330 + (1 - title) * 300, textAlign: "center", fontSize: 280, fontWeight: 900, letterSpacing: 30, color: "#E8EEFF", transform: `translateX(${-cam * 0.45}px)`, textShadow: "0 0 40px #8EC5FF66" } }, "DEPTH"), __h("svg", { width: 1920, height: 1080, style: { position: "absolute" } }, __h("path", { d: layers[2].d, fill: layers[2].c, transform: `translate(${-cam * layers[2].k} 0)` }), __h("rect", { x: 0, y: 700, width: 1920, height: 200, fill: "url(#fog)" }), __h("defs", null, __h("linearGradient", { id: "fog", x1: "0", x2: "0", y1: "0", y2: "1" }, __h("stop", { offset: "0%", stopColor: "#8EA4CC", stopOpacity: 0 }), __h("stop", { offset: "60%", stopColor: "#8EA4CC", stopOpacity: 0.35 }), __h("stop", { offset: "100%", stopColor: "#8EA4CC", stopOpacity: 0 }))), __h("path", { d: layers[3].d, fill: layers[3].c, transform: `translate(${-cam * layers[3].k} 0)` })), Array.from({ length: 6 }, (_, i) => __h("div", { key: i, style: { position: "absolute", left: ((i * 420 - cam * 1.8) % 2400 + 2400) % 2400 - 240, top: 820, width: 26, height: 260, background: "#0A0F1E" } }, __h("div", { style: { position: "absolute", left: -70, top: -150, width: 0, height: 0, borderLeft: "83px solid transparent", borderRight: "83px solid transparent", borderBottom: "220px solid #0A0F1E" } })))));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Parallax;
+    })();
+    (function () {
+      const V = {"s":0.62,"dy":625};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L23', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

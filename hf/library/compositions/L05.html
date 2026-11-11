@@ -1,0 +1,111 @@
+<!-- L05 Comic / Pop Art (Bold): Sinar cepat, halftone, ledakan POW!, guncangan impact.
+     Palette #FFE14D #FF2D55 #111111 - best for promo, hook, fun.
+     Ported from src/library/scenes/scenes1.tsx (Comic). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #FFE14D; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L05" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes1.tsx
+      var t = (f) => f / FPS;
+      var C30 = Math.cos(Math.PI / 6);
+      var burstPts = (n, r1, r2) => Array.from({ length: n * 2 }, (_, i) => {
+        const r = i % 2 ? r2 : r1 * (0.85 + rnd(`bp${i}`) * 0.3);
+        const a = i / (n * 2) * Math.PI * 2;
+        return `${Math.cos(a) * r},${Math.sin(a) * r}`;
+      }).join(" ");
+      var Comic = ({ f }) => {
+        const p = sp(f, 0.15, 8, 200, 0.6);
+        const hit = Math.max(0, 1 - Math.abs(t(f) - 0.3) / 0.2);
+        const shake = hit * 18;
+        const sx = (rnd(`cs${f}`) - 0.5) * shake;
+        const sy = (rnd(`cy${f}`) - 0.5) * shake;
+        const bubbles = [
+          { w: "WHAM!", x: 260, y: 170, a: 0.85, r: -10, c: "#00C2FF" },
+          { w: "ZAP!", x: 1440, y: 700, a: 1.25, r: 8, c: "#FF7A00" }
+        ];
+        const fi = useFrameInset();
+        return __h(Full, { bg: "#FFE14D" }, __h("div", { style: { position: "absolute", inset: Math.min(-400, fi.top - 200), background: "repeating-conic-gradient(from 0deg at 50% 50%, #FFF3A8 0deg 6deg, transparent 6deg 14deg)", transform: `rotate(${t(f) * 8}deg)` } }), __h("div", { style: { position: "absolute", ...fi, backgroundImage: "radial-gradient(#E9A900 32%, transparent 34%)", backgroundSize: "26px 26px", opacity: 0.55 } }), __h("div", { style: { position: "absolute", inset: 0, transform: `translate(${sx}px, ${sy}px)` } }, __h("svg", { width: 1920, height: 1080, style: { position: "absolute" } }, __h("g", { transform: `translate(960 540) scale(${p}) rotate(${(1 - p) * -40})` }, __h("polygon", { points: burstPts(14, 470, 300), fill: "#111", transform: "translate(18 18)" }), __h("polygon", { points: burstPts(14, 470, 300), fill: "#FF2D55", stroke: "#111", strokeWidth: 12, strokeLinejoin: "round" }), __h("polygon", { points: burstPts(14, 330, 230), fill: "#FFFFFF", opacity: 0.25 }))), __h("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" } }, __h(
+          "div",
+          {
+            style: {
+              fontSize: 260,
+              fontWeight: 900,
+              color: "#FFFFFF",
+              WebkitTextStroke: "12px #111",
+              paintOrder: "stroke fill",
+              textShadow: "14px 14px 0 #111",
+              transform: `scale(${sp(f, 0.25, 7, 260, 0.5)}) rotate(-6deg)`,
+              letterSpacing: -6
+            }
+          },
+          "POW!"
+        )), bubbles.map((b, i) => {
+          const q = sp(f, b.a, 9, 240, 0.5);
+          return __h(
+            "div",
+            {
+              key: i,
+              style: {
+                position: "absolute",
+                left: b.x,
+                top: b.y,
+                padding: "18px 40px",
+                background: "#FFFFFF",
+                border: "8px solid #111",
+                borderRadius: 60,
+                boxShadow: `10px 10px 0 #111`,
+                fontSize: 80,
+                fontWeight: 900,
+                color: b.c,
+                WebkitTextStroke: "3px #111",
+                transform: `scale(${q}) rotate(${b.r}deg)`
+              }
+            },
+            b.w
+          );
+        })));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Comic;
+    })();
+    (function () {
+      const V = {"s":0.95,"bleed":false};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L05', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

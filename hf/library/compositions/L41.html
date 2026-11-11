@@ -1,0 +1,68 @@
+<!-- L41 Constellation (Abstract): Titik bintang tersambung jadi jaringan.
+     Palette #070B1F #7EA8FF #FFFFFF - best for abstract.
+     Ported from src/library/scenes/scenes6.tsx (Constellation). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #070B1F; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L41" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes6.tsx
+      var t = (f) => f / FPS;
+      var C = { position: "absolute", display: "flex", alignItems: "center", justifyContent: "center" };
+      var PTS = Array.from({ length: 22 }).map((_, i) => ({ x: 340 + rnd(`px${i}`) * 1240, y: 140 + rnd(`py${i}`) * 800 }));
+      var Constellation = ({ f }) => {
+        const tt = t(f);
+        const edges = [];
+        PTS.forEach((a, i) => PTS.forEach((b, j) => {
+          if (j > i && Math.hypot(a.x - b.x, a.y - b.y) < 330) edges.push([i, j]);
+        }));
+        return __h(Full, { bg: "#070B1F" }, __h("div", { style: { position: "absolute", inset: 0, background: "radial-gradient(ellipse at 50% 40%, #1E2A6B, transparent 70%)" } }), __h("svg", { width: 1920, height: 1080, style: { position: "absolute" } }, edges.map(([i, j], k) => {
+          const p = ramp(f, 0.3 + k * 0.012, 0.7 + k * 0.012, OUT);
+          const a = PTS[i];
+          const b = PTS[j];
+          return __h("line", { key: k, x1: a.x, y1: a.y, x2: mix(a.x, b.x, p), y2: mix(a.y, b.y, p), stroke: "#7EA8FF", strokeOpacity: 0.45, strokeWidth: 2 });
+        }), PTS.map((p, i) => __h("circle", { key: i, cx: p.x + Math.sin(tt + i) * 4, cy: p.y + Math.cos(tt + i) * 4, r: 6 * sp(f, 0.05 + i * 0.02, 10, 220), fill: "#fff", style: { filter: "drop-shadow(0 0 6px #9DBBFF)" } }))), __h("div", { style: { ...C, left: 0, right: 0, top: 440, fontSize: 150, fontWeight: 900, letterSpacing: 12, color: "#fff", textShadow: "0 0 30px #5B7CFF", opacity: ramp(f, 1.1, 1.5) } }, "CONNECTED"));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Constellation;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L41', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

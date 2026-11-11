@@ -1,0 +1,114 @@
+<!-- L04 Doodle / Hand-drawn (Handmade): Buku bergaris, garis pensil tergambar sendiri, stabilo kuning.
+     Palette #FFFCF2 #1E1E24 #FFD24A #FF5A36 - best for tutorial, edukasi, tips.
+     Ported from src/library/scenes/scenes1.tsx (Doodle). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #FFFCF2; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L04" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes1.tsx
+      var C30 = Math.cos(Math.PI / 6);
+      var DOODLES = [
+        { d: "M 640 560 C 595 520 585 470 598 428 C 616 362 690 334 742 346 C 800 360 832 420 816 476 C 806 516 774 536 766 560 Z", a: 0.05, b: 0.6 },
+        { d: "M 645 590 L 762 590 M 652 622 L 756 622 M 672 652 L 736 652", a: 0.5, b: 0.8 },
+        { d: "M 670 545 L 686 470 L 705 505 L 722 466 L 736 545", a: 0.55, b: 0.9 },
+        { d: "M 705 290 L 708 230 M 590 330 L 550 290 M 830 330 L 870 290 M 545 440 L 490 440 M 870 440 L 925 440", a: 0.85, b: 1.15 },
+        { d: "M 950 450 C 1010 380 1080 370 1140 420 M 1108 392 L 1144 424 L 1100 440", a: 0.95, b: 1.3 },
+        { d: "M 1560 230 l 20 45 l 48 4 l -37 31 l 12 47 l -43 -26 l -43 26 l 12 -47 l -37 -31 l 48 -4 z", a: 1.3, b: 1.7 },
+        { d: "M 1180 650 C 1300 625 1440 668 1610 632", a: 1.45, b: 1.75 }
+      ];
+      var Doodle = ({ f }) => {
+        const b = step(f, 8);
+        const jx = (rnd(`dx${b}`) - 0.5) * 4;
+        const jy = (rnd(`dy${b}`) - 0.5) * 4;
+        const jr = (rnd(`dr${b}`) - 0.5) * 1.2;
+        const letters = "BIG IDEA!".split("");
+        return __h(Full, { bg: "#FFFCF2", style: { backgroundImage: "repeating-linear-gradient(0deg, transparent 0 58px, #DCE6F5 58px 61px)" } }, __h("div", { style: { position: "absolute", left: 150, top: 0, bottom: 0, width: 4, background: "#F3B4B4" } }), __h("svg", { width: 1920, height: 1080, style: { position: "absolute" } }, __h(
+          "path",
+          {
+            d: "M 1170 600 L 1240 470 L 1300 600 L 1360 470 L 1420 600 L 1480 470 L 1540 600 L 1600 470",
+            stroke: "#FFD24A",
+            strokeWidth: 70,
+            fill: "none",
+            strokeLinejoin: "round",
+            opacity: 0.75,
+            pathLength: 1,
+            strokeDasharray: 1,
+            strokeDashoffset: 1 - ramp(f, 1.1, 1.5)
+          }
+        ), __h("g", { transform: `translate(${jx} ${jy}) rotate(${jr} 960 540)` }, __h("path", { d: DOODLES[0].d, fill: "#FFE27A", opacity: ramp(f, 0.6, 0.9) }), DOODLES.map((d, i) => __h(
+          "path",
+          {
+            key: i,
+            d: d.d,
+            fill: "none",
+            stroke: "#1E1E24",
+            strokeWidth: 8,
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            pathLength: 1,
+            strokeDasharray: 1,
+            strokeDashoffset: 1 - ramp(f, d.a, d.b, Easing.bezier(0.4, 0, 0.2, 1))
+          }
+        )))), __h("div", { style: { position: "absolute", left: 1180, top: 440, transform: `rotate(${-5 + jr}deg)`, display: "flex" } }, letters.map((c, i) => {
+          const p = sp(f, 1.05 + i * 0.05, 9, 220, 0.5);
+          return __h(
+            "span",
+            {
+              key: i,
+              style: {
+                display: "inline-block",
+                fontSize: 128,
+                fontWeight: 900,
+                color: "#1E1E24",
+                transform: `scale(${p}) rotate(${(rnd(`dl${i}${b}`) - 0.5) * 8}deg)`,
+                width: c === " " ? 40 : void 0
+              }
+            },
+            c
+          );
+        })));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Doodle;
+    })();
+    (function () {
+      const V = {"s":0.78};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L04', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

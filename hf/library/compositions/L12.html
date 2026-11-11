@@ -1,0 +1,104 @@
+<!-- L12 2D Character (Character): Karakter jalan, berhenti, melambai, berkedip, balon kata.
+     Palette #8ECAE6 #FB8500 #023047 - best for cerita, explainer, maskot.
+     Ported from src/library/scenes/scenes2.tsx (Character). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #8ECAE6; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L12" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes2.tsx
+      var t = (f) => f / FPS;
+      var Character = ({ f }) => {
+        const tt = t(f);
+        const walkEnd = 1.3;
+        const walking = tt < walkEnd;
+        const cx = mix(250, 860, ramp(f, 0, walkEnd, Easing.bezier(0.3, 0, 0.6, 1)));
+        const ph = tt * 10;
+        const amp = walking ? 1 : Math.max(0, 1 - (tt - walkEnd) * 6);
+        const leg = Math.sin(ph) * 28 * amp;
+        const arm = Math.sin(ph) * 30 * amp;
+        const bob = Math.abs(Math.sin(ph)) * 10 * amp;
+        const wave = tt > walkEnd ? Math.sin((tt - walkEnd) * 16) * 22 : 0;
+        const waveUp = sp(f, walkEnd, 12, 180, 0.6);
+        const blink = Math.floor(tt * 60) % 100 > 94 || tt > 1.9 && tt < 1.96 ? 0.1 : 1;
+        const ground = 860;
+        const skin = "#FFD6A5";
+        const limb = { position: "absolute", width: 30, height: 120, borderRadius: 20, transformOrigin: "50% 12px" };
+        const bubble = sp(f, 1.45, 10, 200, 0.6);
+        return __h(Full, { bg: "linear-gradient(#8ECAE6 0%, #CDEBF6 70%)" }, [0, 1, 2].map((i) => __h("div", { key: i, style: { position: "absolute", left: 200 + i * 600 - tt * 30, top: 140 + i * 50, width: 220, height: 70, borderRadius: 99, background: "#FFFFFF", opacity: 0.9 } })), [0, 1, 2, 3, 4].map((i) => __h("div", { key: i, style: { position: "absolute", left: 100 + i * 420 - tt * 80, top: ground - 260 } }, __h("div", { style: { width: 160, height: 160, borderRadius: 99, background: "#52B788" } }), __h("div", { style: { width: 26, height: 110, margin: "-10px auto 0", background: "#8D5B3E", borderRadius: 6 } }))), __h("div", { style: { position: "absolute", left: 0, right: 0, top: ground, bottom: 0, background: "#95D5B2" } }), __h("div", { style: { position: "absolute", left: 0, right: 0, top: ground, height: 16, background: "#74C69D" } }), __h("div", { style: { position: "absolute", left: cx - 90, top: ground - 16, width: 180, height: 32, borderRadius: "50%", background: "#00000026" } }), __h("div", { style: { position: "absolute", left: cx, top: ground - 380 - bob } }, __h("div", { style: { ...limb, left: -6, top: 230, height: 150, background: "#023047", transform: `rotate(${-leg}deg)` } }), __h("div", { style: { ...limb, left: -60, top: 120, height: 110, background: "#E76F00", transform: `rotate(${-arm}deg)` } }), __h("div", { style: { position: "absolute", left: -70, top: 100, width: 140, height: 160, borderRadius: "50px 50px 30px 30px", background: "#FB8500" } }), __h("div", { style: { ...limb, left: -24, top: 230, height: 150, background: "#03405F", transform: `rotate(${leg}deg)` } }), __h(
+          "div",
+          {
+            style: {
+              ...limb,
+              left: 40,
+              top: 120,
+              height: 110,
+              background: "#FFA62B",
+              transform: `rotate(${walking ? arm : mix(arm, -150 + wave, waveUp)}deg)`
+            }
+          },
+          __h("div", { style: { position: "absolute", bottom: -14, left: -4, width: 38, height: 38, borderRadius: 99, background: skin } })
+        ), __h("div", { style: { position: "absolute", left: -75, top: -40, width: 150, height: 150, borderRadius: 99, background: skin } }, __h("div", { style: { position: "absolute", left: -6, top: -12, width: 162, height: 80, borderRadius: "80px 80px 20px 40px", background: "#3D2C2E" } }), [42, 96].map((x) => __h("div", { key: x, style: { position: "absolute", left: x, top: 72, width: 16, height: 22, borderRadius: 99, background: "#1D1D1D", transform: `scaleY(${blink})` } })), __h("div", { style: { position: "absolute", left: 58, top: 108, width: 40, height: 16, borderRadius: "0 0 40px 40px", background: "#C1121F" } }), __h("div", { style: { position: "absolute", left: 22, top: 100, width: 22, height: 12, borderRadius: 99, background: "#FF8FA3", opacity: 0.7 } }), __h("div", { style: { position: "absolute", left: 110, top: 100, width: 22, height: 12, borderRadius: 99, background: "#FF8FA3", opacity: 0.7 } }))), __h(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              left: cx + 120,
+              top: ground - 560,
+              padding: "22px 40px",
+              background: "#FFFFFF",
+              borderRadius: 40,
+              fontSize: 60,
+              fontWeight: 900,
+              color: "#023047",
+              boxShadow: "0 16px 0 #00000018",
+              transform: `scale(${bubble})`,
+              transformOrigin: "left bottom"
+            }
+          },
+          "HI THERE!"
+        ));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Character;
+    })();
+    (function () {
+      const V = {"s":1};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L12', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

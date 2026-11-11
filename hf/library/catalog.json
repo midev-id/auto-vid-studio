@@ -1,0 +1,2160 @@
+[
+ {
+  "id": "L01",
+  "slug": "minimalist",
+  "component": "Minimalist",
+  "name": "Minimalist",
+  "category": "Clean",
+  "desc": "Lingkaran digambar, morph ke kotak, titik koral memantul. Banyak ruang kosong.",
+  "palette": [
+   "#F4F2EE",
+   "#111111",
+   "#E8553D"
+  ],
+  "bestFor": [
+   "brand",
+   "quote",
+   "intro"
+  ],
+  "v": {
+   "s": 1.25
+  },
+  "file": "compositions/L01.html",
+  "sound": {
+   "label": "MINIMALIST MOTION GRAPHICS",
+   "accent": "#F4F2EE",
+   "tin": "left",
+   "whoosh": "Swishes/Sharp swoosh.wav",
+   "fx": [
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 0.78
+    },
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 1.28,
+     "vol": 0.18
+    }
+   ]
+  }
+ },
+ {
+  "id": "L02",
+  "slug": "kinetic",
+  "component": "Kinetic",
+  "name": "Kinetic Typography",
+  "category": "Type",
+  "desc": "Kata per kata dihantam, geser, putar di latar hitam/kuning.",
+  "palette": [
+   "#0E0E10",
+   "#FFE600",
+   "#FF3B6B"
+  ],
+  "bestFor": [
+   "hook",
+   "voice-over",
+   "quote"
+  ],
+  "v": {
+   "s": 1.3
+  },
+  "file": "compositions/L02.html",
+  "sound": {
+   "label": "KINETIC TYPOGRAPHY",
+   "accent": "#FFE600",
+   "tin": "zoom",
+   "whoosh": "Subdrop Low+Hi/SD_Low+Hi_01.wav",
+   "fx": [
+    {
+     "src": "alexis_gaming_cam-ks-motion-metal-hit-351564.mp3",
+     "at": 0.08,
+     "vol": 0.18,
+     "dur": 0.6
+    },
+    {
+     "src": "Buttons/Button_05.wav",
+     "at": 0.42
+    },
+    {
+     "src": "mix/finger-snap-reverb-423222.mp3",
+     "at": 0.78
+    },
+    {
+     "src": "mix/clap-10-36723.mp3",
+     "at": 1.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L03",
+  "slug": "isometric",
+  "component": "Isometric",
+  "name": "Isometric",
+  "category": "3D",
+  "desc": "Kubus isometrik tumbuh bertahap, pin peta memantul.",
+  "palette": [
+   "#EEF2FF",
+   "#C8D3FF",
+   "#5B6CFF",
+   "#FFB547"
+  ],
+  "bestFor": [
+   "tech",
+   "proses",
+   "data"
+  ],
+  "v": {
+   "s": 1.25
+  },
+  "file": "compositions/L03.html",
+  "sound": {
+   "label": "ISOMETRIC MOTION GRAPHICS",
+   "accent": "#7D93FF",
+   "tin": "up",
+   "whoosh": "Swishes/Low fly.wav",
+   "fx": [
+    {
+     "src": "mix/multi-pop-6-188170.mp3",
+     "at": 0.15,
+     "vol": 0.2
+    },
+    {
+     "src": "Buttons/Button_07.wav",
+     "at": 1.22
+    }
+   ]
+  }
+ },
+ {
+  "id": "L04",
+  "slug": "doodle",
+  "component": "Doodle",
+  "name": "Doodle / Hand-drawn",
+  "category": "Handmade",
+  "desc": "Buku bergaris, garis pensil tergambar sendiri, stabilo kuning.",
+  "palette": [
+   "#FFFCF2",
+   "#1E1E24",
+   "#FFD24A",
+   "#FF5A36"
+  ],
+  "bestFor": [
+   "tutorial",
+   "edukasi",
+   "tips"
+  ],
+  "v": {
+   "s": 0.78
+  },
+  "file": "compositions/L04.html",
+  "sound": {
+   "label": "DOODLE / HAND-DRAWN ANIMATION",
+   "accent": "#FF5A36",
+   "tin": "right",
+   "whoosh": "Swishes/Fast swish.wav",
+   "fx": [
+    {
+     "src": "mix/giridharani-knife-drag-on-wood-soft-scrape-asmr-428875.mp3",
+     "at": 0.05,
+     "vol": 0.25,
+     "dur": 1.7
+    },
+    {
+     "src": "mix/snaping-42970.mp3",
+     "at": 1.05,
+     "vol": 0.2
+    }
+   ]
+  }
+ },
+ {
+  "id": "L05",
+  "slug": "comic",
+  "component": "Comic",
+  "name": "Comic / Pop Art",
+  "category": "Bold",
+  "desc": "Sinar cepat, halftone, ledakan POW!, guncangan impact.",
+  "palette": [
+   "#FFE14D",
+   "#FF2D55",
+   "#111111"
+  ],
+  "bestFor": [
+   "promo",
+   "hook",
+   "fun"
+  ],
+  "v": {
+   "s": 0.95,
+   "bleed": false
+  },
+  "file": "compositions/L05.html",
+  "sound": {
+   "label": "COMIC / POP ART MOTION GRAPHICS",
+   "accent": "#FF2D55",
+   "tin": "spin",
+   "whoosh": "Swishes/Woosh rattle.wav",
+   "fx": [
+    {
+     "src": "Subdrop Low/SD_Low_02.wav",
+     "at": 0.25,
+     "vol": 0.3
+    },
+    {
+     "src": "mix/ui-pop-up-15-197897.mp3",
+     "at": 0.85
+    },
+    {
+     "src": "Buttons/Button_09.wav",
+     "at": 1.25
+    }
+   ]
+  }
+ },
+ {
+  "id": "L06",
+  "slug": "cgi",
+  "component": "CGI",
+  "name": "3D / CGI",
+  "category": "3D",
+  "desc": "Kubus 3D jatuh, lantai grid perspektif, bola mengorbit.",
+  "palette": [
+   "#33276E",
+   "#06050D",
+   "#7C5CFF",
+   "#E33DC8"
+  ],
+  "bestFor": [
+   "tech",
+   "produk",
+   "launch"
+  ],
+  "v": {
+   "s": 1.35
+  },
+  "file": "compositions/L06.html",
+  "sound": {
+   "label": "3D / CGI MOTION GRAPHICS",
+   "accent": "#9B82FF",
+   "tin": "zoom",
+   "whoosh": "Swishes/Reverse riser 01.wav",
+   "fx": [
+    {
+     "src": "Subdrop Low/SD_Low_06.wav",
+     "at": 0.35,
+     "vol": 0.3
+    },
+    {
+     "src": "mix/liecio-magic-sparkle-190030.mp3",
+     "at": 0.6,
+     "vol": 0.15,
+     "dur": 1.4
+    }
+   ]
+  }
+ },
+ {
+  "id": "L07",
+  "slug": "swiss",
+  "component": "Swiss",
+  "name": "Swiss / Editorial",
+  "category": "Clean",
+  "desc": "Grid 12 kolom, judul raksasa naik, lingkaran merah, kolom caption.",
+  "palette": [
+   "#F2F0EA",
+   "#111111",
+   "#E30613"
+  ],
+  "bestFor": [
+   "editorial",
+   "brand",
+   "berita"
+  ],
+  "v": {
+   "s": 0.6
+  },
+  "file": "compositions/L07.html",
+  "sound": {
+   "label": "SWISS / EDITORIAL MOTION DESIGN",
+   "accent": "#E30613",
+   "tin": "left",
+   "whoosh": "Swishes/High fast swoosh.wav",
+   "fx": [
+    {
+     "src": "Buttons/Button_03.wav",
+     "at": 0.25
+    },
+    {
+     "src": "mix/freesound_community-object-slide-on-table-65701.mp3",
+     "at": 0.45,
+     "vol": 0.2,
+     "dur": 0.6
+    },
+    {
+     "src": "mix/lamp-click_on_off-104823.mp3",
+     "at": 0.72,
+     "vol": 0.2,
+     "dur": 0.4
+    }
+   ]
+  }
+ },
+ {
+  "id": "L08",
+  "slug": "glitch",
+  "component": "Glitch",
+  "name": "Glitch",
+  "category": "Digital",
+  "desc": "RGB split, irisan offset, scanline, teks SIGNAL LOST diketik.",
+  "palette": [
+   "#050507",
+   "#00FFE0",
+   "#FF1F6E"
+  ],
+  "bestFor": [
+   "hook",
+   "tech",
+   "gaming"
+  ],
+  "v": {
+   "s": 0.62
+  },
+  "file": "compositions/L08.html",
+  "sound": {
+   "label": "GLITCH / DIGITAL DISTORTION",
+   "accent": "#00FFE0",
+   "tin": "down",
+   "whoosh": "Glitch transition sounds/T3.wav",
+   "fx": [
+    {
+     "src": "Glitch transition sounds/T1.wav",
+     "at": 0.12,
+     "vol": 0.2
+    },
+    {
+     "src": "typing-sound-efffect.mp3",
+     "at": 0.5,
+     "vol": 0.18,
+     "dur": 0.75
+    },
+    {
+     "src": "Glitch transition sounds/T5.wav",
+     "at": 0.9,
+     "vol": 0.2
+    },
+    {
+     "src": "Glitch transition sounds/T9.wav",
+     "at": 1.5,
+     "vol": 0.2
+    }
+   ]
+  }
+ },
+ {
+  "id": "L09",
+  "slug": "memphis",
+  "component": "Memphis",
+  "name": "Memphis / Geometric",
+  "category": "Bold",
+  "desc": "Bentuk outline bayangan keras, squiggle, confetti, judul bertumpuk.",
+  "palette": [
+   "#FFF4E0",
+   "#FF6FB5",
+   "#2EC4B6",
+   "#FFC300",
+   "#6C63FF"
+  ],
+  "bestFor": [
+   "fun",
+   "promo",
+   "event"
+  ],
+  "v": {
+   "s": 0.72
+  },
+  "file": "compositions/L09.html",
+  "sound": {
+   "label": "MEMPHIS / GEOMETRIC MOTION GRAPHICS",
+   "accent": "#FF6FB5",
+   "tin": "spin",
+   "whoosh": "Swishes/Golden swoosh.wav",
+   "fx": [
+    {
+     "src": "mix/floraphonic-ui-pop-up-5-197889.mp3",
+     "at": 0.08
+    },
+    {
+     "src": "mix/47313572-ui-sounds-pack-2-sound-1-358893.mp3",
+     "at": 0.3
+    },
+    {
+     "src": "mix/multi-pop-6-188170.mp3",
+     "at": 0.5,
+     "vol": 0.18
+    }
+   ]
+  }
+ },
+ {
+  "id": "L10",
+  "slug": "infographic",
+  "component": "Infographic",
+  "name": "Infographic / Data",
+  "category": "Data",
+  "desc": "Bar naik dengan angka berjalan, donut %, grafik garis, +248%.",
+  "palette": [
+   "#0B1424",
+   "#00D1FF",
+   "#FFC857"
+  ],
+  "bestFor": [
+   "data",
+   "laporan",
+   "hasil iklan"
+  ],
+  "v": {
+   "s": 0.6
+  },
+  "file": "compositions/L10.html",
+  "sound": {
+   "label": "INFOGRAPHIC / DATA VISUALIZATION",
+   "accent": "#00D1FF",
+   "tin": "up",
+   "whoosh": "Swishes/Future swoosh.wav",
+   "fx": [
+    {
+     "src": "mix/clicking-433009.mp3",
+     "at": 0.4,
+     "vol": 0.18,
+     "dur": 1.1
+    },
+    {
+     "src": "mix/freesound_community-cha-ching-7053.mp3",
+     "at": 1.72,
+     "vol": 0.18
+    }
+   ]
+  }
+ },
+ {
+  "id": "L11",
+  "slug": "paper",
+  "component": "Paper",
+  "name": "Paper Cutout",
+  "category": "Handmade",
+  "desc": "12fps, lapisan bukit kertas, matahari & awan kertas, label sobek.",
+  "palette": [
+   "#9ED0D6",
+   "#5FA36B",
+   "#F4A259",
+   "#FFFDF7"
+  ],
+  "bestFor": [
+   "cerita",
+   "anak",
+   "edukasi"
+  ],
+  "v": {
+   "s": 0.85
+  },
+  "file": "compositions/L11.html",
+  "sound": {
+   "label": "PAPER CUTOUT / COLLAGE ANIMATION",
+   "accent": "#F4A259",
+   "tin": "right",
+   "whoosh": "mix/Swoosh 2.wav",
+   "fx": [
+    {
+     "src": "mix/freesound_community-object-slide-on-table-65701.mp3",
+     "at": 0.12,
+     "vol": 0.22,
+     "dur": 0.8
+    },
+    {
+     "src": "mix/ui-pop-up-15-197897.mp3",
+     "at": 0.95,
+     "vol": 0.18
+    }
+   ]
+  }
+ },
+ {
+  "id": "L12",
+  "slug": "character",
+  "component": "Character",
+  "name": "2D Character",
+  "category": "Character",
+  "desc": "Karakter jalan, berhenti, melambai, berkedip, balon kata.",
+  "palette": [
+   "#8ECAE6",
+   "#FB8500",
+   "#023047"
+  ],
+  "bestFor": [
+   "cerita",
+   "explainer",
+   "maskot"
+  ],
+  "v": {
+   "s": 1
+  },
+  "file": "compositions/L12.html",
+  "sound": {
+   "label": "2D CHARACTER ANIMATION",
+   "accent": "#FFB703",
+   "tin": "left",
+   "whoosh": "Swishes/Windy swish.wav",
+   "fx": [
+    {
+     "src": "Buttons/Button_01.wav",
+     "at": 0.2,
+     "vol": 0.1
+    },
+    {
+     "src": "Buttons/Button_01.wav",
+     "at": 0.52,
+     "vol": 0.1
+    },
+    {
+     "src": "Buttons/Button_01.wav",
+     "at": 0.84,
+     "vol": 0.1
+    },
+    {
+     "src": "Buttons/Button_01.wav",
+     "at": 1.16,
+     "vol": 0.1
+    },
+    {
+     "src": "mix/floraphonic-ui-pop-up-5-197889.mp3",
+     "at": 1.45
+    }
+   ]
+  }
+ },
+ {
+  "id": "L13",
+  "slug": "liquid",
+  "component": "Liquid",
+  "name": "Liquid",
+  "category": "Abstract",
+  "desc": "Blob cair bergoyang, tetesan bergabung, gelombang sinus naik.",
+  "palette": [
+   "#0A0F2C",
+   "#3A86FF",
+   "#8338EC",
+   "#FF006E"
+  ],
+  "bestFor": [
+   "brand",
+   "musik",
+   "transisi"
+  ],
+  "v": {
+   "s": 1.2
+  },
+  "file": "compositions/L13.html",
+  "sound": {
+   "label": "LIQUID MOTION GRAPHICS",
+   "accent": "#3A86FF",
+   "tin": "zoom",
+   "whoosh": "Subdrop Low/SD_Low_04.wav",
+   "fx": [
+    {
+     "src": "mix/yodguard-healing-magic-1-378665.mp3",
+     "at": 0.05,
+     "vol": 0.16,
+     "dur": 1.6
+    },
+    {
+     "src": "mix/multi-pop-6-188170.mp3",
+     "at": 0.4,
+     "vol": 0.15
+    }
+   ]
+  }
+ },
+ {
+  "id": "L14",
+  "slug": "flat",
+  "component": "Flat",
+  "name": "Flat Design",
+  "category": "Clean",
+  "desc": "Gunung, matahari, pohon flat; judul long shadow 40 lapis.",
+  "palette": [
+   "#8ED1FC",
+   "#264653",
+   "#2A9D8F",
+   "#FFB703"
+  ],
+  "bestFor": [
+   "explainer",
+   "travel",
+   "edukasi"
+  ],
+  "v": {
+   "s": 0.95
+  },
+  "file": "compositions/L14.html",
+  "sound": {
+   "label": "FLAT DESIGN ANIMATION",
+   "accent": "#2EC4B6",
+   "tin": "down",
+   "whoosh": "Swishes/Short whip.wav",
+   "fx": [
+    {
+     "src": "Buttons/Button_04.wav",
+     "at": 0.1
+    },
+    {
+     "src": "mix/47313572-ui-sounds-pack-2-sound-2-358896.mp3",
+     "at": 0.5
+    },
+    {
+     "src": "Buttons/Button_06.wav",
+     "at": 0.62
+    }
+   ]
+  }
+ },
+ {
+  "id": "L15",
+  "slug": "corporate",
+  "component": "Corporate",
+  "name": "Corporate",
+  "category": "Business",
+  "desc": "Sapuan diagonal biru, logo bar, kartu KPI dengan area chart.",
+  "palette": [
+   "#F7F9FC",
+   "#0A1F44",
+   "#0057FF"
+  ],
+  "bestFor": [
+   "agency",
+   "laporan",
+   "B2B"
+  ],
+  "v": {
+   "s": 0.6
+  },
+  "file": "compositions/L15.html",
+  "sound": {
+   "label": "CORPORATE MOTION GRAPHICS",
+   "accent": "#2F7BFF",
+   "tin": "left",
+   "whoosh": "Swishes/Fast zing.wav",
+   "fx": [
+    {
+     "src": "Buttons/Button_08.wav",
+     "at": 0.45
+    },
+    {
+     "src": "mix/miraclei-sample_confirm_accept02_kofi_by_miraclei-364180.mp3",
+     "at": 1.4,
+     "vol": 0.18
+    }
+   ]
+  }
+ },
+ {
+  "id": "L16",
+  "slug": "retro",
+  "component": "Retro",
+  "name": "Retro / Vintage",
+  "category": "Film",
+  "desc": "Sunburst berputar, badge EST. 1970, grain film, goresan, flicker.",
+  "palette": [
+   "#E8D5A9",
+   "#3B2A1A",
+   "#D9A441",
+   "#B5651D"
+  ],
+  "bestFor": [
+   "kuliner",
+   "brand lokal",
+   "nostalgia"
+  ],
+  "v": {
+   "s": 0.95,
+   "bleed": false
+  },
+  "file": "compositions/L16.html",
+  "sound": {
+   "label": "RETRO / VINTAGE MOTION GRAPHICS",
+   "accent": "#D9A441",
+   "tin": "spin",
+   "whoosh": "Swishes/Flame pass.wav",
+   "fx": [
+    {
+     "src": "mix/8mm-film-camera-6446.mp3",
+     "at": 0,
+     "vol": 0.25,
+     "dur": 2.5
+    }
+   ]
+  }
+ },
+ {
+  "id": "L17",
+  "slug": "cyberpunk",
+  "component": "Cyberpunk",
+  "name": "Cyberpunk",
+  "category": "Digital",
+  "desc": "Skyline kota neon, hujan, judul neon berkedip, HUD.",
+  "palette": [
+   "#07001A",
+   "#00F0FF",
+   "#FF00E5"
+  ],
+  "bestFor": [
+   "gaming",
+   "tech",
+   "AI"
+  ],
+  "v": {
+   "s": 0.6,
+   "dy": 420
+  },
+  "file": "compositions/L17.html",
+  "sound": {
+   "label": "CYBERPUNK / FUTURISTIC MOTION GRAPHICS",
+   "accent": "#FF00E5",
+   "tin": "right",
+   "whoosh": "Glitch transition sounds/T7.wav",
+   "fx": [
+    {
+     "src": "mix/Bips.wav",
+     "at": 0.15,
+     "vol": 0.15,
+     "dur": 0.8
+    },
+    {
+     "src": "Glitch transition sounds/T4.wav",
+     "at": 0.3,
+     "vol": 0.18
+    },
+    {
+     "src": "typing-sound-efffect.mp3",
+     "at": 0.45,
+     "vol": 0.15,
+     "dur": 1
+    }
+   ]
+  }
+ },
+ {
+  "id": "L18",
+  "slug": "abstract",
+  "component": "Abstract",
+  "name": "Abstract / Experimental",
+  "category": "Abstract",
+  "desc": "Cincin titik berputar berlawanan, warna bergeser, lingkaran difference.",
+  "palette": [
+   "#0D0D0D",
+   "#FF7A00",
+   "#7A5CFF"
+  ],
+  "bestFor": [
+   "musik",
+   "art",
+   "intro"
+  ],
+  "v": {
+   "s": 0.95
+  },
+  "file": "compositions/L18.html",
+  "sound": {
+   "label": "ABSTRACT / EXPERIMENTAL MOTION GRAPHICS",
+   "accent": "#FF7A00",
+   "tin": "zoom",
+   "whoosh": "Swishes/Rumble swish.wav",
+   "fx": [
+    {
+     "src": "mix/trading_nation-long-riser-185557.mp3",
+     "at": 0,
+     "vol": 0.12,
+     "dur": 2.2
+    },
+    {
+     "src": "Subdrop Low/SD_Low_09.wav",
+     "at": 0.6,
+     "vol": 0.25
+    }
+   ]
+  }
+ },
+ {
+  "id": "L19",
+  "slug": "type-collage",
+  "component": "TypeCollage",
+  "name": "Type Collage",
+  "category": "Type",
+  "desc": "9 stiker kata dihantam masuk, selotip, blok COLLAGE besar.",
+  "palette": [
+   "#F1EDE4",
+   "#111111",
+   "#FF3B30",
+   "#FFD60A",
+   "#2F6BFF"
+  ],
+  "bestFor": [
+   "hook",
+   "fashion",
+   "list"
+  ],
+  "v": {
+   "s": 0.6
+  },
+  "file": "compositions/L19.html",
+  "sound": {
+   "label": "TYPOGRAPHY KINETIC COLLAGE",
+   "accent": "#FFD60A",
+   "tin": "up",
+   "whoosh": "mix/Fast whip.wav",
+   "fx": [
+    {
+     "src": "Buttons/Button_01.wav",
+     "at": 0.05,
+     "vol": 0.14
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 0.12000000000000001,
+     "vol": 0.14
+    },
+    {
+     "src": "Buttons/Button_03.wav",
+     "at": 0.19,
+     "vol": 0.14
+    },
+    {
+     "src": "Buttons/Button_04.wav",
+     "at": 0.26,
+     "vol": 0.14
+    },
+    {
+     "src": "Buttons/Button_05.wav",
+     "at": 0.33,
+     "vol": 0.14
+    },
+    {
+     "src": "Buttons/Button_06.wav",
+     "at": 0.4,
+     "vol": 0.14
+    },
+    {
+     "src": "Buttons/Button_07.wav",
+     "at": 0.47000000000000003,
+     "vol": 0.14
+    },
+    {
+     "src": "Buttons/Button_08.wav",
+     "at": 0.54,
+     "vol": 0.14
+    },
+    {
+     "src": "Buttons/Button_09.wav",
+     "at": 0.6100000000000001,
+     "vol": 0.14
+    },
+    {
+     "src": "alexis_gaming_cam-ks-motion-metal-hit-351564.mp3",
+     "at": 0.95,
+     "vol": 0.18,
+     "dur": 0.7
+    }
+   ]
+  }
+ },
+ {
+  "id": "L20",
+  "slug": "uiux",
+  "component": "UIUX",
+  "name": "UI/UX",
+  "category": "Digital",
+  "desc": "Mockup HP, skeleton jadi konten, klik kursor, toggle, toast.",
+  "palette": [
+   "#E2E5FF",
+   "#14142B",
+   "#6C63FF",
+   "#00B894"
+  ],
+  "bestFor": [
+   "aplikasi",
+   "tutorial",
+   "SaaS"
+  ],
+  "v": {
+   "s": 0.8,
+   "dx": -40
+  },
+  "file": "compositions/L20.html",
+  "sound": {
+   "label": "UI/UX MOTION GRAPHICS",
+   "accent": "#6C63FF",
+   "tin": "left",
+   "whoosh": "Swishes/Future zing.wav",
+   "fx": [
+    {
+     "src": "mix/47313572-ui-sounds-pack-2-sound-4-358895.mp3",
+     "at": 0.6
+    },
+    {
+     "src": "mouse-click-sound.mp3",
+     "at": 0.9,
+     "vol": 0.3
+    },
+    {
+     "src": "Buttons/Button_10.wav",
+     "at": 1,
+     "vol": 0.15
+    },
+    {
+     "src": "Buttons/Button_10.wav",
+     "at": 1.12,
+     "vol": 0.15
+    },
+    {
+     "src": "Buttons/Button_10.wav",
+     "at": 1.24,
+     "vol": 0.15
+    },
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 1.35
+    }
+   ]
+  }
+ },
+ {
+  "id": "L21",
+  "slug": "clay",
+  "component": "Clay",
+  "name": "Claymation",
+  "category": "Handmade",
+  "desc": "12fps, huruf tanah liat jatuh squash, bola memantul.",
+  "palette": [
+   "#FBEFE2",
+   "#F28C38",
+   "#6BBF59",
+   "#4A90E2",
+   "#FF7EB6"
+  ],
+  "bestFor": [
+   "fun",
+   "anak",
+   "produk"
+  ],
+  "v": {
+   "s": 0.85
+  },
+  "file": "compositions/L21.html",
+  "sound": {
+   "label": "CLAYMATION / CLAY ANIMATION",
+   "accent": "#FF8C61",
+   "tin": "down",
+   "whoosh": "Swishes/Delay woosh.wav",
+   "fx": [
+    {
+     "src": "mix/47313572-ui-sounds-pack-2-sound-1-358893.mp3",
+     "at": 0.2,
+     "vol": 0.15
+    },
+    {
+     "src": "mix/47313572-ui-sounds-pack-2-sound-1-358893.mp3",
+     "at": 0.32,
+     "vol": 0.15
+    },
+    {
+     "src": "mix/47313572-ui-sounds-pack-2-sound-1-358893.mp3",
+     "at": 0.44,
+     "vol": 0.15
+    },
+    {
+     "src": "mix/47313572-ui-sounds-pack-2-sound-1-358893.mp3",
+     "at": 0.56,
+     "vol": 0.15
+    },
+    {
+     "src": "Buttons/Button_06.wav",
+     "at": 0.3846153846153846,
+     "vol": 0.12
+    },
+    {
+     "src": "Buttons/Button_06.wav",
+     "at": 0.7692307692307692,
+     "vol": 0.12
+    },
+    {
+     "src": "Buttons/Button_06.wav",
+     "at": 1.1538461538461537,
+     "vol": 0.12
+    },
+    {
+     "src": "Buttons/Button_06.wav",
+     "at": 1.5384615384615383,
+     "vol": 0.12
+    },
+    {
+     "src": "Buttons/Button_06.wav",
+     "at": 1.923076923076923,
+     "vol": 0.12
+    }
+   ]
+  }
+ },
+ {
+  "id": "L22",
+  "slug": "stop-motion",
+  "component": "StopMotion",
+  "name": "Stop Motion",
+  "category": "Handmade",
+  "desc": "10fps, sticky note di meja kayu, pensil & koin, cahaya berkedip.",
+  "palette": [
+   "#B07D4F",
+   "#FFE066",
+   "#FF8FAB",
+   "#8CE99A",
+   "#74C0FC"
+  ],
+  "bestFor": [
+   "tips",
+   "list",
+   "craft"
+  ],
+  "v": {
+   "s": 0.62
+  },
+  "file": "compositions/L22.html",
+  "sound": {
+   "label": "STOP MOTION GRAPHICS",
+   "accent": "#C08552",
+   "tin": "right",
+   "whoosh": "mix/swoosh-026-454861.mp3",
+   "fx": [
+    {
+     "src": "mix/shutter-39318.mp3",
+     "at": 0.3,
+     "vol": 0.2,
+     "dur": 0.4
+    },
+    {
+     "src": "mix/shutter-39318.mp3",
+     "at": 0.85,
+     "vol": 0.2,
+     "dur": 0.4
+    },
+    {
+     "src": "Camera/dslr-camera-focus-shutter-sound.wav",
+     "at": 1.4,
+     "vol": 0.2,
+     "dur": 0.6
+    },
+    {
+     "src": "mix/freesound_community-cash-register-purchase-87313.mp3",
+     "at": 1.65,
+     "vol": 0.12,
+     "dur": 0.6
+    }
+   ]
+  }
+ },
+ {
+  "id": "L23",
+  "slug": "parallax",
+  "component": "Parallax",
+  "name": "Parallax / 2.5D",
+  "category": "3D",
+  "desc": "Lapisan bukit beda kecepatan, judul di antara lapisan, kabut & bulan.",
+  "palette": [
+   "#0B132B",
+   "#5B6C8F",
+   "#8EC5FF"
+  ],
+  "bestFor": [
+   "cerita",
+   "travel",
+   "intro"
+  ],
+  "v": {
+   "s": 0.62,
+   "dy": 625
+  },
+  "file": "compositions/L23.html",
+  "sound": {
+   "label": "PARALLAX / 2.5D ANIMATION",
+   "accent": "#8EC5FF",
+   "tin": "left",
+   "whoosh": "Swishes/Space ship fly by.wav",
+   "fx": [
+    {
+     "src": "mix/Swoosh very long.wav",
+     "at": 0.15,
+     "vol": 0.12,
+     "dur": 2.2
+    },
+    {
+     "src": "mix/universfield-magic-244951.mp3",
+     "at": 0.3,
+     "vol": 0.14,
+     "dur": 1.5
+    }
+   ]
+  }
+ },
+ {
+  "id": "L24",
+  "slug": "cinematic",
+  "component": "Cinematic",
+  "name": "Cinematic",
+  "category": "Film",
+  "desc": "Letterbox, glow teal/oranye, sapuan cahaya, anamorphic flare.",
+  "palette": [
+   "#05080A",
+   "#0F4C5C",
+   "#C86B2A",
+   "#FFC98A"
+  ],
+  "bestFor": [
+   "trailer",
+   "launch",
+   "brand"
+  ],
+  "v": {
+   "s": 0.58
+  },
+  "file": "compositions/L24.html",
+  "sound": {
+   "label": "CINEMATIC MOTION GRAPHICS",
+   "accent": "#F2A65A",
+   "tin": "zoom",
+   "whoosh": "Subdrop Low+Hi/SD_Low+Hi_05.wav",
+   "fx": [
+    {
+     "src": "mix/panoramic.wav",
+     "at": 0.15,
+     "vol": 0.18,
+     "dur": 2.2
+    },
+    {
+     "src": "Subdrop Low/SD_Low_07.wav",
+     "at": 0.2,
+     "vol": 0.28
+    }
+   ]
+  }
+ },
+ {
+  "id": "L25",
+  "slug": "mixed-media",
+  "component": "MixedMedia",
+  "name": "Mixed Media",
+  "category": "Handmade",
+  "desc": "Kartu kertas halftone sobek, selotip, kubus 3D, coretan tangan.",
+  "palette": [
+   "#EADBC4",
+   "#FF3366",
+   "#2F6BFF",
+   "#111111",
+   "#FFE600"
+  ],
+  "bestFor": [
+   "fashion",
+   "art",
+   "promo"
+  ],
+  "v": {
+   "s": 0.62
+  },
+  "file": "compositions/L25.html",
+  "sound": {
+   "label": "MIXED MEDIA MOTION GRAPHICS",
+   "accent": "#FF3366",
+   "tin": "spin",
+   "whoosh": "woosh_7.mp3",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-15-197897.mp3",
+     "at": 0.3
+    },
+    {
+     "src": "mix/bicycle-gear-45545.mp3",
+     "at": 0.42,
+     "vol": 0.12,
+     "dur": 0.5
+    },
+    {
+     "src": "mix/giridharani-knife-drag-on-wood-soft-scrape-asmr-428875.mp3",
+     "at": 0.6,
+     "vol": 0.22,
+     "dur": 0.7
+    },
+    {
+     "src": "mix/clap-10-36723.mp3",
+     "at": 1.2,
+     "vol": 0.18
+    }
+   ]
+  }
+ },
+ {
+  "id": "L26",
+  "slug": "soft-kinetic",
+  "component": "SoftKinetic",
+  "name": "Soft Kinetic",
+  "category": "Custom",
+  "desc": "Kertas grid abu, kata tipis-tebal masuk blur per kata, kartu melayang ber-shadow, spark coral.",
+  "palette": [
+   "#EEEEEC",
+   "#161616",
+   "#6E6E6A",
+   "#D97757"
+  ],
+  "bestFor": [
+   "promo",
+   "explainer",
+   "ai"
+  ],
+  "v": {
+   "s": 0.62,
+   "bleed": false
+  },
+  "file": "compositions/L26.html",
+  "sound": {
+   "label": "SOFT KINETIC",
+   "accent": "#D97757",
+   "tin": "up",
+   "whoosh": "woosh_7.mp3",
+   "fx": [
+    {
+     "src": "mix/multi-pop-6-188170.mp3",
+     "at": 0.1,
+     "vol": 0.16
+    },
+    {
+     "src": "mix/ui-pop-up-15-197897.mp3",
+     "at": 1.15,
+     "vol": 0.12
+    },
+    {
+     "src": "mix/ui-pop-up-15-197897.mp3",
+     "at": 1.5,
+     "vol": 0.1
+    }
+   ]
+  }
+ },
+ {
+  "id": "L27",
+  "slug": "modern-ui",
+  "component": "ModernUI",
+  "name": "Modern UI",
+  "category": "Clean",
+  "desc": "Kartu putih shadow berlapis, stat tile pop, toast, klik kursor.",
+  "palette": [
+   "#EEF1F7",
+   "#0F1626",
+   "#2F6BFF"
+  ],
+  "bestFor": [
+   "clean"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L27.html",
+  "sound": {
+   "label": "MODERN UI",
+   "accent": "#2F6BFF",
+   "tin": "left",
+   "whoosh": "Swishes/Sharp swoosh.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L28",
+  "slug": "neumorphism",
+  "component": "Neumorph",
+  "name": "Neumorphism",
+  "category": "Clean",
+  "desc": "Kontrol timbul satu warna, tombol ditekan, slider & toggle.",
+  "palette": [
+   "#E4E8EE",
+   "#4A5263",
+   "#5B6CFF"
+  ],
+  "bestFor": [
+   "clean"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L28.html",
+  "sound": {
+   "label": "NEUMORPHISM",
+   "accent": "#5B6CFF",
+   "tin": "zoom",
+   "whoosh": "Swishes/Future swoosh.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L29",
+  "slug": "glass",
+  "component": "Glass",
+  "name": "Glassmorphism",
+  "category": "Digital",
+  "desc": "Orb warna di balik kartu kaca transparan 3D.",
+  "palette": [
+   "#160F33",
+   "#FF4F8B",
+   "#00D1FF"
+  ],
+  "bestFor": [
+   "digital"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L29.html",
+  "sound": {
+   "label": "GLASSMORPHISM",
+   "accent": "#00D1FF",
+   "tin": "left",
+   "whoosh": "Swishes/Future zing.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L30",
+  "slug": "bento",
+  "component": "Bento",
+  "name": "Bento Grid",
+  "category": "Clean",
+  "desc": "Tile bento ala Apple muncul satu per satu.",
+  "palette": [
+   "#F5F5F7",
+   "#111111",
+   "#2F6BFF"
+  ],
+  "bestFor": [
+   "clean"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L30.html",
+  "sound": {
+   "label": "BENTO GRID",
+   "accent": "#2F6BFF",
+   "tin": "up",
+   "whoosh": "Swishes/Short whip.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L31",
+  "slug": "brutalist",
+  "component": "Brutalist",
+  "name": "Brutalist",
+  "category": "Bold",
+  "desc": "Border tebal, shadow keras, teks raksasa, marquee.",
+  "palette": [
+   "#EDEDE6",
+   "#000000",
+   "#FFE600"
+  ],
+  "bestFor": [
+   "bold"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L31.html",
+  "sound": {
+   "label": "BRUTALIST",
+   "accent": "#FFE600",
+   "tin": "spin",
+   "whoosh": "Swishes/Woosh rattle.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L32",
+  "slug": "neon-sign",
+  "component": "NeonSign",
+  "name": "Neon Sign",
+  "category": "Digital",
+  "desc": "Tembok bata, tulisan neon berkedip nyala.",
+  "palette": [
+   "#140F14",
+   "#FF2E88",
+   "#00F0D8"
+  ],
+  "bestFor": [
+   "digital"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L32.html",
+  "sound": {
+   "label": "NEON SIGN",
+   "accent": "#00F0D8",
+   "tin": "zoom",
+   "whoosh": "Glitch transition sounds/T2.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L33",
+  "slug": "vaporwave",
+  "component": "Vaporwave",
+  "name": "Vaporwave",
+  "category": "Retro",
+  "desc": "Matahari bergaris, grid perspektif, teks chrome.",
+  "palette": [
+   "#1A0B3B",
+   "#B5179E",
+   "#00F0FF"
+  ],
+  "bestFor": [
+   "retro"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L33.html",
+  "sound": {
+   "label": "VAPORWAVE",
+   "accent": "#00F0FF",
+   "tin": "up",
+   "whoosh": "Swishes/Space ship fly by.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L34",
+  "slug": "pixel-art",
+  "component": "PixelArt",
+  "name": "Pixel Art / 8-bit",
+  "category": "Retro",
+  "desc": "Hati pixel tersusun, koin memantul, LEVEL UP.",
+  "palette": [
+   "#2B2D5C",
+   "#FF3B5C",
+   "#FFD23F"
+  ],
+  "bestFor": [
+   "retro"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L34.html",
+  "sound": {
+   "label": "PIXEL ART / 8-BIT",
+   "accent": "#FFD23F",
+   "tin": "down",
+   "whoosh": "Buttons/Button_06.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L35",
+  "slug": "blueprint",
+  "component": "Blueprint",
+  "name": "Blueprint",
+  "category": "Data",
+  "desc": "Grid biru teknis, garis tergambar, dimensi & label.",
+  "palette": [
+   "#0D3B73",
+   "#FFFFFF",
+   "#9EC5FF"
+  ],
+  "bestFor": [
+   "data"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L35.html",
+  "sound": {
+   "label": "BLUEPRINT",
+   "accent": "#9EC5FF",
+   "tin": "left",
+   "whoosh": "Swishes/High fast swoosh.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L36",
+  "slug": "terminal",
+  "component": "Terminal",
+  "name": "Terminal / Hacker",
+  "category": "Digital",
+  "desc": "Teks hijau diketik, progress bar ASCII.",
+  "palette": [
+   "#050A07",
+   "#7CFFB2",
+   "#5E8A72"
+  ],
+  "bestFor": [
+   "digital"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L36.html",
+  "sound": {
+   "label": "TERMINAL / HACKER",
+   "accent": "#5E8A72",
+   "tin": "down",
+   "whoosh": "Glitch transition sounds/T5.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L37",
+  "slug": "newspaper",
+  "component": "Newspaper",
+  "name": "Newspaper",
+  "category": "Type",
+  "desc": "Masthead koran, headline dihantam, stempel BREAKING.",
+  "palette": [
+   "#F1EBDD",
+   "#111111",
+   "#D7261E"
+  ],
+  "bestFor": [
+   "type"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L37.html",
+  "sound": {
+   "label": "NEWSPAPER",
+   "accent": "#D7261E",
+   "tin": "right",
+   "whoosh": "Swishes/Fast swish.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L38",
+  "slug": "risograph",
+  "component": "Riso",
+  "name": "Risograph",
+  "category": "Handmade",
+  "desc": "Dua tinta overprint, grain, misregistrasi.",
+  "palette": [
+   "#F4EEE2",
+   "#FF48B0",
+   "#0078BF"
+  ],
+  "bestFor": [
+   "handmade"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L38.html",
+  "sound": {
+   "label": "RISOGRAPH",
+   "accent": "#0078BF",
+   "tin": "zoom",
+   "whoosh": "Swishes/Delay woosh.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L39",
+  "slug": "line-art",
+  "component": "LineArt",
+  "name": "Line Art",
+  "category": "Clean",
+  "desc": "Satu garis menggambar bohlam yang menyala.",
+  "palette": [
+   "#FAFAF7",
+   "#141414",
+   "#FF7A00"
+  ],
+  "bestFor": [
+   "clean"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L39.html",
+  "sound": {
+   "label": "LINE ART",
+   "accent": "#FF7A00",
+   "tin": "left",
+   "whoosh": "Swishes/Windy swish.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L40",
+  "slug": "aurora",
+  "component": "Aurora",
+  "name": "Aurora Gradient",
+  "category": "Abstract",
+  "desc": "Pita aurora bergerak di balik judul.",
+  "palette": [
+   "#060814",
+   "#22D3EE",
+   "#A855F7"
+  ],
+  "bestFor": [
+   "abstract"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L40.html",
+  "sound": {
+   "label": "AURORA GRADIENT",
+   "accent": "#A855F7",
+   "tin": "up",
+   "whoosh": "Swishes/Reverse riser 01.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L41",
+  "slug": "constellation",
+  "component": "Constellation",
+  "name": "Constellation",
+  "category": "Abstract",
+  "desc": "Titik bintang tersambung jadi jaringan.",
+  "palette": [
+   "#070B1F",
+   "#7EA8FF",
+   "#FFFFFF"
+  ],
+  "bestFor": [
+   "abstract"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L41.html",
+  "sound": {
+   "label": "CONSTELLATION",
+   "accent": "#FFFFFF",
+   "tin": "zoom",
+   "whoosh": "Swishes/Future zing.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L42",
+  "slug": "sticker-bomb",
+  "component": "StickerBomb",
+  "name": "Sticker Bomb",
+  "category": "Bold",
+  "desc": "Stiker die-cut ditempel bertumpuk.",
+  "palette": [
+   "#2A2A31",
+   "#FF3B6B",
+   "#FFD23F"
+  ],
+  "bestFor": [
+   "bold"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L42.html",
+  "sound": {
+   "label": "STICKER BOMB",
+   "accent": "#FFD23F",
+   "tin": "spin",
+   "whoosh": "Swishes/Short whip.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L43",
+  "slug": "map-route",
+  "component": "MapRoute",
+  "name": "Map Route",
+  "category": "Data",
+  "desc": "Rute peta tergambar, pesawat, pin bendera.",
+  "palette": [
+   "#DCEBF5",
+   "#0B1B2F",
+   "#FF5A36"
+  ],
+  "bestFor": [
+   "data"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L43.html",
+  "sound": {
+   "label": "MAP ROUTE",
+   "accent": "#FF5A36",
+   "tin": "right",
+   "whoosh": "Swishes/Low fly.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L44",
+  "slug": "chalkboard",
+  "component": "Chalkboard",
+  "name": "Chalkboard",
+  "category": "Handmade",
+  "desc": "Papan hijau, tulisan kapur, coretan.",
+  "palette": [
+   "#1E3F30",
+   "#F4F4EC",
+   "#FFE88A"
+  ],
+  "bestFor": [
+   "handmade"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L44.html",
+  "sound": {
+   "label": "CHALKBOARD",
+   "accent": "#FFE88A",
+   "tin": "left",
+   "whoosh": "Swishes/Fast swish.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L45",
+  "slug": "y2k-chrome",
+  "component": "Y2K",
+  "name": "Y2K Chrome",
+  "category": "Retro",
+  "desc": "Teks chrome, bubble glossy, bintang kelip.",
+  "palette": [
+   "#B8C6FF",
+   "#F7C6FF",
+   "#4B3BFF"
+  ],
+  "bestFor": [
+   "retro"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L45.html",
+  "sound": {
+   "label": "Y2K CHROME",
+   "accent": "#4B3BFF",
+   "tin": "zoom",
+   "whoosh": "Swishes/Golden swoosh.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L46",
+  "slug": "bauhaus",
+  "component": "Bauhaus",
+  "name": "Bauhaus",
+  "category": "Clean",
+  "desc": "Bentuk primer menyusun komposisi.",
+  "palette": [
+   "#F1E9D8",
+   "#E03C31",
+   "#1D4E9E"
+  ],
+  "bestFor": [
+   "clean"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L46.html",
+  "sound": {
+   "label": "BAUHAUS",
+   "accent": "#1D4E9E",
+   "tin": "left",
+   "whoosh": "Swishes/Sharp swoosh.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L47",
+  "slug": "typewriter",
+  "component": "Typewriter",
+  "name": "Typewriter",
+  "category": "Type",
+  "desc": "Huruf diketik satu-satu di kertas.",
+  "palette": [
+   "#3B2F2A",
+   "#FBF7EE",
+   "#D7261E"
+  ],
+  "bestFor": [
+   "type"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L47.html",
+  "sound": {
+   "label": "TYPEWRITER",
+   "accent": "#D7261E",
+   "tin": "up",
+   "whoosh": "Swishes/Delay woosh.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L48",
+  "slug": "duotone-split",
+  "component": "DuotoneSplit",
+  "name": "Duotone Split",
+  "category": "Bold",
+  "desc": "Layar terbelah dua foto duotone, badge VS.",
+  "palette": [
+   "#111111",
+   "#FF6A3D",
+   "#5B3DF5"
+  ],
+  "bestFor": [
+   "bold"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L48.html",
+  "sound": {
+   "label": "DUOTONE SPLIT",
+   "accent": "#5B3DF5",
+   "tin": "down",
+   "whoosh": "Swishes/Rumble swish.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L49",
+  "slug": "social-feed",
+  "component": "SocialFeed",
+  "name": "Social Feed",
+  "category": "Digital",
+  "desc": "Mockup HP, notifikasi, hati meledak.",
+  "palette": [
+   "#FFE9F0",
+   "#111111",
+   "#FF3B6B"
+  ],
+  "bestFor": [
+   "digital"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L49.html",
+  "sound": {
+   "label": "SOCIAL FEED",
+   "accent": "#FF3B6B",
+   "tin": "up",
+   "whoosh": "Swishes/Short whip.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ },
+ {
+  "id": "L50",
+  "slug": "luxury",
+  "component": "Luxury",
+  "name": "Luxury Gold",
+  "category": "Film",
+  "desc": "Bingkai emas, teks emas lebar, kilau.",
+  "palette": [
+   "#0B0A09",
+   "#C9A55A",
+   "#F6E3A1"
+  ],
+  "bestFor": [
+   "film"
+  ],
+  "v": {
+   "s": 0.75
+  },
+  "file": "compositions/L50.html",
+  "sound": {
+   "label": "LUXURY GOLD",
+   "accent": "#F6E3A1",
+   "tin": "zoom",
+   "whoosh": "Swishes/Golden swoosh.wav",
+   "fx": [
+    {
+     "src": "mix/ui-pop-up-14-197900.mp3",
+     "at": 0.5,
+     "vol": 0.16
+    },
+    {
+     "src": "Buttons/Button_02.wav",
+     "at": 1.1,
+     "vol": 0.14
+    }
+   ]
+  }
+ }
+]

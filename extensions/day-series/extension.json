@@ -1,0 +1,132 @@
+{
+  "name": "Day Series (kota netizen)",
+  "version": "1.0.0",
+  "rules": "rules.md",
+  "templates": [
+    {
+      "id": "X10",
+      "name": "Day Series · Anime",
+      "category": "Day Series",
+      "desc": "Cel-shade anime: outline tebal, mata besar, blush, speed-line wipe, sparkle.",
+      "palette": [
+        "#9FD8FF",
+        "#FF5C8A",
+        "#FFD23F",
+        "#2B2340"
+      ],
+      "bestFor": [
+        "series harian",
+        "komentar netizen",
+        "storytelling"
+      ],
+      "dir": "templates/anime",
+      "entry": "compositions/video.html",
+      "poster": {
+        "9:16": "previews/anime.jpg"
+      },
+      "preview": {
+        "9:16": "previews/anime.mp4"
+      }
+    },
+    {
+      "id": "X11",
+      "name": "Day Series · Pixel Block",
+      "category": "Day Series",
+      "desc": "Dunia blok pixel ala game sandbox: semua kotak 12px, gerak patah-patah 12fps, wipe blok.",
+      "palette": [
+        "#7EC0FF",
+        "#6DB33F",
+        "#8B5A2B",
+        "#3FD44A"
+      ],
+      "bestFor": [
+        "series harian",
+        "komentar netizen",
+        "storytelling"
+      ],
+      "dir": "templates/pixel",
+      "entry": "compositions/video.html",
+      "poster": {
+        "9:16": "previews/pixel.jpg"
+      },
+      "preview": {
+        "9:16": "previews/pixel.mp4"
+      }
+    },
+    {
+      "id": "X12",
+      "name": "Day Series · Block Avatar",
+      "category": "Day Series",
+      "desc": "Avatar kotak ala game avatar online: kepala kuning, baseplate grid, warna primer, iris wipe.",
+      "palette": [
+        "#8FD3FF",
+        "#00A2FF",
+        "#FFC400",
+        "#5ACB6E"
+      ],
+      "bestFor": [
+        "series harian",
+        "komentar netizen",
+        "storytelling"
+      ],
+      "dir": "templates/avatar",
+      "entry": "compositions/video.html",
+      "poster": {
+        "9:16": "previews/avatar.jpg"
+      },
+      "preview": {
+        "9:16": "previews/avatar.mp4"
+      }
+    },
+    {
+      "id": "X13",
+      "name": "Day Series · Toy Brick",
+      "category": "Day Series",
+      "desc": "Mainan bata plastik: stud di atap & tanah, minifig kuning, transisi bata jatuh.",
+      "palette": [
+        "#E3000B",
+        "#FFD500",
+        "#0055BF",
+        "#4CB05A"
+      ],
+      "bestFor": [
+        "series harian",
+        "komentar netizen",
+        "storytelling"
+      ],
+      "dir": "templates/brick",
+      "entry": "compositions/video.html",
+      "poster": {
+        "9:16": "previews/brick.jpg"
+      },
+      "preview": {
+        "9:16": "previews/brick.mp4"
+      }
+    },
+    {
+      "id": "X14",
+      "name": "Day Series · Paper Cutout",
+      "category": "Day Series",
+      "desc": "Kertas potong flat: bayangan offset, warna pastel hangat, goyang halus, sobekan kertas.",
+      "palette": [
+        "#F6E9D2",
+        "#E86A4A",
+        "#5B9BD5",
+        "#3A3128"
+      ],
+      "bestFor": [
+        "series harian",
+        "komentar netizen",
+        "storytelling"
+      ],
+      "dir": "templates/paper",
+      "entry": "compositions/video.html",
+      "poster": {
+        "9:16": "previews/paper.jpg"
+      },
+      "preview": {
+        "9:16": "previews/paper.mp4"
+      }
+    }
+  ]
+}

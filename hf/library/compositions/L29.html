@@ -1,0 +1,60 @@
+<!-- L29 Glassmorphism (Digital): Orb warna di balik kartu kaca transparan 3D.
+     Palette #160F33 #FF4F8B #00D1FF - best for digital.
+     Ported from src/library/scenes/scenes5.tsx (Glass). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #160F33; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L29" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes5.tsx
+      var t = (f) => f / FPS;
+      var Glass = ({ f }) => {
+        const tt = t(f);
+        return __h(Full, { bg: "#160F33" }, [["#FF4F8B", 520, 300, 360], ["#6D4AFF", 1380, 760, 420], ["#00D1FF", 1280, 220, 260]].map(([c, x, y, r], i) => __h("div", { key: i, style: { position: "absolute", left: x - r + Math.sin(tt * 1.2 + i) * 60, top: y - r + Math.cos(tt + i) * 40, width: r * 2, height: r * 2, borderRadius: "50%", background: `radial-gradient(circle, ${c} 0%, ${c}00 70%)` } })), [0, 1, 2].map((i) => {
+          const p = sp(f, 0.1 + i * 0.18, 15, 130, 0.8);
+          return __h("div", { key: i, style: { position: "absolute", left: 560 + i * 90, top: 230 + i * 110, width: 800, height: 460, borderRadius: 44, background: "linear-gradient(135deg, #FFFFFF38, #FFFFFF0C)", border: "2px solid #FFFFFF55", boxShadow: "0 30px 60px #0006, inset 0 1px 0 #FFFFFF80", transform: `perspective(1800px) rotateY(${(1 - p) * -40 + Math.sin(tt + i) * 3}deg) translateX(${(1 - p) * -500}px)`, opacity: p } }, i === 2 ? __h("div", { style: { padding: 54, color: "#fff" } }, __h("div", { style: { fontSize: 30, fontWeight: 700, letterSpacing: 8, opacity: 0.7 } }, "PREMIUM"), __h("div", { style: { fontSize: 120, fontWeight: 900, letterSpacing: -4, lineHeight: 1 } }, "GLASS"), __h("div", { style: { marginTop: 40, height: 18, width: 520 * ramp(f, 0.9, 1.5, OUT), borderRadius: 9, background: "linear-gradient(90deg, #00D1FF, #FF4F8B)" } })) : null);
+        }));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Glass;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L29', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

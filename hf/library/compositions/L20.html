@@ -1,0 +1,160 @@
+<!-- L20 UI/UX (Digital): Mockup HP, skeleton jadi konten, klik kursor, toggle, toast.
+     Palette #E2E5FF #14142B #6C63FF #00B894 - best for aplikasi, tutorial, SaaS.
+     Ported from src/library/scenes/scenes3.tsx (UIUX). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #E2E5FF; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L20" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes3.tsx
+      var t = (f) => f / FPS;
+      var UIUX = ({ f }) => {
+        const tt = t(f);
+        const phone = sp(f, 0.02, 14, 140, 0.8);
+        const loaded = tt > 0.6;
+        const cur = ramp(f, 0.35, 0.85, Easing.bezier(0.4, 0, 0.2, 1));
+        const cx = mix(1300, 780, cur);
+        const cy = mix(900, 760, cur);
+        const press = tt > 0.9 && tt < 1.05 ? 0.9 : 1;
+        const ripple = ramp(f, 0.9, 1.3, OUT);
+        const tog = (a) => sp(f, a, 14, 220, 0.6);
+        const toast = sp(f, 1.35, 13, 180, 0.7);
+        const rows = [
+          { ic: "White/home1.png", c: "#6C63FF", w: "DASHBOARD" },
+          { ic: "White/chart3.png", c: "#00B894", w: "ANALYTICS" },
+          { ic: "White/mail.png", c: "#FF7675", w: "MESSAGES" }
+        ];
+        return __h(Full, { bg: "radial-gradient(circle at 40% 40%, #F4F5FF 0%, #E2E5FF 100%)" }, __h(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              left: 600,
+              top: 110,
+              width: 380,
+              height: 820,
+              borderRadius: 56,
+              background: "#FFFFFF",
+              border: "12px solid #14142B",
+              boxShadow: "0 50px 90px -40px #2A2A6A90",
+              transform: `translateY(${(1 - phone) * 700}px) rotate(${(1 - phone) * 8}deg)`,
+              overflow: "hidden"
+            }
+          },
+          __h("div", { style: { margin: "28px auto 0", width: 110, height: 26, borderRadius: 99, background: "#14142B" } }),
+          __h("div", { style: { padding: "30px 28px 0", fontSize: 34, fontWeight: 900, color: "#14142B" } }, "HELLO, GALIH"),
+          rows.map((r, i) => {
+            const p = sp(f, 0.6 + i * 0.08, 14, 200, 0.6);
+            return __h("div", { key: i, style: { display: "flex", alignItems: "center", gap: 16, margin: "20px 28px 0", height: 90, borderRadius: 22, background: "#F3F4FB", padding: "0 18px" } }, loaded ? __h(Fragment, null, __h("div", { style: { width: 56, height: 56, borderRadius: 16, background: r.c, display: "flex", alignItems: "center", justifyContent: "center", transform: `scale(${p})` } }, __h(Img, { src: icon(r.ic), style: { width: 30, height: 30 } })), __h("div", { style: { fontSize: 24, fontWeight: 900, color: "#14142B", opacity: p } }, r.w)) : __h(Fragment, null, __h("div", { style: { width: 56, height: 56, borderRadius: 16, background: `linear-gradient(90deg,#E4E6F3,#F7F8FD,#E4E6F3)`, backgroundPosition: `${tt * 600}px 0` } }), __h("div", { style: { width: 160, height: 18, borderRadius: 9, background: "#E4E6F3" } })));
+          }),
+          __h(
+            "div",
+            {
+              style: {
+                position: "absolute",
+                left: 28,
+                right: 28,
+                bottom: 60,
+                height: 92,
+                borderRadius: 26,
+                background: "#6C63FF",
+                color: "#FFF",
+                fontSize: 30,
+                fontWeight: 900,
+                letterSpacing: 4,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transform: `scale(${press})`,
+                overflow: "hidden"
+              }
+            },
+            __h("div", { style: { position: "absolute", left: 150 - 300 * ripple, top: 46 - 300 * ripple, width: 600 * ripple, height: 600 * ripple, borderRadius: 999, background: "#FFFFFF", opacity: 0.35 * (1 - ripple) } }),
+            tt > 1 ? "UPGRADED ✓" : "UPGRADE"
+          )
+        ), __h(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              left: 1080,
+              top: 300,
+              width: 520,
+              padding: 34,
+              borderRadius: 30,
+              background: "#FFFFFF",
+              boxShadow: "0 30px 60px -30px #2A2A6A70",
+              transform: `translateX(${(1 - sp(f, 0.25, 14, 160, 0.7)) * 800}px)`
+            }
+          },
+          ["DARK MODE", "NOTIFICATIONS", "AUTO SYNC"].map((w, i) => {
+            const on = tog(1 + i * 0.12);
+            return __h("div", { key: i, style: { display: "flex", alignItems: "center", justifyContent: "space-between", height: 74 } }, __h("div", { style: { fontSize: 26, fontWeight: 900, color: "#14142B" } }, w), __h("div", { style: { width: 92, height: 50, borderRadius: 99, background: on > 0.5 ? "#6C63FF" : "#D5D7E8", position: "relative" } }, __h("div", { style: { position: "absolute", top: 5, left: 5 + on * 42, width: 40, height: 40, borderRadius: 99, background: "#FFF", boxShadow: "0 4px 10px #0003" } })));
+          })
+        ), __h(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              left: 1080,
+              top: 150,
+              padding: "20px 30px",
+              borderRadius: 24,
+              background: "#14142B",
+              color: "#FFF",
+              display: "flex",
+              alignItems: "center",
+              gap: 18,
+              fontSize: 26,
+              fontWeight: 900,
+              transform: `translateY(${(1 - toast) * -300}px)`,
+              opacity: toast
+            }
+          },
+          __h("div", { style: { width: 46, height: 46, borderRadius: 14, background: "#00B894", display: "flex", alignItems: "center", justifyContent: "center" } }, __h(Img, { src: icon("Font Awesome/bell13.png"), style: { width: 26, height: 26, filter: "brightness(0) invert(1)" } })),
+          "PAYMENT SUCCESS"
+        ), __h("svg", { width: 60, height: 70, style: { position: "absolute", left: cx, top: cy, transform: `scale(${press})`, opacity: ramp(f, 0.3, 0.4) } }, __h("path", { d: "M 4 4 L 4 52 L 17 40 L 27 62 L 36 58 L 26 37 L 44 37 Z", fill: "#14142B", stroke: "#FFF", strokeWidth: 4, strokeLinejoin: "round" })));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = UIUX;
+    })();
+    (function () {
+      const V = {"s":0.8,"dx":-40};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L20', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

@@ -1,0 +1,110 @@
+<!-- L17 Cyberpunk (Digital): Skyline kota neon, hujan, judul neon berkedip, HUD.
+     Palette #07001A #00F0FF #FF00E5 - best for gaming, tech, AI.
+     Ported from src/library/scenes/scenes2.tsx (Cyberpunk). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #07001A; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L17" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes2.tsx
+      var t = (f) => f / FPS;
+      var Cyberpunk = ({ f }) => {
+        const tt = t(f);
+        const s = step(f, 4);
+        const on = tt < 0.5 ? rnd(`cf${s}`) > 0.4 ? 1 : 0.2 : rnd(`cf${s}`) > 0.06 ? 1 : 0.5;
+        const neon = "0 0 6px #fff, 0 0 18px #00F0FF, 0 0 40px #00F0FF, 0 0 80px #FF00E5";
+        const scan = tt * 600 % 1300 - 100;
+        const readout = "SYS.ONLINE > NEURAL LINK 98.6%";
+        return __h(Full, { bg: "linear-gradient(#07001A 0%, #1A0638 70%, #2B0A4F 100%)" }, Array.from({ length: 22 }, (_, i) => {
+          const w = 70 + rnd(`bw${i}`) * 90;
+          const h = 240 + rnd(`bh${i}`) * 520;
+          const x = i * 90 - 40;
+          const rise = sp(f, 0.02 + rnd(`br${i}`) * 0.3, 15, 140, 0.8);
+          return __h("div", { key: i, style: { position: "absolute", left: x, bottom: 0, width: w, height: h * rise, background: i % 2 ? "#0D0524" : "#140834", borderTop: `3px solid ${i % 3 ? "#FF00E555" : "#00F0FF55"}` } }, Array.from(
+            { length: 10 },
+            (_2, j) => rnd(`win${i}-${j}`) > 0.55 ? __h(
+              "div",
+              {
+                key: j,
+                style: {
+                  position: "absolute",
+                  left: 10 + j % 3 * 22,
+                  top: 20 + Math.floor(j / 3) * 44,
+                  width: 12,
+                  height: 20,
+                  background: rnd(`wc${i}${j}`) > 0.5 ? "#00F0FF" : "#FF00E5",
+                  opacity: 0.7
+                }
+              }
+            ) : null
+          ));
+        }), Array.from({ length: 60 }, (_, i) => {
+          const x = rnd(`rx${i}`) * 2100 - (tt * 300 + rnd(`ro${i}`) * 900) % 900 * 0.3;
+          const y = (tt * 1800 + rnd(`ry${i}`) * 1200) % 1300 - 150;
+          return __h("div", { key: i, style: { position: "absolute", left: x, top: y, width: 2, height: 60, background: "#9FE8FF55", transform: "rotate(12deg)" } });
+        }), __h("div", { style: { position: "absolute", left: 0, right: 0, top: 320, textAlign: "center" } }, __h("div", { style: { fontSize: 210, fontWeight: 900, letterSpacing: 6, color: "#E8FDFF", textShadow: neon, opacity: on, fontStyle: "italic" } }, "NEO-2099"), __h("div", { style: { marginTop: 10, fontSize: 32, fontWeight: 700, letterSpacing: 8, color: "#FF00E5", textShadow: "0 0 12px #FF00E5" } }, readout.slice(0, Math.floor(Math.max(0, tt - 0.4) * 30)), __h("span", { style: { opacity: Math.floor(tt * 4) % 2 } }, "█"))), [
+          [140, 160, 0],
+          [1780, 160, 90],
+          [1780, 900, 180],
+          [140, 900, 270]
+        ].map(([x, y, r], i) => __h(
+          "div",
+          {
+            key: i,
+            style: {
+              position: "absolute",
+              left: x - 40,
+              top: y - 40,
+              width: 80,
+              height: 80,
+              borderLeft: "5px solid #00F0FF",
+              borderTop: "5px solid #00F0FF",
+              transform: `rotate(${r}deg) scale(${sp(f, 0.2 + i * 0.05)})`,
+              boxShadow: "-4px -4px 12px #00F0FF66"
+            }
+          }
+        )), __h("div", { style: { position: "absolute", left: 0, right: 0, top: scan, height: 3, background: "#00F0FF", boxShadow: "0 0 24px #00F0FF", opacity: 0.6 } }));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Cyberpunk;
+    })();
+    (function () {
+      const V = {"s":0.6,"dy":420};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L17', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

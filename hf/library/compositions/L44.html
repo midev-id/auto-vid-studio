@@ -1,0 +1,59 @@
+<!-- L44 Chalkboard (Handmade): Papan hijau, tulisan kapur, coretan.
+     Palette #1E3F30 #F4F4EC #FFE88A - best for handmade.
+     Ported from src/library/scenes/scenes6.tsx (Chalkboard). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #1E3F30; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L44" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes6.tsx
+      var draw = (f, a, b) => ({ pathLength: 1, strokeDasharray: 1, strokeDashoffset: 1 - ramp(f, a, b, Easing.bezier(0.5, 0, 0.3, 1)) });
+      var PTS = Array.from({ length: 22 }).map((_, i) => ({ x: 340 + rnd(`px${i}`) * 1240, y: 140 + rnd(`py${i}`) * 800 }));
+      var Chalkboard = ({ f }) => {
+        const ff = step(f, 2);
+        const chalk = (txt, a, b, size, top, color = "#F4F4EC") => __h("div", { style: { position: "absolute", left: 0, right: 0, top, textAlign: "center", fontSize: size, fontWeight: 700, color, letterSpacing: 4, textShadow: "0 0 2px #fff8", opacity: 0.92, clipPath: `inset(0 ${(1 - ramp(f, a, b, Easing.linear)) * 100}% 0 0)` } }, txt);
+        return __h(Full, { bg: "#5A3A22" }, __h("div", { style: { position: "absolute", left: 120, top: 70, right: 120, bottom: 70, background: "radial-gradient(ellipse at 50% 40%, #2F5A44, #1E3F30)", borderRadius: 10, boxShadow: "inset 0 0 60px #0008" } }), Array.from({ length: 40 }).map((_, i) => __h("div", { key: i, style: { position: "absolute", left: 160 + rnd(`cx${i}`) * 1600, top: 110 + rnd(`cy${i}`) * 860, width: 3, height: 3, borderRadius: 2, background: "#ffffff55", opacity: rnd(`co${i + ff}`) * 0.8 } })), chalk("TODAY WE LEARN", 0.05, 0.6, 70, 230), chalk("E = MCÂ²", 0.6, 1.1, 210, 380, "#FFE88A"), __h("svg", { width: 1920, height: 1080, style: { position: "absolute" }, fill: "none", stroke: "#F4F4EC", strokeWidth: 6, strokeLinecap: "round", opacity: 0.85 }, __h("path", { d: "M600 700 Q 960 780 1320 700", ...draw(f, 1.1, 1.4) }), __h("path", { d: "M1380 300 l40 -40 l40 40 l-40 40 z", ...draw(f, 1.2, 1.5) }), __h("circle", { cx: 520, cy: 300, r: 46, ...draw(f, 1.25, 1.55) })), __h("div", { style: { position: "absolute", left: 160, right: 160, bottom: 70, height: 40, background: "#7A5232", boxShadow: "0 -6px 12px #0006" } }));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Chalkboard;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L44', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

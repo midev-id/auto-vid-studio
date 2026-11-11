@@ -1,0 +1,62 @@
+<!-- L34 Pixel Art / 8-bit (Retro): Hati pixel tersusun, koin memantul, LEVEL UP.
+     Palette #2B2D5C #FF3B5C #FFD23F - best for retro.
+     Ported from src/library/scenes/scenes5.tsx (PixelArt). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #2B2D5C; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L34" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes5.tsx
+      var t = (f) => f / FPS;
+      var C = { position: "absolute", display: "flex", alignItems: "center", justifyContent: "center" };
+      var HEART = ["01100110", "11111111", "11111111", "11111111", "01111110", "00111100", "00011000"];
+      var PixelArt = ({ f }) => {
+        const ff = step(f, 5);
+        const tt = t(ff);
+        const cells = HEART.flatMap((row, y) => row.split("").map((c, x) => ({ x, y, on: c === "1" }))).filter((c) => c.on);
+        const coinY = Math.abs(Math.sin(tt * 5)) * 120;
+        return __h(Full, { bg: "#2B2D5C" }, __h("div", { style: { position: "absolute", inset: 0, backgroundImage: "linear-gradient(#0000001f 4px, transparent 4px), linear-gradient(90deg, #0000001f 4px, transparent 4px)", backgroundSize: "40px 40px" } }), __h("div", { style: { position: "absolute", left: 0, right: 0, top: 960, height: 120, background: "#5BC236", borderTop: "20px solid #3E8E22" } }), cells.map((c, i) => tt > 0.05 + i * 0.022 ? __h("div", { key: i, style: { position: "absolute", left: 640 + c.x * 80, top: 200 + c.y * 80, width: 80, height: 80, background: (c.x + c.y) % 3 ? "#FF3B5C" : "#FF7A8F", boxShadow: "inset -8px -8px 0 #B8183A" } }) : null), __h("div", { style: { position: "absolute", left: 1400, top: 700 - coinY, width: 100, height: 100, background: "#FFD23F", boxShadow: "inset -12px -12px 0 #D99A00, 0 0 0 10px #000", borderRadius: 4 } }), __h("div", { style: { ...C, left: 0, right: 0, top: 790, fontSize: 96, fontWeight: 900, letterSpacing: 14, color: "#fff", textShadow: "8px 8px 0 #000", opacity: tt > 1 && Math.floor(tt * 4) % 2 ? 1 : tt > 1 ? 0.25 : 0 } }, "LEVEL UP!"));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = PixelArt;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L34', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

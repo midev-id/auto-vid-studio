@@ -1,0 +1,125 @@
+<!-- L16 Retro / Vintage (Film): Sunburst berputar, badge EST. 1970, grain film, goresan, flicker.
+     Palette #E8D5A9 #3B2A1A #D9A441 #B5651D - best for kuliner, brand lokal, nostalgia.
+     Ported from src/library/scenes/scenes2.tsx (Retro). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #E8D5A9; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L16" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes2.tsx
+      var t = (f) => f / FPS;
+      var Retro = ({ f }) => {
+        const tt = t(f);
+        const g = step(f, 2);
+        const weave = (rnd(`rw${g}`) - 0.5) * 4;
+        const flick = rnd(`rf${g}`) * 0.1;
+        const badge = sp(f, 0.1, 11, 150, 0.8);
+        const ribbon = ramp(f, 0.6, 1, OUT);
+        const fi = useFrameInset();
+        return __h(Full, { bg: "#E8D5A9" }, __h("div", { style: { position: "absolute", inset: 0, transform: `translateY(${weave}px)` } }, __h(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              inset: Math.min(-500, fi.top - 200),
+              background: "repeating-conic-gradient(from 0deg at 50% 50%, #D9A441 0deg 7.5deg, #E8D5A9 7.5deg 15deg)",
+              transform: `rotate(${tt * 10}deg)`,
+              opacity: 0.6
+            }
+          }
+        ), __h("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" } }, __h(
+          "div",
+          {
+            style: {
+              width: 560,
+              height: 560,
+              borderRadius: 999,
+              background: "#3B2A1A",
+              boxShadow: "0 0 0 14px #E8D5A9, 0 0 0 24px #3B2A1A",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#F3E6C4",
+              transform: `scale(${badge}) rotate(${(1 - badge) * -30}deg)`
+            }
+          },
+          __h("div", { style: { fontSize: 28, fontWeight: 700, letterSpacing: 12 } }, "★ EST. 1970 ★"),
+          __h("div", { style: { fontSize: 170, fontWeight: 900, letterSpacing: -4, lineHeight: 1, textShadow: "6px 6px 0 #B5651D" } }, "RETRO"),
+          __h("div", { style: { width: 300, height: 4, background: "#D9A441", margin: "10px 0" } }),
+          __h("div", { style: { fontSize: 28, fontWeight: 700, letterSpacing: 10 } }, "QUALITY GOODS")
+        )), __h("div", { style: { position: "absolute", left: 0, right: 0, top: 760, display: "flex", justifyContent: "center" } }, __h(
+          "div",
+          {
+            style: {
+              padding: "18px 110px",
+              background: "#B5651D",
+              color: "#F3E6C4",
+              fontSize: 44,
+              fontWeight: 900,
+              letterSpacing: 10,
+              clipPath: `polygon(0 0, 100% 0, 95% 50%, 100% 100%, 0 100%, 5% 50%)`,
+              transform: `scaleX(${ribbon})`
+            }
+          },
+          "VINTAGE CO."
+        ))), Array.from({ length: 40 }, (_, i) => __h(
+          "div",
+          {
+            key: i,
+            style: {
+              position: "absolute",
+              left: rnd(`gx${i}${g}`) * 1920,
+              top: rnd(`gy${i}${g}`) * 1080,
+              width: 2 + rnd(`gs${i}${g}`) * 5,
+              height: 2 + rnd(`gs${i}${g}`) * 5,
+              borderRadius: 9,
+              background: i % 2 ? "#2B1D10" : "#FFF6DD",
+              opacity: 0.5
+            }
+          }
+        )), rnd(`sc${g}`) > 0.4 && __h("div", { style: { position: "absolute", left: rnd(`sx${g}`) * 1920, top: 0, bottom: 0, width: 2, background: "#2B1D1055" } }), __h("div", { style: { position: "absolute", ...fi, background: "radial-gradient(ellipse at center, transparent 45%, #2B1D10AA 100%)" } }), __h("div", { style: { position: "absolute", ...fi, background: "#2B1D10", opacity: flick } }));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Retro;
+    })();
+    (function () {
+      const V = {"s":0.95,"bleed":false};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L16', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

@@ -1,0 +1,131 @@
+<!-- Ported from src/templates/SketchbookTemplate.tsx (SketchbookTemplate) by hf/tools/port-video.mjs.
+     The whole picture is one function of the frame (30fps), rendered by HFK.mount(); audio clips live in index.html. -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="video" data-width="1080" data-height="1920" data-layout-allow-overflow></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/font.js
+      var loadFont = () => ({ fontFamily: "'Noto Sans KR', sans-serif" });
+    
+      // src/templates/common.tsx
+      var { fontFamily: FONT } = loadFont("normal", { weights: ["400", "500", "700", "900"], subsets: ["latin"] });
+      var W = 1080;
+      var H = 1920;
+      var clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" };
+      var SMOOTH = Easing.bezier(0.7, 0, 0.3, 1);
+      var ramp = (f, a, b, easing = SMOOTH) => interpolate(f, [a, b], [0, 1], { ...clamp, easing });
+      var useSpring = () => {
+        const { fps } = useVideoConfig();
+        return (f, at = 0, damping = 16, stiffness = 140, mass = 0.7) => spring({ frame: f - at, fps, config: { damping, stiffness, mass } });
+      };
+      var drawOn = (p) => ({ pathLength: 1, strokeDasharray: 1, strokeDashoffset: 1 - p });
+      var Scenes = ({ scenes: scenes2, overlap = 12 }) => {
+        let at = 0;
+        return __h(Fragment, null, scenes2.map((s, i) => {
+          const from = at;
+          at += s.dur;
+          const len = s.dur + (i < scenes2.length - 1 ? overlap : 0);
+          return __h(Sequence, { key: i, from, durationInFrames: len, layout: "none" }, __h(SceneFrame, { render: s.render, dur: len }));
+        }));
+      };
+      var SceneFrame = ({ render, dur }) => {
+        const f = useCurrentFrame();
+        return __h(AbsoluteFill, null, render(f, dur));
+      };
+      var totalFrames = (scenes2) => scenes2.reduce((a, s) => a + s.dur, 0);
+      var Sfx = ({ at, src, v = 0.25 }) => __h(Sequence, { from: at, layout: "none" }, __h(Audio, { src: staticFile(`shared/sfx/${src}.wav`), volume: v }));
+    
+      // src/templates/SketchbookTemplate.tsx
+      var PAL = { paper: "#F6F0E0", line: "rgba(80,110,160,0.18)", margin: "rgba(214,80,80,0.35)", pencil: "#2F2F33", marker: "#FFD84D", red: "#D9483B" };
+      var COPY = { title: "IDE BESAR", note: "mulai dari coretan kecil", steps: ["RISET", "SKETSA", "EKSEKUSI"] };
+      var wobble = (pts, f, amt = 3, salt = "w") => {
+        const seed = Math.floor(f / 4);
+        return pts.map(([x, y], i) => [x + (random(`${salt}x${i}${seed}`) - 0.5) * amt * 2, y + (random(`${salt}y${i}${seed}`) - 0.5) * amt * 2]);
+      };
+      var toPath = (pts) => "M" + pts.map((p) => p.join(" ")).join(" L");
+      var circlePts = (cx, cy, rx, ry, turns = 1.08) => [...Array(40)].map((_, i) => {
+        const a = i / 39 * Math.PI * 2 * turns - 0.4;
+        return [cx + Math.cos(a) * rx, cy + Math.sin(a) * ry];
+      });
+      var Paper = ({ children, turn = 0 }) => __h(AbsoluteFill, { style: { perspective: 2400 } }, __h(
+        AbsoluteFill,
+        {
+          style: {
+            background: PAL.paper,
+            backgroundImage: `linear-gradient(${PAL.line} 2px, transparent 2px)`,
+            backgroundSize: "100% 72px",
+            backgroundPosition: "0 40px",
+            transformOrigin: "left center",
+            transform: `rotateY(${-turn * 100}deg)`,
+            boxShadow: turn > 0 ? `${-30 * turn}px 0 60px rgba(0,0,0,0.25)` : void 0,
+            fontFamily: FONT
+          }
+        },
+        __h("div", { style: { position: "absolute", left: 120, top: 0, bottom: 0, width: 3, background: PAL.margin } }),
+        children
+      ));
+      var Hand = ({ f, at, children, size, rot = -2, color = PAL.pencil, weight = 900 }) => {
+        const p = ramp(f, at, at + 14);
+        return __h("div", { style: { fontSize: size, fontWeight: weight, color, transform: `rotate(${rot}deg)`, clipPath: `inset(0 ${(1 - p) * 100}% 0 0)`, lineHeight: 1.1 } }, children);
+      };
+      var scenes = [
+        {
+          dur: 95,
+          render: (f, dur) => __h(Paper, { turn: ramp(f, dur - 16, dur) }, __h("div", { style: { position: "absolute", top: 640, left: 0, right: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 40 } }, __h("div", { style: { position: "relative" } }, __h("div", { style: { position: "absolute", left: -20, right: -20, top: "45%", height: "45%", background: PAL.marker, transformOrigin: "left", transform: `scaleX(${ramp(f, 28, 44)}) rotate(-1.5deg)`, opacity: 0.85 } }), __h("div", { style: { position: "relative" } }, __h(Hand, { f, at: 6, size: 190 }, COPY.title))), __h(Hand, { f, at: 40, size: 56, weight: 500, rot: 1 }, COPY.note.toUpperCase())), __h("svg", { width: W, height: H, style: { position: "absolute", inset: 0 } }, __h("path", { d: toPath(wobble(circlePts(540, 760, 470, 190), f, 4, "c")), fill: "none", stroke: PAL.red, strokeWidth: 7, strokeLinecap: "round", ...drawOn(ramp(f, 46, 66)) }), __h("path", { d: toPath(wobble([[300, 1180], [420, 1260], [560, 1300], [700, 1290]], f, 4, "a")), fill: "none", stroke: PAL.pencil, strokeWidth: 6, strokeLinecap: "round", ...drawOn(ramp(f, 60, 74)) }), __h("path", { d: toPath(wobble([[650, 1250], [705, 1290], [655, 1335]], f, 3, "h")), fill: "none", stroke: PAL.pencil, strokeWidth: 6, strokeLinecap: "round", strokeLinejoin: "round", opacity: ramp(f, 72, 76) }), __h(
+            "path",
+            {
+              d: toPath(wobble([[860, 330], [890, 410], [970, 410], [905, 455], [930, 535], [860, 485], [790, 535], [815, 455], [750, 410], [830, 410], [860, 330]], f, 3, "s")),
+              fill: "none",
+              stroke: PAL.pencil,
+              strokeWidth: 5,
+              strokeLinejoin: "round",
+              ...drawOn(ramp(f, 12, 36))
+            }
+          )))
+        },
+        {
+          dur: 110,
+          render: (f) => __h(Steps, { f })
+        }
+      ];
+      var Steps = ({ f }) => {
+        const sp = useSpring();
+        return __h(Paper, null, __h("svg", { width: W, height: H, style: { position: "absolute", inset: 0 } }, COPY.steps.map((_, i) => {
+          const y = 520 + i * 380;
+          const at = 8 + i * 22;
+          return __h("g", { key: i }, __h("path", { d: toPath(wobble(circlePts(260, y, 90, 90), f, 3, `n${i}`)), fill: "none", stroke: PAL.pencil, strokeWidth: 6, ...drawOn(ramp(f, at, at + 14)) }), i < COPY.steps.length - 1 ? __h("path", { d: toPath(wobble([[260, y + 110], [250, y + 190], [262, y + 270]], f, 3, `l${i}`)), fill: "none", stroke: PAL.pencil, strokeWidth: 5, strokeDasharray: "14 12", opacity: ramp(f, at + 14, at + 22) }) : null, __h("path", { d: toPath(wobble([[880, y - 40], [900, y], [960, y - 70]], f, 3, `k${i}`)), fill: "none", stroke: PAL.red, strokeWidth: 9, strokeLinecap: "round", strokeLinejoin: "round", ...drawOn(ramp(f, at + 30, at + 38)) }));
+        })), COPY.steps.map((s, i) => __h("div", { key: s, style: { position: "absolute", left: 0, top: 520 + i * 380 - 60, width: 520, textAlign: "center", fontFamily: FONT, fontSize: 90, fontWeight: 900, color: PAL.pencil, transform: `scale(${sp(f, 12 + i * 22, 12)})` } }, i + 1)), COPY.steps.map((s, i) => __h("div", { key: `t${s}`, style: { position: "absolute", left: 400, top: 520 + i * 380 - 60 } }, __h(Hand, { f, at: 16 + i * 22, size: 100, rot: -1 + i }, s))));
+      };
+      var SKETCH_DURATION = totalFrames(scenes);
+      var SketchbookTemplate = () => __h(AbsoluteFill, { style: { width: W, height: H, background: "#E9E1CC" } }, __h(Scenes, { scenes, overlap: 0 }), __h(Sfx, { at: 79, src: "swipe", v: 0.3 }), __h(Sfx, { at: 46, src: "tick", v: 0.2 }));
+    
+      // <stdin>
+      window.__HFK_SCENE = SketchbookTemplate;
+      window.__HFK_LEN = SKETCH_DURATION;
+    })();
+    HFK.mount('video', window.__HFK_SCENE, {fps: 30, width: 1080, height: 1920, duration: 6.833});
+  </script>
+</template>

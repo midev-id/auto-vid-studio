@@ -1,0 +1,67 @@
+<!-- L47 Typewriter (Type): Huruf diketik satu-satu di kertas.
+     Palette #3B2F2A #FBF7EE #D7261E - best for type.
+     Ported from src/library/scenes/scenes6.tsx (Typewriter). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #3B2F2A; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L47" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes6.tsx
+      var t = (f) => f / FPS;
+      var PTS = Array.from({ length: 22 }).map((_, i) => ({ x: 340 + rnd(`px${i}`) * 1240, y: 140 + rnd(`py${i}`) * 800 }));
+      var Typewriter = ({ f }) => {
+        const tt = t(f);
+        const lines = ["Dear viewer,", "every great story", "starts with one key."];
+        const total = lines.join("").length;
+        const n = Math.round(interpolate(tt, [0.25, 1.45], [0, total], clamp));
+        let used = 0;
+        const paper = sp(f, 0, 16, 110, 0.9);
+        return __h(Full, { bg: "#3B2F2A" }, __h("div", { style: { position: "absolute", left: 460, top: 100 + (1 - paper) * 700, width: 1e3, height: 900, background: "#FBF7EE", boxShadow: "0 30px 60px #0008", padding: "90px 100px" } }, lines.map((l, i) => {
+          const k = Math.max(0, Math.min(l.length, n - used));
+          used += l.length;
+          return __h("div", { key: i, style: { fontSize: 76, fontWeight: 500, color: "#222", lineHeight: 1.6, letterSpacing: 2 } }, l.slice(0, k).split("").map((ch, j) => __h("span", { key: j, style: { display: "inline-block", transform: `translateY(${(rnd(`ty${i}${j}`) - 0.5) * 4}px)`, opacity: 0.85 + rnd(`to${i}${j}`) * 0.15, whiteSpace: "pre" } }, ch)), k > 0 && k < l.length ? __h("span", { style: { opacity: Math.floor(tt * 4) % 2 ? 1 : 0 } }, "â–Œ") : null);
+        }), __h("div", { style: { height: 8, width: 520 * ramp(f, 1.5, 1.8, OUT), background: "#D7261E", marginTop: 10, borderRadius: 4 } })));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Typewriter;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L47', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

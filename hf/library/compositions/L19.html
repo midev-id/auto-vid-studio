@@ -1,0 +1,111 @@
+<!-- L19 Type Collage (Type): 9 stiker kata dihantam masuk, selotip, blok COLLAGE besar.
+     Palette #F1EDE4 #111111 #FF3B30 #FFD60A #2F6BFF - best for hook, fashion, list.
+     Ported from src/library/scenes/scenes3.tsx (TypeCollage). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #F1EDE4; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L19" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes3.tsx
+      var STICKERS = [
+        { w: "CUT", x: 230, y: 170, s: 120, r: -8, bg: "#111", fg: "#FFD60A" },
+        { w: "PASTE", x: 560, y: 120, s: 90, r: 5, bg: "#FF3B30", fg: "#FFF" },
+        { w: "LOUD", x: 1300, y: 140, s: 130, r: 7, bg: "#FFD60A", fg: "#111" },
+        { w: "ZINE", x: 1580, y: 330, s: 100, r: -12, bg: "#2F6BFF", fg: "#FFF" },
+        { w: "REMIX", x: 200, y: 420, s: 110, r: 9, bg: "#FFFFFF", fg: "#111" },
+        { w: "BOLD", x: 1450, y: 620, s: 120, r: -5, bg: "#111", fg: "#FFF" },
+        { w: "MIX", x: 330, y: 680, s: 140, r: -14, bg: "#FF7AC6", fg: "#111" },
+        { w: "!!!", x: 980, y: 760, s: 120, r: 12, bg: "#2BD67B", fg: "#111" },
+        { w: "TYPE", x: 820, y: 110, s: 100, r: -3, bg: "#FFFFFF", fg: "#FF3B30" }
+      ];
+      var TypeCollage = ({ f }) => {
+        const big = sp(f, 0.95, 9, 200, 0.6);
+        return __h(Full, { bg: "#F1EDE4", style: { backgroundImage: "repeating-linear-gradient(0deg, transparent 0 34px, #00000010 34px 36px)" } }, STICKERS.map((s, i) => {
+          const p = sp(f, 0.05 + i * 0.07, 8, 260, 0.5);
+          return __h(
+            "div",
+            {
+              key: i,
+              style: {
+                position: "absolute",
+                left: s.x,
+                top: s.y,
+                padding: "6px 22px",
+                background: s.bg,
+                color: s.fg,
+                fontSize: s.s,
+                fontWeight: i % 2 ? 900 : 700,
+                letterSpacing: i % 3 ? -3 : 6,
+                lineHeight: 1,
+                fontStyle: i % 4 === 1 ? "italic" : void 0,
+                border: s.bg === "#FFFFFF" ? "4px solid #111" : void 0,
+                boxShadow: "8px 10px 0 #00000030",
+                transform: `scale(${mix(2.2, 1, p)}) rotate(${s.r}deg)`,
+                opacity: p > 0.02 ? 1 : 0
+              }
+            },
+            s.w,
+            i % 3 === 0 && __h("div", { style: { position: "absolute", left: "30%", top: -18, width: 110, height: 34, background: "#FFFFFFB0", transform: "rotate(-6deg)" } })
+          );
+        }), __h("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" } }, __h(
+          "div",
+          {
+            style: {
+              padding: "10px 40px",
+              background: "#111",
+              color: "#F1EDE4",
+              fontSize: 190,
+              fontWeight: 900,
+              letterSpacing: -8,
+              lineHeight: 1,
+              transform: `scale(${mix(3, 1, big)}) rotate(-3deg)`,
+              opacity: big > 0.02 ? 1 : 0,
+              boxShadow: "16px 16px 0 #FF3B30"
+            }
+          },
+          "COLLAGE"
+        )));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = TypeCollage;
+    })();
+    (function () {
+      const V = {"s":0.6};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L19', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

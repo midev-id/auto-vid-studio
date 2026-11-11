@@ -1,0 +1,58 @@
+<!-- L39 Line Art (Clean): Satu garis menggambar bohlam yang menyala.
+     Palette #FAFAF7 #141414 #FF7A00 - best for clean.
+     Ported from src/library/scenes/scenes6.tsx (LineArt). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #FAFAF7; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L39" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes6.tsx
+      var draw = (f, a, b) => ({ pathLength: 1, strokeDasharray: 1, strokeDashoffset: 1 - ramp(f, a, b, Easing.bezier(0.5, 0, 0.3, 1)) });
+      var LineArt = ({ f }) => {
+        const lit = ramp(f, 1.1, 1.4);
+        return __h(Full, { bg: "#FAFAF7" }, __h("div", { style: { position: "absolute", left: 760, top: 160, width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, #FFD23F88, transparent 70%)", opacity: lit } }), __h("svg", { width: 1920, height: 1080, style: { position: "absolute" }, fill: "none", stroke: "#141414", strokeWidth: 9, strokeLinecap: "round", strokeLinejoin: "round" }, __h("path", { d: "M300 760 C 600 760, 700 700, 820 560 C 720 470, 760 230, 960 230 C 1160 230, 1200 470, 1100 560 C 1080 600, 1060 640, 1060 680 L 860 680 C 860 640, 840 600, 820 560 M 870 730 L 1050 730 M 890 780 L 1030 780 C 1100 800, 1300 820, 1620 800", ...draw(f, 0.05, 1.1) }), __h("path", { d: "M900 560 L930 470 L960 540 L990 470 L1020 560", stroke: "#FF7A00", ...draw(f, 1, 1.3) })), __h("div", { style: { position: "absolute", left: 0, right: 0, top: 860, textAlign: "center", fontSize: 78, color: "#141414", letterSpacing: -1, opacity: ramp(f, 1.3, 1.6) } }, __h("span", { style: { fontWeight: 500 } }, "one line, "), __h("span", { style: { fontWeight: 900 } }, "ONE IDEA")));
+      };
+      var PTS = Array.from({ length: 22 }).map((_, i) => ({ x: 340 + rnd(`px${i}`) * 1240, y: 140 + rnd(`py${i}`) * 800 }));
+    
+      // <stdin>
+      window.__HFK_SCENE = LineArt;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L39', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

@@ -1,0 +1,65 @@
+<!-- L27 Modern UI (Clean): Kartu putih shadow berlapis, stat tile pop, toast, klik kursor.
+     Palette #EEF1F7 #0F1626 #2F6BFF - best for clean.
+     Ported from src/library/scenes/scenes5.tsx (ModernUI). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #EEF1F7; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L27" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes5.tsx
+      var t = (f) => f / FPS;
+      var SH = "0 2px 4px rgba(15,22,38,0.05), 0 14px 28px -8px rgba(15,22,38,0.14), 0 44px 90px -30px rgba(15,22,38,0.35)";
+      var ModernUI = ({ f }) => {
+        const tt = t(f);
+        const card = sp(f, 0.05, 16, 120, 0.8);
+        const toast = sp(f, 1.15, 13, 200, 0.6);
+        const click = interpolate(tt, [1, 1.06, 1.22], [0, 1, 0], clamp);
+        const mv = sp(f, 0.4, 17, 120);
+        return __h(Full, { bg: "#EEF1F7" }, __h("div", { style: { position: "absolute", inset: 0, background: `radial-gradient(700px 700px at ${30 + Math.sin(tt) * 6}% 30%, #DCE4F5, transparent 70%), radial-gradient(600px 600px at 75% 80%, #2F6BFF22, transparent 70%)` } }), __h("div", { style: { position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, #0F162614 2px, transparent 2.5px)", backgroundSize: "44px 44px", backgroundPosition: `0 ${tt * 14}px` } }), __h("div", { style: { position: "absolute", left: 460, top: 170, width: 1e3, height: 640, perspective: 2e3 } }, __h("div", { style: { position: "absolute", inset: 0, borderRadius: 40, background: "#fff", boxShadow: SH, padding: 50, transform: `rotateX(${(1 - card) * 35 + 4}deg) rotateY(${Math.sin(tt * 0.8) * 3}deg) translateY(${(1 - card) * 300}px)`, opacity: Math.min(1, card * 2) } }, __h("div", { style: { fontSize: 30, fontWeight: 700, color: "#6B7489", letterSpacing: 4 } }, "DASHBOARD"), __h("div", { style: { fontSize: 78, fontWeight: 900, color: "#0F1626", marginTop: 6, letterSpacing: -2 } }, "CLEAN & SIMPLE"), __h("div", { style: { display: "flex", gap: 28, marginTop: 44 } }, [["VIEWS", "12.4K", "#2F6BFF"], ["LIKES", "3.1K", "#FF7A45"], ["SAVES", "980", "#12A36B"]].map(([k, v, c], i) => {
+          const p = sp(f, 0.45 + i * 0.12, 12, 200, 0.6);
+          return __h("div", { key: k, style: { flex: 1, height: 230, borderRadius: 28, background: "#F5F7FB", padding: 28, transform: `scale(${p}) translateY(${(1 - p) * 40}px)`, outline: i === 1 && tt > 1 ? `4px solid ${c}` : void 0 } }, __h("div", { style: { width: 56, height: 56, borderRadius: 18, background: c } }), __h("div", { style: { fontSize: 24, fontWeight: 700, color: "#6B7489", marginTop: 22 } }, k), __h("div", { style: { fontSize: 56, fontWeight: 900, color: "#0F1626" } }, v));
+        })))), __h("svg", { width: 60, height: 72, viewBox: "0 0 23 28", style: { position: "absolute", left: 1040 + (1 - mv) * 300, top: 600 + (1 - mv) * 200, transform: `scale(${1 - click * 0.15})` } }, __h("path", { d: "M2 2 L2 22 L7.5 17 L11 25.5 L14.5 24 L11 15.8 L18.5 15.5 Z", fill: "#fff", stroke: "#111", strokeWidth: 1.6, strokeLinejoin: "round" })), __h("div", { style: { position: "absolute", left: 620, top: 860, width: 680, height: 120, borderRadius: 30, background: "#fff", boxShadow: SH, display: "flex", alignItems: "center", gap: 24, padding: "0 30px", transform: `translateY(${(1 - toast) * 260}px)`, opacity: toast } }, __h("div", { style: { width: 70, height: 70, borderRadius: 22, background: "#2F6BFF", color: "#fff", fontSize: 40, fontWeight: 900, display: "grid", placeItems: "center" } }, "✓"), __h("div", { style: { fontSize: 38, fontWeight: 900, color: "#0F1626" } }, "SAVED TO LIBRARY")));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = ModernUI;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L27', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

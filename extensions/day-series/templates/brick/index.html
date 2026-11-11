@@ -1,0 +1,76 @@
+<!doctype html>
+<!-- X13 Day Series · Toy Brick: HyperFrames project from extensions/day-series (built by src/build.mjs).
+     Picture: compositions/video.html (edit window.DAYCFG there). Sound: the <audio> clips below (sfx from assets/sfx/core). -->
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; font-family: 'Noto Sans KR', sans-serif; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="34" data-fps="30" data-width="1080" data-height="1920">
+      <div id="video" data-composition-id="video" data-composition-src="compositions/video.html" data-start="0" data-duration="34"
+        data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <audio id="sfx0" class="clip" src="assets/sfx/core/sfx-drum-hit.mp3" data-start="0.3" data-duration="1.541" data-volume="0.25" data-track-index="2"></audio>
+      <audio id="sfx1" class="clip" src="assets/sfx/core/sfx-pop.mp3" data-start="0.5" data-duration="0.731" data-volume="0.3" data-track-index="3"></audio>
+      <audio id="sfx2" class="clip" src="assets/sfx/core/sfx-whoosh-short.mp3" data-start="0.9" data-duration="0.549" data-volume="0.18" data-track-index="4"></audio>
+      <audio id="sfx3" class="clip" src="assets/sfx/core/sfx-pop.mp3" data-start="1" data-duration="0.731" data-volume="0.3" data-track-index="5"></audio>
+      <audio id="sfx4" class="clip" src="assets/sfx/core/sfx-thud-slam.mp3" data-start="3.3" data-duration="2.064" data-volume="0.25" data-track-index="2"></audio>
+      <audio id="sfx5" class="clip" src="assets/sfx/core/sfx-notification.mp3" data-start="3.7" data-duration="2.403" data-volume="0.22" data-track-index="3"></audio>
+      <audio id="sfx6" class="clip" src="assets/sfx/core/sfx-counter-ticks.mp3" data-start="4.4" data-duration="2.717" data-volume="0.2" data-track-index="4"></audio>
+      <audio id="sfx7" class="clip" src="assets/sfx/core/sfx-ui-thump-soft.mp3" data-start="5.8" data-duration="0.392" data-volume="0.25" data-track-index="2"></audio>
+      <audio id="sfx8" class="clip" src="assets/sfx/core/sfx-crowd-cheer.mp3" data-start="5.8" data-duration="3.736" data-volume="0.15" data-track-index="5"></audio>
+      <audio id="sfx9" class="clip" src="assets/sfx/core/sfx-ui-ticks-8th.mp3" data-start="6.1" data-duration="0.549" data-volume="0.2" data-track-index="6"></audio>
+      <audio id="sfx10" class="clip" src="assets/sfx/core/sfx-ui-ding-soft.mp3" data-start="7.1" data-duration="0.836" data-volume="0.22" data-track-index="2"></audio>
+      <audio id="sfx11" class="clip" src="assets/sfx/core/sfx-thud-slam.mp3" data-start="8.8" data-duration="2.064" data-volume="0.25" data-track-index="2"></audio>
+      <audio id="sfx12" class="clip" src="assets/sfx/core/sfx-footsteps.mp3" data-start="9.2" data-duration="3.527" data-volume="0.15" data-track-index="3"></audio>
+      <audio id="sfx13" class="clip" src="assets/sfx/core/sfx-pop.mp3" data-start="9.4" data-duration="0.731" data-volume="0.25" data-track-index="4"></audio>
+      <audio id="sfx14" class="clip" src="assets/sfx/core/sfx-pop.mp3" data-start="9.9" data-duration="0.731" data-volume="0.25" data-track-index="5"></audio>
+      <audio id="sfx15" class="clip" src="assets/sfx/core/sfx-pop.mp3" data-start="10.4" data-duration="0.731" data-volume="0.25" data-track-index="4"></audio>
+      <audio id="sfx16" class="clip" src="assets/sfx/core/sfx-crowd-cheer.mp3" data-start="10.9" data-duration="3.736" data-volume="0.18" data-track-index="2"></audio>
+      <audio id="sfx17" class="clip" src="assets/sfx/core/sfx-thud-slam.mp3" data-start="12.8" data-duration="2.064" data-volume="0.25" data-track-index="3"></audio>
+      <audio id="sfx18" class="clip" src="assets/sfx/core/sfx-notification.mp3" data-start="13.2" data-duration="2.403" data-volume="0.22" data-track-index="4"></audio>
+      <audio id="sfx19" class="clip" src="assets/sfx/core/sfx-typing.mp3" data-start="13.5" data-duration="1.097" data-volume="0.25" data-track-index="5"></audio>
+      <audio id="sfx20" class="clip" src="assets/sfx/core/sfx-pop.mp3" data-start="15.2" data-duration="0.731" data-volume="0.3" data-track-index="2"></audio>
+      <audio id="sfx21" class="clip" src="assets/sfx/core/sfx-ui-ding-soft.mp3" data-start="15.2" data-duration="0.836" data-volume="0.2" data-track-index="3"></audio>
+      <audio id="sfx22" class="clip" src="assets/sfx/core/sfx-thud-slam.mp3" data-start="17.8" data-duration="2.064" data-volume="0.25" data-track-index="2"></audio>
+      <audio id="sfx23" class="clip" src="assets/sfx/core/sfx-whoosh-low.mp3" data-start="18.1" data-duration="2.638" data-volume="0.2" data-track-index="3"></audio>
+      <audio id="sfx24" class="clip" src="assets/sfx/core/sfx-clock-ticking.mp3" data-start="18.3" data-duration="3.527" data-volume="0.15" data-track-index="4"></audio>
+      <audio id="sfx25" class="clip" src="assets/sfx/core/sfx-pop.mp3" data-start="19" data-duration="0.731" data-volume="0.25" data-track-index="5"></audio>
+      <audio id="sfx26" class="clip" src="assets/sfx/core/sfx-pop.mp3" data-start="19.5" data-duration="0.731" data-volume="0.25" data-track-index="6"></audio>
+      <audio id="sfx27" class="clip" src="assets/sfx/core/sfx-pop.mp3" data-start="19.9" data-duration="0.731" data-volume="0.25" data-track-index="2"></audio>
+      <audio id="sfx28" class="clip" src="assets/sfx/core/sfx-pop.mp3" data-start="20.3" data-duration="0.731" data-volume="0.25" data-track-index="5"></audio>
+      <audio id="sfx29" class="clip" src="assets/sfx/core/sfx-pop.mp3" data-start="20.8" data-duration="0.731" data-volume="0.25" data-track-index="2"></audio>
+      <audio id="sfx30" class="clip" src="assets/sfx/core/sfx-pop.mp3" data-start="21" data-duration="0.731" data-volume="0.25" data-track-index="3"></audio>
+      <audio id="sfx31" class="clip" src="assets/sfx/core/sfx-pop.mp3" data-start="21.3" data-duration="0.731" data-volume="0.25" data-track-index="5"></audio>
+      <audio id="sfx32" class="clip" src="assets/sfx/core/sfx-clock-ticking.mp3" data-start="21.4" data-duration="3.527" data-volume="0.15" data-track-index="6"></audio>
+      <audio id="sfx33" class="clip" src="assets/sfx/core/sfx-pop.mp3" data-start="21.7" data-duration="0.731" data-volume="0.25" data-track-index="2"></audio>
+      <audio id="sfx34" class="clip" src="assets/sfx/core/sfx-pop.mp3" data-start="22.1" data-duration="0.731" data-volume="0.25" data-track-index="3"></audio>
+      <audio id="sfx35" class="clip" src="assets/sfx/core/sfx-thud-slam.mp3" data-start="24.3" data-duration="2.064" data-volume="0.25" data-track-index="2"></audio>
+      <audio id="sfx36" class="clip" src="assets/sfx/core/sfx-notification.mp3" data-start="24.6" data-duration="2.403" data-volume="0.22" data-track-index="3"></audio>
+      <audio id="sfx37" class="clip" src="assets/sfx/core/sfx-typing.mp3" data-start="24.8" data-duration="1.097" data-volume="0.25" data-track-index="4"></audio>
+      <audio id="sfx38" class="clip" src="assets/sfx/core/sfx-record-scratch.mp3" data-start="26.1" data-duration="1.541" data-volume="0.2" data-track-index="4"></audio>
+      <audio id="sfx39" class="clip" src="assets/sfx/core/sfx-pop.mp3" data-start="26.1" data-duration="0.731" data-volume="0.25" data-track-index="5"></audio>
+      <audio id="sfx40" class="clip" src="assets/sfx/core/sfx-thud-slam.mp3" data-start="28.3" data-duration="2.064" data-volume="0.25" data-track-index="2"></audio>
+      <audio id="sfx41" class="clip" src="assets/sfx/core/sfx-click.mp3" data-start="28.7" data-duration="0.366" data-volume="0.3" data-track-index="3"></audio>
+      <audio id="sfx42" class="clip" src="assets/sfx/core/sfx-click.mp3" data-start="29.2" data-duration="0.366" data-volume="0.3" data-track-index="3"></audio>
+      <audio id="sfx43" class="clip" src="assets/sfx/core/sfx-click.mp3" data-start="29.7" data-duration="0.366" data-volume="0.3" data-track-index="3"></audio>
+      <audio id="sfx44" class="clip" src="assets/sfx/core/sfx-thud-slam.mp3" data-start="30.8" data-duration="2.064" data-volume="0.25" data-track-index="2"></audio>
+      <audio id="sfx45" class="clip" src="assets/sfx/core/sfx-whoosh-soft.mp3" data-start="31" data-duration="0.936" data-volume="0.2" data-track-index="3"></audio>
+      <audio id="sfx46" class="clip" src="assets/sfx/core/sfx-chime-gleam.mp3" data-start="32" data-duration="2.000" data-volume="0.25" data-track-index="3"></audio>
+      <audio id="sfx47" class="clip" src="assets/sfx/core/sfx-ui-thump-soft.mp3" data-start="32" data-duration="0.392" data-volume="0.2" data-track-index="4"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

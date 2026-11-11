@@ -1,0 +1,60 @@
+<!-- L46 Bauhaus (Clean): Bentuk primer menyusun komposisi.
+     Palette #F1E9D8 #E03C31 #1D4E9E - best for clean.
+     Ported from src/library/scenes/scenes6.tsx (Bauhaus). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #F1E9D8; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L46" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes6.tsx
+      var PTS = Array.from({ length: 22 }).map((_, i) => ({ x: 340 + rnd(`px${i}`) * 1240, y: 140 + rnd(`py${i}`) * 800 }));
+      var Bauhaus = ({ f }) => {
+        const a = sp(f, 0.05, 13, 140);
+        const b = sp(f, 0.25, 13, 140);
+        const c = sp(f, 0.45, 13, 140);
+        const d = ramp(f, 0.7, 1.1, OUT);
+        return __h(Full, { bg: "#F1E9D8" }, __h("div", { style: { position: "absolute", left: 520, top: 140, width: 440, height: 440, borderRadius: "50%", background: "#E03C31", transform: `translateX(${(1 - a) * -700}px)` } }), __h("div", { style: { position: "absolute", left: 960, top: 140, width: 440, height: 440, background: "#1D4E9E", transform: `rotate(${(1 - b) * 180}deg) scale(${b})` } }), __h("svg", { width: 880, height: 420, style: { position: "absolute", left: 520, top: 580, transform: `translateY(${(1 - c) * 600}px)` } }, __h("polygon", { points: "0,420 440,0 880,420", fill: "#F2B705" })), __h("div", { style: { position: "absolute", left: 520, top: 578, width: 880 * d, height: 14, background: "#111" } }), __h("div", { style: { position: "absolute", left: 1440, top: 160, writingMode: "vertical-rl", fontSize: 120, fontWeight: 900, letterSpacing: 10, color: "#111", opacity: ramp(f, 0.9, 1.3) } }, "FORM"), __h("div", { style: { position: "absolute", left: 330, top: 160, writingMode: "vertical-rl", transform: "rotate(180deg)", fontSize: 50, fontWeight: 700, letterSpacing: 16, color: "#111", opacity: ramp(f, 1, 1.4) } }, "FUNCTION"));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Bauhaus;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L46', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

@@ -1,0 +1,67 @@
+<!-- L42 Sticker Bomb (Bold): Stiker die-cut ditempel bertumpuk.
+     Palette #2A2A31 #FF3B6B #FFD23F - best for bold.
+     Ported from src/library/scenes/scenes6.tsx (StickerBomb). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #2A2A31; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L42" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes6.tsx
+      var PTS = Array.from({ length: 22 }).map((_, i) => ({ x: 340 + rnd(`px${i}`) * 1240, y: 140 + rnd(`py${i}`) * 800 }));
+      var StickerBomb = ({ f }) => {
+        const st = [
+          { x: 420, y: 220, r: -12, bg: "#FF3B6B", txt: "WOW!", s: 110 },
+          { x: 1180, y: 180, r: 10, bg: "#FFD23F", txt: "100%", s: 100, round: true },
+          { x: 720, y: 420, r: 4, bg: "#2F6BFF", txt: "NEW DROP", s: 120 },
+          { x: 380, y: 700, r: 8, bg: "#12C48B", txt: "COOL", s: 100, round: true },
+          { x: 1120, y: 690, r: -8, bg: "#111", txt: "HYPE âœ¶", s: 110 },
+          { x: 860, y: 860, r: -3, bg: "#FF7A00", txt: "FUN", s: 90 }
+        ];
+        return __h(Full, { bg: "#2A2A31" }, __h("div", { style: { position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, #ffffff10 2px, transparent 2.5px)", backgroundSize: "36px 36px" } }), st.map((s, i) => {
+          const p = sp(f, 0.05 + i * 0.16, 9, 240, 0.6);
+          return __h("div", { key: i, style: { position: "absolute", left: s.x, top: s.y, padding: s.round ? 0 : "26px 46px", width: s.round ? 280 : void 0, height: s.round ? 280 : void 0, borderRadius: s.round ? "50%" : 36, display: "grid", placeItems: "center", background: s.bg, color: "#fff", fontSize: s.s, fontWeight: 900, letterSpacing: -2, border: "12px solid #fff", boxShadow: "0 18px 30px #0007", transform: `rotate(${s.r + (1 - p) * 30}deg) scale(${mix(2.2, 1, p)})`, opacity: Math.min(1, p * 3) } }, s.txt);
+        }));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = StickerBomb;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L42', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

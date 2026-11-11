@@ -1,0 +1,73 @@
+<!-- L14 Flat Design (Clean): Gunung, matahari, pohon flat; judul long shadow 40 lapis.
+     Palette #8ED1FC #264653 #2A9D8F #FFB703 - best for explainer, travel, edukasi.
+     Ported from src/library/scenes/scenes2.tsx (Flat). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #8ED1FC; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L14" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes2.tsx
+      var t = (f) => f / FPS;
+      var Flat = ({ f }) => {
+        const tt = t(f);
+        const longShadow = Array.from({ length: 40 }, (_, i) => `${i + 1}px ${i + 1}px 0 #1B7A8C`).join(",");
+        const pop = (a) => sp(f, a, 11, 200, 0.6);
+        return __h(Full, { bg: "#8ED1FC" }, __h("div", { style: { position: "absolute", left: 1380, top: 140 + (1 - pop(0.05)) * 300, width: 220, height: 220, borderRadius: 999, background: "#FFB703", boxShadow: "0 0 0 40px #FFB70333, 0 0 0 80px #FFB7031A" } }), [
+          { x: 160, y: 200, w: 260 },
+          { x: 760, y: 120, w: 200 }
+        ].map((c, i) => __h("div", { key: i, style: { position: "absolute", left: c.x + tt * 30, top: c.y, transform: `scale(${pop(0.1 + i * 0.1)})` } }, __h("div", { style: { width: c.w, height: 60, borderRadius: 99, background: "#FFFFFF" } }), __h("div", { style: { position: "absolute", left: c.w * 0.25, top: -40, width: c.w * 0.45, height: c.w * 0.45, borderRadius: 999, background: "#FFFFFF" } }))), __h("svg", { width: 1920, height: 1080, style: { position: "absolute" } }, [
+          { x: 520, h: 520, w: 520, c: "#264653", s: "#FFFFFF", a: 0.15 },
+          { x: 1050, h: 600, w: 640, c: "#2A9D8F", s: "#E9F5F2", a: 0.25 },
+          { x: 1560, h: 420, w: 480, c: "#287271", s: "#FFFFFF", a: 0.35 }
+        ].map((m, i) => {
+          const p = pop(m.a);
+          const top = 900 - m.h * p;
+          return __h("g", { key: i }, __h("polygon", { points: `${m.x - m.w / 2},900 ${m.x},${top} ${m.x + m.w / 2},900`, fill: m.c }), __h("polygon", { points: `${m.x},${top} ${m.x + m.w / 2},900 ${m.x},900`, fill: "#00000018" }), __h("polygon", { points: `${m.x - m.w * 0.11},${top + m.h * 0.22 * p} ${m.x},${top} ${m.x + m.w * 0.11},${top + m.h * 0.22 * p} ${m.x + m.w * 0.04},${top + m.h * 0.17 * p} ${m.x - m.w * 0.03},${top + m.h * 0.24 * p}`, fill: m.s }));
+        }), __h("rect", { x: 0, y: 880, width: 1920, height: 200, fill: "#52B788" }), __h("rect", { x: 0, y: 880, width: 1920, height: 18, fill: "#40916C" }), [300, 820, 1300, 1720].map((x, i) => {
+          const p = pop(0.5 + i * 0.08);
+          return __h("g", { key: x, transform: `translate(${x} 900) scale(${p})` }, __h("rect", { x: -10, y: -70, width: 20, height: 70, fill: "#8D5B3E" }), __h("polygon", { points: "-60,-60 0,-200 60,-60", fill: "#2D6A4F" }), __h("polygon", { points: "0,-200 60,-60 0,-60", fill: "#00000020" }));
+        })), __h("div", { style: { position: "absolute", left: 0, right: 0, top: 300, textAlign: "center" } }, __h("div", { style: { display: "inline-block", fontSize: 230, fontWeight: 900, color: "#FFFFFF", letterSpacing: -6, textShadow: longShadow, transform: `scale(${pop(0.6)})` } }, "FLAT")));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Flat;
+    })();
+    (function () {
+      const V = {"s":0.95};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L14', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

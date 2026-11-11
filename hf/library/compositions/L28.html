@@ -1,0 +1,64 @@
+<!-- L28 Neumorphism (Clean): Kontrol timbul satu warna, tombol ditekan, slider & toggle.
+     Palette #E4E8EE #4A5263 #5B6CFF - best for clean.
+     Ported from src/library/scenes/scenes5.tsx (Neumorph). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #E4E8EE; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L28" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes5.tsx
+      var t = (f) => f / FPS;
+      var C = { position: "absolute", display: "flex", alignItems: "center", justifyContent: "center" };
+      var NB = "#E4E8EE";
+      var out = (d) => `${d}px ${d}px ${d * 2}px #B8C0CC, -${d}px -${d}px ${d * 2}px #FFFFFF`;
+      var inn = (d) => `inset ${d}px ${d}px ${d * 2}px #B8C0CC, inset -${d}px -${d}px ${d * 2}px #FFFFFF`;
+      var Neumorph = ({ f }) => {
+        const tt = t(f);
+        const pressed = tt > 1.05;
+        const knob = interpolate(tt, [0.5, 1.4], [0, 1], { ...clamp, easing: OUT });
+        const tog = sp(f, 1.3, 14, 200);
+        return __h(Full, { bg: NB }, __h("div", { style: { ...C, left: 760, top: 200, width: 400, height: 400, borderRadius: 200, background: NB, boxShadow: pressed ? inn(18) : out(24), transform: `scale(${sp(f, 0.05, 12, 150) * (pressed ? 0.97 : 1)})` } }, __h("div", { style: { fontSize: 130, fontWeight: 900, color: pressed ? "#5B6CFF" : "#9AA4B5" } }, "⏻")), __h("div", { style: { position: "absolute", left: 560, top: 700, width: 800, height: 60, borderRadius: 30, background: NB, boxShadow: inn(8), opacity: sp(f, 0.3) } }, __h("div", { style: { position: "absolute", left: 6, top: 6, width: 48 + knob * 740, height: 48, borderRadius: 24, background: "linear-gradient(90deg, #8E9BFF, #5B6CFF)" } })), __h("div", { style: { position: "absolute", left: 560, top: 830, display: "flex", alignItems: "center", gap: 40, opacity: sp(f, 0.5) } }, __h("div", { style: { width: 180, height: 90, borderRadius: 45, background: NB, boxShadow: inn(7), position: "relative" } }, __h("div", { style: { position: "absolute", top: 10, left: 10 + tog * 90, width: 70, height: 70, borderRadius: 35, background: tog > 0.5 ? "#5B6CFF" : NB, boxShadow: out(6) } })), __h("div", { style: { fontSize: 64, fontWeight: 900, color: "#4A5263", letterSpacing: -1 } }, "SOFT UI")));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Neumorph;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L28', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

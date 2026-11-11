@@ -1,0 +1,70 @@
+<!-- L30 Bento Grid (Clean): Tile bento ala Apple muncul satu per satu.
+     Palette #F5F5F7 #111111 #2F6BFF - best for clean.
+     Ported from src/library/scenes/scenes5.tsx (Bento). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #F5F5F7; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L30" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes5.tsx
+      var t = (f) => f / FPS;
+      var SH = "0 2px 4px rgba(15,22,38,0.05), 0 14px 28px -8px rgba(15,22,38,0.14), 0 44px 90px -30px rgba(15,22,38,0.35)";
+      var C = { position: "absolute", display: "flex", alignItems: "center", justifyContent: "center" };
+      var Bento = ({ f }) => {
+        const tt = t(f);
+        const tiles = [
+          { x: 300, y: 130, w: 640, h: 500, bg: "#111", at: 0.05, c: __h("div", { style: { color: "#fff", fontSize: 120, fontWeight: 900, letterSpacing: -4, lineHeight: 0.95 } }, "ALL", __h("br", null), "IN ONE.") },
+          { x: 970, y: 130, w: 310, h: 240, bg: "#FFD23F", at: 0.18, c: __h("div", { style: { fontSize: 90, fontWeight: 900 } }, Math.round(98 * ramp(f, 0.3, 1.2, OUT)), "%") },
+          { x: 1310, y: 130, w: 310, h: 240, bg: "#2F6BFF", at: 0.28, c: __h("div", { style: { width: 110, height: 110, borderRadius: 55, border: "14px solid #fff", borderTopColor: "transparent", transform: `rotate(${tt * 360}deg)` } }) },
+          { x: 970, y: 390, w: 650, h: 240, bg: "#fff", at: 0.38, c: __h("div", { style: { display: "flex", alignItems: "flex-end", gap: 18, height: 150 } }, [0.4, 0.7, 0.5, 0.9, 0.65, 1].map((v, i) => __h("div", { key: i, style: { width: 60, height: 150 * v * sp(f, 0.5 + i * 0.06), borderRadius: 14, background: i === 5 ? "#FF5A1F" : "#DDE3EE" } }))) },
+          { x: 300, y: 660, w: 420, h: 290, bg: "#FF5A1F", at: 0.48, c: __h("div", { style: { fontSize: 70, fontWeight: 900, color: "#fff" } }, "FAST") },
+          { x: 750, y: 660, w: 870, h: 290, bg: "#E9ECF2", at: 0.58, c: __h("div", { style: { fontSize: 64, fontWeight: 900, color: "#111", letterSpacing: -1 } }, "DESIGNED TO ", __h("span", { style: { color: "#2F6BFF" } }, "FIT")) }
+        ];
+        return __h(Full, { bg: "#F5F5F7" }, tiles.map((b, i) => {
+          const p = sp(f, b.at, 14, 170, 0.7);
+          return __h("div", { key: i, style: { ...C, left: b.x, top: b.y, width: b.w, height: b.h, borderRadius: 40, background: b.bg, boxShadow: SH, transform: `scale(${0.6 + 0.4 * p})`, opacity: Math.min(1, p * 2), overflow: "hidden" } }, b.c);
+        }));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Bento;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L30', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

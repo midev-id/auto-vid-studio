@@ -1,0 +1,582 @@
+[
+  {
+    "name": "drone-dark",
+    "file": "sfx-drone-dark.mp3",
+    "category": "ambience",
+    "duration": 7.38,
+    "description": "Drone gelap ~7 dtk — suspense, misteri, latar tegang",
+    "license": "CC BY",
+    "source": "Openverse/Freesound",
+    "credit": "\"Deep Dark Drone - A\" by Victek is licensed under CC BY 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/."
+  },
+  {
+    "name": "rain-ambience",
+    "file": "sfx-rain-ambience.mp3",
+    "category": "ambience",
+    "duration": 8,
+    "description": "Ambience hujan 8 dtk, fade in/out (dibuat FFmpeg)",
+    "license": "Dibuat sendiri",
+    "source": "FFmpeg",
+    "credit": null
+  },
+  {
+    "name": "glitch-1",
+    "file": "sfx-glitch-1.mp3",
+    "category": "glitch",
+    "duration": 2.54,
+    "description": "Punchy digital glitch — hard-cut accent or sudden reveal. Trigger on the hit; let the decay bleed into the next shot (J-cut).",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "glitch-2",
+    "file": "sfx-glitch-2.mp3",
+    "category": "glitch",
+    "duration": 3.49,
+    "description": "Harsh, longer glitch — chaotic / jarring transition or a distorted reveal.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "glitch-3",
+    "file": "sfx-glitch-3.mp3",
+    "category": "glitch",
+    "duration": 2.85,
+    "description": "Low-key glitch texture — subtle digital shift, minimal transition that sits under other audio.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "boom-cinematic",
+    "file": "sfx-boom-cinematic.mp3",
+    "category": "impact",
+    "duration": 3.58,
+    "description": "Boom sinematik — judul besar, reveal dramatis",
+    "license": "CC BY",
+    "source": "Openverse/Freesound",
+    "credit": "\"cinematic boom 130730_06.wav\" by klankbeeld is licensed under CC BY 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/."
+  },
+  {
+    "name": "drum-hit",
+    "file": "sfx-drum-hit.mp3",
+    "category": "impact",
+    "duration": 1.5,
+    "description": "Pukulan drum — beat aksen, teks slam",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Drum Hit 2.wav\" by robertmcdonald is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "glass-break",
+    "file": "sfx-glass-break.mp3",
+    "category": "impact",
+    "duration": 1.38,
+    "description": "Kaca pecah — gagal, mitos dipatahkan, shock",
+    "license": "CC BY",
+    "source": "Openverse/Freesound",
+    "credit": "\"Glass breaking\" by Ruben_Uitenweerde is licensed under CC BY 3.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/3.0/."
+  },
+  {
+    "name": "hit-boom",
+    "file": "sfx-hit-boom.mp3",
+    "category": "impact",
+    "duration": 1.8,
+    "description": "Hit/boom rendah 1.8 dtk (dibuat FFmpeg)",
+    "license": "Dibuat sendiri",
+    "source": "FFmpeg",
+    "credit": null
+  },
+  {
+    "name": "impact-bass-1",
+    "file": "sfx-impact-bass-1.mp3",
+    "category": "impact",
+    "duration": 2.07,
+    "description": "Bass impact hit — logo/hero snap, headline slam. Trigger on the visual landing; decay carries into the next shot (J-cut).",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "impact-bass-2",
+    "file": "sfx-impact-bass-2.mp3",
+    "category": "impact",
+    "duration": 2.57,
+    "description": "Bass impact with a short swell — brief anticipation then a deep hit. Place so the peak lands on the reveal.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "punch",
+    "file": "sfx-punch.mp3",
+    "category": "impact",
+    "duration": 0.89,
+    "description": "Pukulan/tinju — aksi, benturan cepat",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Punch Hit 1.wav\" by joe_anderson22 is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "riser",
+    "file": "sfx-riser.mp3",
+    "category": "impact",
+    "duration": 9.23,
+    "description": "Long cinematic riser (~10s build, peak at the end). Trigger at (climax_time − 10.03s) so it crests exactly on the reveal.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "riser-short",
+    "file": "sfx-riser-short.mp3",
+    "category": "impact",
+    "duration": 2.95,
+    "description": "Riser pendek ~3 dtk — build-up singkat sebelum reveal",
+    "license": "CC BY",
+    "source": "Openverse/Freesound",
+    "credit": "\"Short riser, note G\" by copyc4t is licensed under CC BY 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/."
+  },
+  {
+    "name": "thud-slam",
+    "file": "sfx-thud-slam.mp3",
+    "category": "impact",
+    "duration": 2.04,
+    "description": "Thud bass berat — objek jatuh, banting",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"thud bassy slam.aiff\" by kyles is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "bird-chirp",
+    "file": "sfx-bird-chirp.mp3",
+    "category": "nature",
+    "duration": 0.31,
+    "description": "Satu kicau burung — pagi, alam, suasana ceria",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Single Bird Chirp\" by alegemaate is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "fire-crackle",
+    "file": "sfx-fire-crackle.mp3",
+    "category": "nature",
+    "duration": 2.87,
+    "description": "Api berderak — api, panas, kemah",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Fire Crackling\" by AntumDeluge is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "rain-drops",
+    "file": "sfx-rain-drops.mp3",
+    "category": "nature",
+    "duration": 9.85,
+    "description": "Rintik hujan besar ~10 dtk — loop latar hujan",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Big rain drops (2).MP3\" by macdaddyno1 is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "splash",
+    "file": "sfx-splash.mp3",
+    "category": "nature",
+    "duration": 1.3,
+    "description": "Cipratan air — sesuatu jatuh ke air",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Splash\" by swordofkings128 is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "thunder",
+    "file": "sfx-thunder.mp3",
+    "category": "nature",
+    "duration": 2.77,
+    "description": "Gemuruh petir — badai, momen dramatis",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Thunder rumbling, underwater, outdoors_Thunder rumbling.aif\" by carroll27 is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "water-drop",
+    "file": "sfx-water-drop.mp3",
+    "category": "nature",
+    "duration": 0.45,
+    "description": "Satu tetes air — air, hujan mulai, ide muncul",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Single Water Drop\" by paespedro is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "wave-splash",
+    "file": "sfx-wave-splash.mp3",
+    "category": "nature",
+    "duration": 8.9,
+    "description": "Ombak besar pecah — laut, pantai",
+    "license": "CC BY",
+    "source": "Openverse/Freesound",
+    "credit": "\"big wave splash.mp3\" by soundmary is licensed under CC BY 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/."
+  },
+  {
+    "name": "wind-gust",
+    "file": "sfx-wind-gust.mp3",
+    "category": "nature",
+    "duration": 6.95,
+    "description": "Hembusan angin ~8 dtk — cuaca, perpindahan, sepi",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Wind Gust\" by crashoverride6 is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "applause",
+    "file": "sfx-applause.mp3",
+    "category": "people",
+    "duration": 6.32,
+    "description": "Tepuk tangan ~6 dtk — akhir presentasi, apresiasi",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Applause 2.WAV\" by Sandermotions is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "crowd-cheer",
+    "file": "sfx-crowd-cheer.mp3",
+    "category": "people",
+    "duration": 3.7,
+    "description": "Kerumunan kecil bersorak + tepuk tangan — menang, perayaan",
+    "license": "CC BY",
+    "source": "Openverse/Freesound",
+    "credit": "\"small crowd cheering and clapping.wav\" by Tomlija is licensed under CC BY 3.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/3.0/."
+  },
+  {
+    "name": "footsteps",
+    "file": "sfx-footsteps.mp3",
+    "category": "people",
+    "duration": 3.49,
+    "description": "Langkah kaki di lantai keras — berjalan, datang",
+    "license": "CC BY",
+    "source": "Openverse/Freesound",
+    "credit": "\"Footsteps on hard floor indoors.wav\" by Jake Williams is licensed under CC BY 3.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/3.0/."
+  },
+  {
+    "name": "heartbeat",
+    "file": "sfx-heartbeat.mp3",
+    "category": "people",
+    "duration": 11.66,
+    "description": "Satu detak jantung — tegang, kesehatan, emosi",
+    "license": "CC BY",
+    "source": "Openverse/Freesound",
+    "credit": "\"Heartbeat.\" by urupin is licensed under CC BY 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/."
+  },
+  {
+    "name": "page-turn",
+    "file": "sfx-page-turn.mp3",
+    "category": "transition",
+    "duration": 1.87,
+    "description": "Balik halaman kertas — ganti bab, slide dokumen",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Page Turn\" by davidbain is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "swipe",
+    "file": "sfx-swipe.mp3",
+    "category": "transition",
+    "duration": 0.84,
+    "description": "Swipe halus — ganti scene / kartu geser",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Swipe.wav\" by MATRIXXX_ is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "swoosh-fast",
+    "file": "sfx-swoosh-fast.mp3",
+    "category": "transition",
+    "duration": 0.33,
+    "description": "Swoosh sangat pendek (tongkat membelah udara) — gerakan cepat, slide in",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"swosh-08.flac - 'stick cutting air'\" by qubodup is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "whoosh",
+    "file": "sfx-whoosh.mp3",
+    "category": "transition",
+    "duration": 0.51,
+    "description": "Punchy whoosh/impact — fast reveal or hard transition accent. Sync to the motion.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "whoosh-cinematic",
+    "file": "sfx-whoosh-cinematic.mp3",
+    "category": "transition",
+    "duration": 5.02,
+    "description": "Cinematic whoosh build (~5.5s) — sweeping scene transition. Align so the swell peaks on the cut.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "whoosh-low",
+    "file": "sfx-whoosh-low.mp3",
+    "category": "transition",
+    "duration": 2.59,
+    "description": "Whoosh rendah dan berat — transisi besar, objek besar lewat",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"whoosh_short_low.wav\" by DJT4NN3R is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "whoosh-reverse",
+    "file": "sfx-whoosh-reverse.mp3",
+    "category": "transition",
+    "duration": 0.59,
+    "description": "Whoosh terbalik (naik ke titik) — sebelum reveal/cut",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Backwards Whoosh\" by SlavicMagic is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "whoosh-short",
+    "file": "sfx-whoosh-short.mp3",
+    "category": "transition",
+    "duration": 0.51,
+    "description": "Short whoosh — quick swipe/slide accent, fast element move, snappy transition. Sync to the motion.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "whoosh-soft",
+    "file": "sfx-whoosh-soft.mp3",
+    "category": "transition",
+    "duration": 0.9,
+    "description": "Whoosh lembut 0.9 dtk (dibuat FFmpeg)",
+    "license": "Dibuat sendiri",
+    "source": "FFmpeg",
+    "credit": null
+  },
+  {
+    "name": "bell-ding",
+    "file": "sfx-bell-ding.mp3",
+    "category": "ui",
+    "duration": 2.46,
+    "description": "Ding bel — notifikasi, poin penting, jawaban benar",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"bell ding 1.wav\" by 5ro4 is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "camera-shutter",
+    "file": "sfx-camera-shutter.mp3",
+    "category": "ui",
+    "duration": 0.3,
+    "description": "Jepretan kamera — screenshot, foto muncul, freeze frame",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Camera Shutter\" by roachpowder is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "cash-register",
+    "file": "sfx-cash-register.mp3",
+    "category": "ui",
+    "duration": 0.96,
+    "description": "Mesin kasir 'ka-ching' — harga, penjualan, uang",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Cash register\" by MaoDin204 is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "chime",
+    "file": "sfx-chime.mp3",
+    "category": "ui",
+    "duration": 2.08,
+    "description": "Soft melodic chime — gentle positive beat: success/confirmation or a lighthearted transition. Sync to the visual moment.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "chime-gleam",
+    "file": "sfx-chime-gleam.mp3",
+    "category": "ui",
+    "duration": 3.95,
+    "description": "Chime berkilau — highlight, magic, produk bersinar",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"GLEAM-GLOW-SFX-CHIME.wav\" by newagesoup is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "click",
+    "file": "sfx-click.mp3",
+    "category": "ui",
+    "duration": 0.32,
+    "description": "Crisp UI click — button press, toggle, selection. Short accent, sync exactly to the on-screen action.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "click-soft",
+    "file": "sfx-click-soft.mp3",
+    "category": "ui",
+    "duration": 0.32,
+    "description": "Quiet short click — low-key UI tap / soft selection. Short accent, sync exactly to the on-screen action.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "clock-ticking",
+    "file": "sfx-clock-ticking.mp3",
+    "category": "ui",
+    "duration": 3.5,
+    "description": "Jam berdetak — waktu, deadline, countdown",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Ticking Clock\" by AntumDeluge is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "coin",
+    "file": "sfx-coin.mp3",
+    "category": "ui",
+    "duration": 0.29,
+    "description": "Koin game — poin, reward, bonus",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Coin GET!\" by plasterbrain is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "counter-ticks",
+    "file": "sfx-counter-ticks.mp3",
+    "category": "ui",
+    "duration": 2.68,
+    "description": "Tik-tik counter — angka naik, statistik berjalan",
+    "license": "CC BY",
+    "source": "Openverse/Freesound",
+    "credit": "\"Counter Ticks\" by Coolshows101sound is licensed under CC BY 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/."
+  },
+  {
+    "name": "error",
+    "file": "sfx-error.mp3",
+    "category": "ui",
+    "duration": 1.01,
+    "description": "Negative / error tone — failure state, a 'wrong' beat, or a glitchy interruption.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "key-press",
+    "file": "sfx-key-press.mp3",
+    "category": "ui",
+    "duration": 0.33,
+    "description": "Single key press — one keystroke / terminal-input beat. Short accent, sync to the typed character.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "laser",
+    "file": "sfx-laser.mp3",
+    "category": "ui",
+    "duration": 0.89,
+    "description": "Laser sci-fi — efek tech, scan, garis muncul",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Laser\" by Daleonfire is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "notification",
+    "file": "sfx-notification.mp3",
+    "category": "ui",
+    "duration": 2.37,
+    "description": "Notification chime — alert, message-in, toast/badge appears. Sync to the element entering.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "ping",
+    "file": "sfx-ping.mp3",
+    "category": "ui",
+    "duration": 1,
+    "description": "Sharp electronic ping — punchy accent on a key reveal or data point. Sync to the beat.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "pop",
+    "file": "sfx-pop.mp3",
+    "category": "ui",
+    "duration": 0.68,
+    "description": "Quick pop — element appear/spawn, chip/tag/badge in. Small precise accent, sync to the pop-in.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "pop-bubble",
+    "file": "sfx-pop-bubble.mp3",
+    "category": "ui",
+    "duration": 0.11,
+    "description": "Pop gelembung kecil — elemen muncul, ikon spawn",
+    "license": "CC BY",
+    "source": "Openverse/Freesound",
+    "credit": "\"BUBBLE POP .wav\" by Ch0cchi is licensed under CC BY 3.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/3.0/."
+  },
+  {
+    "name": "record-scratch",
+    "file": "sfx-record-scratch.mp3",
+    "category": "ui",
+    "duration": 1.5,
+    "description": "Scratch piringan — stop mendadak, 'tunggu dulu', plot twist",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Record Scratch #4\" by musicvision31 is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "sparkle",
+    "file": "sfx-sparkle.mp3",
+    "category": "ui",
+    "duration": 1.78,
+    "description": "Bright sparkle / shimmer — magical reveal or 'shine' highlight on a hero element. Sync to the highlight.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  },
+  {
+    "name": "success",
+    "file": "sfx-success.mp3",
+    "category": "ui",
+    "duration": 3.29,
+    "description": "Jingle sukses — selesai, centang, pencapaian",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"success 1\" by Leszek_Szary is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "typewriter-bell",
+    "file": "sfx-typewriter-bell.mp3",
+    "category": "ui",
+    "duration": 0.89,
+    "description": "Bel mesin tik — akhir baris teks, judul selesai diketik",
+    "license": "CC0",
+    "source": "Openverse/Freesound",
+    "credit": "\"Typewriter Bell.wav\" by ramsamba is marked with CC0 1.0. To view the terms, visit https://creativecommons.org/publicdomain/zero/1.0/."
+  },
+  {
+    "name": "typing",
+    "file": "sfx-typing.mp3",
+    "category": "ui",
+    "duration": 1.05,
+    "description": "Typing burst (~1.5s of keys) — keyboard / code typing reveal, text-being-typed beat. Start as the text begins typing.",
+    "license": "Pixabay Content License",
+    "source": "Pixabay (bundled media-use)",
+    "credit": null
+  }
+]

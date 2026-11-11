@@ -1,0 +1,91 @@
+<!-- L10 Infographic / Data (Data): Bar naik dengan angka berjalan, donut %, grafik garis, +248%.
+     Palette #0B1424 #00D1FF #FFC857 - best for data, laporan, hasil iklan.
+     Ported from src/library/scenes/scenes2.tsx (Infographic). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0B1424; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L10" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes2.tsx
+      var Infographic = ({ f }) => {
+        const bars = [42, 58, 51, 73, 66, 92];
+        const donut = ramp(f, 0.4, 1.5, Easing.bezier(0.3, 0, 0.1, 1));
+        const R = 150;
+        const C = 2 * Math.PI * R;
+        const line = ramp(f, 0.9, 1.9, Easing.bezier(0.5, 0, 0.2, 1));
+        const pts = [0, 30, 18, 52, 40, 75, 68, 100].map((v, i) => `${i * 70},${200 - v * 1.8}`).join(" ");
+        return __h(Full, { bg: "radial-gradient(ellipse at 30% 20%, #16264A 0%, #0B1424 70%)" }, __h("div", { style: { position: "absolute", left: 120, top: 120, color: "#7FA3D9", fontSize: 26, fontWeight: 700, letterSpacing: 8, opacity: ramp(f, 0.1, 0.4) } }, "REPORT / Q4 2026"), __h("div", { style: { position: "absolute", left: 120, top: 160, color: "#FFFFFF", fontSize: 72, fontWeight: 900, letterSpacing: -2, overflow: "hidden" } }, __h("div", { style: { transform: `translateY(${(1 - sp(f, 0.12, 15, 180, 0.6)) * 110}%)` } }, "DATA THAT TALKS")), bars.map((v, i) => {
+          const p = sp(f, 0.25 + i * 0.07, 14, 140, 0.8);
+          const h = v * 4.4 * p;
+          return __h("div", { key: i }, __h(
+            "div",
+            {
+              style: {
+                position: "absolute",
+                left: 140 + i * 110,
+                bottom: 300,
+                width: 72,
+                height: h,
+                borderRadius: "12px 12px 0 0",
+                background: i === bars.length - 1 ? "linear-gradient(#00E5FF,#0077FF)" : "linear-gradient(#3B5A8F,#22385E)"
+              }
+            }
+          ), __h("div", { style: { position: "absolute", left: 140 + i * 110, width: 72, bottom: 310 + h, textAlign: "center", color: "#CFE3FF", fontSize: 24, fontWeight: 700, opacity: p } }, Math.round(v * p)));
+        }), __h("div", { style: { position: "absolute", left: 120, width: 700, bottom: 296, height: 3, background: "#3B5A8F" } }), __h("svg", { width: 400, height: 400, style: { position: "absolute", left: 900, top: 230 } }, __h("circle", { cx: 200, cy: 200, r: R, fill: "none", stroke: "#1D2E52", strokeWidth: 46 }), __h(
+          "circle",
+          {
+            cx: 200,
+            cy: 200,
+            r: R,
+            fill: "none",
+            stroke: "#00D1FF",
+            strokeWidth: 46,
+            strokeLinecap: "round",
+            strokeDasharray: `${C * 0.78 * donut} ${C}`,
+            transform: "rotate(-90 200 200)"
+          }
+        )), __h("div", { style: { position: "absolute", left: 900, top: 230, width: 400, height: 400, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", color: "#FFFFFF" } }, __h("div", { style: { fontSize: 110, fontWeight: 900, letterSpacing: -4, lineHeight: 1 } }, Math.round(78 * donut), "%"), __h("div", { style: { fontSize: 22, fontWeight: 700, letterSpacing: 6, color: "#7FA3D9" } }, "RETENTION")), __h("svg", { width: 560, height: 240, style: { position: "absolute", left: 1360, top: 330 }, overflow: "visible" }, __h("polyline", { points: pts, fill: "none", stroke: "#FFC857", strokeWidth: 8, strokeLinejoin: "round", strokeLinecap: "round", pathLength: 1, strokeDasharray: 1, strokeDashoffset: 1 - line }), __h("circle", { cx: 7 * 70, cy: 200 - 180, r: 14 * sp(f, 1.85, 9, 260, 0.5), fill: "#FFC857" })), __h("div", { style: { position: "absolute", left: 1360, top: 600, color: "#FFC857", fontSize: 64, fontWeight: 900, opacity: ramp(f, 1.7, 2), transform: `translateY(${(1 - ramp(f, 1.7, 2, OUT)) * 20}px)` } }, "+248%"));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Infographic;
+    })();
+    (function () {
+      const V = {"s":0.6};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L10', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

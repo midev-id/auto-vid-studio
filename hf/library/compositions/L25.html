@@ -1,0 +1,117 @@
+<!-- L25 Mixed Media (Handmade): Kartu kertas halftone sobek, selotip, kubus 3D, coretan tangan.
+     Palette #EADBC4 #FF3366 #2F6BFF #111111 #FFE600 - best for fashion, art, promo.
+     Ported from src/library/scenes/scenes3.tsx (MixedMedia). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #EADBC4; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L25" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes3.tsx
+      var t = (f) => f / FPS;
+      var MixedMedia = ({ f }) => {
+        const tt = t(f);
+        const q = step(f, 5);
+        const card = sp(q, 0.05, 11, 160, 0.7);
+        const scrib = ramp(f, 0.6, 1.2, Easing.bezier(0.4, 0, 0.2, 1));
+        const cube = sp(f, 0.4, 10, 170, 0.6);
+        return __h(Full, { bg: "#EADBC4", style: { backgroundImage: "radial-gradient(#00000014 1px, transparent 1.5px)", backgroundSize: "9px 9px" } }, __h(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              left: 260,
+              top: 160,
+              width: 640,
+              height: 560,
+              background: "linear-gradient(135deg, #FF3366 0%, #FF9F1C 100%)",
+              transform: `translateY(${(1 - card) * -800}px) rotate(-6deg)`,
+              clipPath: "polygon(0 2%, 8% 0, 20% 3%, 35% 0, 50% 2%, 66% 0, 80% 3%, 100% 0, 98% 30%, 100% 60%, 97% 100%, 70% 97%, 50% 100%, 30% 97%, 0 100%, 2% 60%, 0 30%)",
+              boxShadow: "0 20px 40px #0004"
+            }
+          },
+          __h("div", { style: { position: "absolute", inset: 0, backgroundImage: "radial-gradient(#00000055 35%, transparent 37%)", backgroundSize: "18px 18px", opacity: 0.6 } })
+        ), __h("div", { style: { position: "absolute", left: 520, top: 130, width: 180, height: 50, background: "#FFFFFFB8", transform: `rotate(8deg) scale(${sp(q, 0.4)})` } }), __h("div", { style: { position: "absolute", left: 1320, top: 230, width: 220, height: 220, perspective: 900, transform: `scale(${cube})` } }, __h("div", { style: { position: "absolute", inset: 0, transformStyle: "preserve-3d", transform: `rotateX(-25deg) rotateY(${tt * 90 + 20}deg)` } }, [0, 90, 180, 270].map((r, i) => __h("div", { key: r, style: { position: "absolute", inset: 0, transform: `rotateY(${r}deg) translateZ(110px)`, background: ["#2F6BFF", "#1F4FCC", "#2F6BFF", "#163C9E"][i], border: "3px solid #111" } })), __h("div", { style: { position: "absolute", inset: 0, transform: "rotateX(90deg) translateZ(110px)", background: "#6F98FF", border: "3px solid #111" } }))), __h("div", { style: { position: "absolute", left: 0, right: 0, top: 380, textAlign: "center" } }, __h("div", { style: { display: "inline-flex", alignItems: "baseline", gap: 30 } }, __h(
+          "div",
+          {
+            style: {
+              fontSize: 180,
+              fontWeight: 900,
+              color: "#111",
+              letterSpacing: -6,
+              background: "#FFF8E8",
+              padding: "0 30px",
+              transform: `rotate(-3deg) scale(${sp(q, 0.3, 9, 200, 0.6)})`,
+              boxShadow: "8px 8px 0 #111"
+            }
+          },
+          "MIXED"
+        ), __h(
+          "div",
+          {
+            style: {
+              fontSize: 180,
+              fontWeight: 900,
+              color: "transparent",
+              WebkitTextStroke: "6px #111",
+              letterSpacing: -4,
+              transform: `rotate(2deg) translateY(${(1 - sp(f, 0.5, 12, 200, 0.6)) * 400}px)`
+            }
+          },
+          "MEDIA"
+        ))), __h("svg", { width: 1920, height: 1080, style: { position: "absolute" } }, __h(
+          "path",
+          {
+            d: "M 1000 400 C 1250 330 1560 380 1600 470 C 1640 570 1300 640 1050 610 C 900 590 880 470 1030 420",
+            fill: "none",
+            stroke: "#FF3366",
+            strokeWidth: 9,
+            strokeLinecap: "round",
+            pathLength: 1,
+            strokeDasharray: 1,
+            strokeDashoffset: 1 - scrib
+          }
+        ), __h("path", { d: "M 330 820 L 360 760 L 390 820 L 420 760 L 450 820", fill: "none", stroke: "#111", strokeWidth: 8, strokeLinejoin: "round", pathLength: 1, strokeDasharray: 1, strokeDashoffset: 1 - ramp(f, 1, 1.4) })), __h("div", { style: { position: "absolute", left: 1240, top: 760, fontSize: 30, fontWeight: 700, letterSpacing: 8, color: "#111", background: "#FFE600", padding: "8px 18px", transform: `rotate(-2deg) scale(${sp(f, 1.2, 10, 220, 0.6)})` } }, "PAPER × 3D × INK"));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = MixedMedia;
+    })();
+    (function () {
+      const V = {"s":0.62};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L25', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

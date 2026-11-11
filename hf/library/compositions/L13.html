@@ -1,0 +1,89 @@
+<!-- L13 Liquid (Abstract): Blob cair bergoyang, tetesan bergabung, gelombang sinus naik.
+     Palette #0A0F2C #3A86FF #8338EC #FF006E - best for brand, musik, transisi.
+     Ported from src/library/scenes/scenes2.tsx (Liquid). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #0A0F2C; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L13" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes2.tsx
+      var t = (f) => f / FPS;
+      var blob = (cx, cy, r, tt, seed, n = 9) => {
+        const p = Array.from({ length: n }, (_, i) => {
+          const a = i / n * Math.PI * 2;
+          const rr = r * (1 + 0.1 * Math.sin(tt * 3.1 + i * 1.7 + seed) + 0.07 * Math.sin(tt * 4.7 + i * 2.9 + seed * 2));
+          return [cx + Math.cos(a) * rr, cy + Math.sin(a) * rr];
+        });
+        let d = `M ${p[0][0]} ${p[0][1]}`;
+        for (let i = 0; i < n; i++) {
+          const p0 = p[(i - 1 + n) % n];
+          const p1 = p[i];
+          const p2 = p[(i + 1) % n];
+          const p3 = p[(i + 2) % n];
+          d += ` C ${p1[0] + (p2[0] - p0[0]) / 6} ${p1[1] + (p2[1] - p0[1]) / 6} ${p2[0] - (p3[0] - p1[0]) / 6} ${p2[1] - (p3[1] - p1[1]) / 6} ${p2[0]} ${p2[1]}`;
+        }
+        return d + " Z";
+      };
+      var Liquid = ({ f }) => {
+        const tt = t(f);
+        const g = sp(f, 0.05, 9, 120, 0.8);
+        const merge = ramp(f, 0.6, 1.6, Easing.bezier(0.6, 0, 0.3, 1));
+        const drops = [
+          { a: 0.4, d: 520, r: 90 },
+          { a: 2.6, d: 560, r: 70 },
+          { a: 4.4, d: 480, r: 60 }
+        ];
+        const wave = (yy, amp, ph) => {
+          let d = `M 0 ${yy}`;
+          for (let x = 0; x <= 1920; x += 80) d += ` L ${x} ${yy + Math.sin(x / 160 + tt * 4 + ph) * amp}`;
+          return d + " L 1920 1080 L 0 1080 Z";
+        };
+        return __h(Full, { bg: "#0A0F2C" }, __h("svg", { width: 1920, height: 1080, style: { position: "absolute" } }, __h("defs", null, __h("linearGradient", { id: "lq", x1: "0", y1: "0", x2: "1", y2: "1" }, __h("stop", { offset: "0%", stopColor: "#3A86FF" }), __h("stop", { offset: "55%", stopColor: "#8338EC" }), __h("stop", { offset: "100%", stopColor: "#FF006E" })), __h("radialGradient", { id: "lqh", cx: "35%", cy: "30%", r: "50%" }, __h("stop", { offset: "0%", stopColor: "#FFFFFF", stopOpacity: 0.45 }), __h("stop", { offset: "100%", stopColor: "#FFFFFF", stopOpacity: 0 }))), __h("path", { d: wave(mix(1100, 860, ramp(f, 0, 1.6, OUT)), 26, 0), fill: "#3A86FF", opacity: 0.35 }), __h("path", { d: wave(mix(1120, 900, ramp(f, 0.1, 1.8, OUT)), 20, 2), fill: "#8338EC", opacity: 0.45 }), drops.map((d, i) => {
+          const ang = d.a + tt * 1.6;
+          const dist = d.d * (1 - merge);
+          return __h("path", { key: i, d: blob(960 + Math.cos(ang) * dist, 480 + Math.sin(ang) * dist * 0.6, d.r * (1 - merge * 0.6) * g, tt, i * 3), fill: "url(#lq)" });
+        }), __h("path", { d: blob(960, 480, 270 * g + merge * 50, tt, 0.5, 10), fill: "url(#lq)" }), __h("path", { d: blob(960, 480, (270 * g + merge * 50) * 0.92, tt + 0.4, 1.3, 10), fill: "url(#lqh)" })), __h("div", { style: { position: "absolute", left: 0, right: 0, top: 400, textAlign: "center", fontSize: 150, fontWeight: 900, color: "#FFFFFF", letterSpacing: -4 } }, "LIQUID".split("").map((c, i) => __h("span", { key: i, style: { display: "inline-block", transform: `translateY(${Math.sin(tt * 5 + i * 0.8) * 14}px) scale(${sp(f, 0.35 + i * 0.05, 8, 200, 0.6)})` } }, c))));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Liquid;
+    })();
+    (function () {
+      const V = {"s":1.2};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L13', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

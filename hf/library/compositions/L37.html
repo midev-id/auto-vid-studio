@@ -1,0 +1,57 @@
+<!-- L37 Newspaper (Type): Masthead koran, headline dihantam, stempel BREAKING.
+     Palette #F1EBDD #111111 #D7261E - best for type.
+     Ported from src/library/scenes/scenes5.tsx (Newspaper). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #F1EBDD; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L37" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes5.tsx
+      var Newspaper = ({ f }) => {
+        const head = sp(f, 0.25, 11, 220, 0.6);
+        const stamp = sp(f, 1.1, 9, 260, 0.6);
+        return __h(Full, { bg: "#F1EBDD" }, __h("div", { style: { position: "absolute", left: 300, right: 300, top: 90, textAlign: "center", fontSize: 110, fontWeight: 900, letterSpacing: 6, color: "#1A1A1A", borderBottom: "6px double #1A1A1A", paddingBottom: 14, opacity: sp(f, 0.05) } }, "THE DAILY MOTION"), __h("div", { style: { position: "absolute", left: 300, top: 300, width: 1320, fontSize: 120, fontWeight: 900, lineHeight: 0.95, letterSpacing: -3, color: "#111", transform: `scale(${mix(1.6, 1, head)})`, transformOrigin: "left top", opacity: head } }, "DESIGN TAKES OVER THE INTERNET"), __h("div", { style: { position: "absolute", left: 300, top: 580, width: 600, height: 400, background: "#ccc", backgroundImage: "radial-gradient(circle, #222 38%, transparent 40%)", backgroundSize: "14px 14px", clipPath: `inset(0 ${(1 - ramp(f, 0.6, 1, OUT)) * 100}% 0 0)` } }), Array.from({ length: 9 }).map((_, i) => __h("div", { key: i, style: { position: "absolute", left: 950 + (i > 4 ? 340 : 0), top: 590 + i % 5 * 76, width: 300 * (0.6 + rnd(i) * 0.4) * ramp(f, 0.7 + i * 0.05, 1 + i * 0.05, OUT), height: 22, background: "#3A3A3A", opacity: 0.7 } })), __h("div", { style: { position: "absolute", left: 1180, top: 460, padding: "14px 34px", border: "10px solid #D7261E", color: "#D7261E", fontSize: 80, fontWeight: 900, letterSpacing: 6, transform: `rotate(-12deg) scale(${mix(2.5, 1, stamp)})`, opacity: stamp } }, "BREAKING"));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Newspaper;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L37', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

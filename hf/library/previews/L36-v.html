@@ -1,0 +1,31 @@
+<!doctype html>
+<!-- Preview of library style L36 Terminal / Hacker: whip-in + its SFX, 2.6s. Used for the panel previews. -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="assets/hfk/kit.js"></script>
+    <style>
+      @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+      @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+      @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+      @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; font-family: 'Noto Sans KR', sans-serif; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="2.6" data-fps="60" data-width="1080" data-height="1920">
+      <div id="L36" data-composition-id="L36" data-composition-src="compositions/L36.html" data-start="0" data-duration="2.6"
+        data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"
+        data-variable-values='{"aspect":"9:16","tin":"down"}'></div>
+      <audio id="L36-sfx0" class="clip" src="assets/sfx/Glitch transition sounds/T5.wav" data-start="0" data-duration="1.2" data-volume="0.26" data-track-index="10"></audio>
+      <audio id="L36-sfx1" class="clip" src="assets/sfx/mix/ui-pop-up-14-197900.mp3" data-start="0.5" data-duration="1.2" data-volume="0.16" data-track-index="11"></audio>
+      <audio id="L36-sfx2" class="clip" src="assets/sfx/Buttons/Button_02.wav" data-start="1.1" data-duration="1.2" data-volume="0.14" data-track-index="12"></audio>
+    </div>
+    <script>
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

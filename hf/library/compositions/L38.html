@@ -1,0 +1,60 @@
+<!-- L38 Risograph (Handmade): Dua tinta overprint, grain, misregistrasi.
+     Palette #F4EEE2 #FF48B0 #0078BF - best for handmade.
+     Ported from src/library/scenes/scenes5.tsx (Riso). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #F4EEE2; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L38" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes5.tsx
+      var Riso = ({ f }) => {
+        const ff = step(f, 4);
+        const jx = (rnd(`rx${ff}`) - 0.5) * 8;
+        const jy = (rnd(`ry${ff}`) - 0.5) * 8;
+        const p = sp(f, 0.05, 13, 150);
+        const q = sp(f, 0.3, 13, 150);
+        return __h(Full, { bg: "#F4EEE2" }, __h("div", { style: { position: "absolute", left: 560, top: 180, width: 560, height: 560, borderRadius: "50%", background: "#FF48B0", mixBlendMode: "multiply", transform: `scale(${p})` } }), __h("div", { style: { position: "absolute", left: 840 + jx, top: 300 + jy, width: 520, height: 520, background: "#0078BF", mixBlendMode: "multiply", transform: `rotate(${(1 - q) * 60 + 12}deg) scale(${q})` } }), __h("div", { style: { position: "absolute", left: 340, top: 760, fontSize: 210, fontWeight: 900, letterSpacing: -8, color: "#0078BF", mixBlendMode: "multiply", opacity: ramp(f, 0.6, 0.9) } }, "PRINT"), __h("div", { style: { position: "absolute", left: 340 + 10 + jx, top: 760 + 6 + jy, fontSize: 210, fontWeight: 900, letterSpacing: -8, color: "#FF48B0", mixBlendMode: "multiply", opacity: ramp(f, 0.75, 1) } }, "PRINT"), __h("div", { style: { position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, #00000022 1.2px, transparent 1.6px)", backgroundSize: "7px 7px", backgroundPosition: `${jx}px ${jy}px` } }));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Riso;
+    })();
+    (function () {
+      const V = {"s":0.75};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L38', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

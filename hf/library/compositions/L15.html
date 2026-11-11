@@ -1,0 +1,105 @@
+<!-- L15 Corporate (Business): Sapuan diagonal biru, logo bar, kartu KPI dengan area chart.
+     Palette #F7F9FC #0A1F44 #0057FF - best for agency, laporan, B2B.
+     Ported from src/library/scenes/scenes2.tsx (Corporate). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #F7F9FC; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L15" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes2.tsx
+      var Corporate = ({ f }) => {
+        const sweep = ramp(f, 0.05, 0.6, Easing.bezier(0.7, 0, 0.2, 1));
+        const chart = ramp(f, 0.7, 1.6, Easing.bezier(0.4, 0, 0.2, 1));
+        const pts = [0, 22, 15, 40, 34, 62, 58, 90];
+        const P = pts.map((v, i) => `${40 + i * 70},${300 - v * 2.6}`).join(" ");
+        return __h(Full, { bg: "#F7F9FC" }, __h(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              inset: 0,
+              background: "linear-gradient(120deg, #0057FF 0%, #0A1F44 100%)",
+              clipPath: `polygon(${mix(100, 58, sweep)}% 0, 100% 0, 100% 100%, ${mix(100, 46, sweep)}% 100%)`
+            }
+          }
+        ), __h("div", { style: { position: "absolute", left: 120, top: 150, display: "flex", gap: 10, alignItems: "flex-end" } }, [40, 64, 88].map((h, i) => __h("div", { key: i, style: { width: 22, height: h * sp(f, 0.1 + i * 0.06), background: i === 2 ? "#0057FF" : "#0A1F44", borderRadius: 4 } })), __h("div", { style: { marginLeft: 12, fontSize: 30, fontWeight: 900, color: "#0A1F44", letterSpacing: 4, opacity: ramp(f, 0.3, 0.6) } }, "NORTHWIND")), ["BUILT FOR", "GROWTH."].map((w, i) => __h("div", { key: i, style: { position: "absolute", left: 120, top: 330 + i * 130, overflow: "hidden" } }, __h("div", { style: { fontSize: 128, fontWeight: 900, letterSpacing: -4, lineHeight: 1, color: i ? "#0057FF" : "#0A1F44", transform: `translateY(${(1 - sp(f, 0.3 + i * 0.1, 15, 170, 0.7)) * 110}%)` } }, w))), __h("div", { style: { position: "absolute", left: 124, top: 620, fontSize: 30, fontWeight: 700, letterSpacing: 6, color: "#5B6B86", opacity: ramp(f, 0.7, 1) } }, "STRATEGY · DATA · RESULTS"), __h(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              left: 1120,
+              top: 250,
+              width: 640,
+              height: 440,
+              borderRadius: 28,
+              background: "#FFFFFF",
+              boxShadow: "0 40px 80px -30px #00123F80",
+              transform: `translateY(${(1 - sp(f, 0.45, 14, 140, 0.8)) * 500}px)`
+            }
+          },
+          __h("div", { style: { position: "absolute", left: 40, top: 34, fontSize: 24, fontWeight: 700, color: "#5B6B86", letterSpacing: 3 } }, "REVENUE"),
+          __h("div", { style: { position: "absolute", left: 40, top: 66, fontSize: 64, fontWeight: 900, color: "#0A1F44" } }, "$", Math.round(4.8 * chart * 10) / 10, "M"),
+          __h(
+            "div",
+            {
+              style: {
+                position: "absolute",
+                right: 40,
+                top: 46,
+                padding: "8px 18px",
+                borderRadius: 99,
+                background: "#E3F9EC",
+                color: "#0F9D58",
+                fontSize: 28,
+                fontWeight: 900,
+                transform: `scale(${sp(f, 1.4, 9, 220, 0.6)})`
+              }
+            },
+            "▲ 248%"
+          ),
+          __h("svg", { width: 640, height: 340, style: { position: "absolute", left: 0, top: 100 } }, __h("defs", null, __h("linearGradient", { id: "corpg", x1: "0", x2: "0", y1: "0", y2: "1" }, __h("stop", { offset: "0%", stopColor: "#0057FF", stopOpacity: 0.25 }), __h("stop", { offset: "100%", stopColor: "#0057FF", stopOpacity: 0 }))), __h("polygon", { points: `40,300 ${P} ${40 + 7 * 70},300`, fill: "url(#corpg)", opacity: chart }), __h("polyline", { points: P, fill: "none", stroke: "#0057FF", strokeWidth: 7, strokeLinejoin: "round", pathLength: 1, strokeDasharray: 1, strokeDashoffset: 1 - chart }))
+        ));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Corporate;
+    })();
+    (function () {
+      const V = {"s":0.6};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L15', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>

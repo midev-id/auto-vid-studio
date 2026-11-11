@@ -1,0 +1,17 @@
+{
+  "name": "Contoh Extension",
+  "version": "1.0.0",
+  "rules": "rules.md",
+  "templates": [
+    {
+      "id": "X01",
+      "name": "Clean Minimal (contoh)",
+      "category": "Contoh",
+      "desc": "Background off-white, teks gelap, satu aksen oranye, kinetic type + shape.",
+      "palette": ["#F7F7F5", "#111111", "#FF5A1F"],
+      "bestFor": ["tips", "promo"],
+      "dir": "templates/clean-minimal",
+      "entry": "compositions/video.html"
+    }
+  ]
+}

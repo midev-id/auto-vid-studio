@@ -1,0 +1,18 @@
+# SFX: lisensi tidak boleh didistribusikan, ambil dari Drive tim
+public/sfx/**/*.mp3
+public/sfx/**/*.wav
+public/shared/sfx/*.mp3
+public/shared/sfx/*.wav
+# project & output per orang
+hf/videos/
+out/
+public/*/
+!public/hfk/
+!public/icons/
+!public/library/
+!public/sfx/
+!public/shared/
+node_modules/
+.waveform-cache/
+__pycache__/
+settings.json

@@ -1,0 +1,126 @@
+<!-- Ported from src/templates/NeonTemplate.tsx (NeonTemplate) by hf/tools/port-video.mjs.
+     The whole picture is one function of the frame (30fps), rendered by HFK.mount(); audio clips live in index.html. -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="video" data-width="1080" data-height="1920" data-layout-allow-overflow></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/font.js
+      var loadFont = () => ({ fontFamily: "'Noto Sans KR', sans-serif" });
+    
+      // src/templates/common.tsx
+      var { fontFamily: FONT } = loadFont("normal", { weights: ["400", "500", "700", "900"], subsets: ["latin"] });
+      var W = 1080;
+      var H = 1920;
+      var clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" };
+      var SMOOTH = Easing.bezier(0.7, 0, 0.3, 1);
+      var ramp = (f, a, b, easing = SMOOTH) => interpolate(f, [a, b], [0, 1], { ...clamp, easing });
+      var useSpring = () => {
+        const { fps } = useVideoConfig();
+        return (f, at = 0, damping = 16, stiffness = 140, mass = 0.7) => spring({ frame: f - at, fps, config: { damping, stiffness, mass } });
+      };
+      var drawOn = (p) => ({ pathLength: 1, strokeDasharray: 1, strokeDashoffset: 1 - p });
+      var Sfx = ({ at, src, v = 0.25 }) => __h(Sequence, { from: at, layout: "none" }, __h(Audio, { src: staticFile(`shared/sfx/${src}.wav`), volume: v }));
+    
+      // src/templates/NeonTemplate.tsx
+      var PAL = { night: "#07060D", pink: "#FF3CAC", cyan: "#2BD2FF", lime: "#B6FF3C", haze: "#1A0F2E" };
+      var COPY = { top: "OPEN", main: ["NIGHT", "MODE"], sub: "NEON TEMPLATE" };
+      var NEON_DURATION = 240;
+      var glow = (c, k = 1) => `0 0 ${4 * k}px #fff, 0 0 ${10 * k}px ${c}, 0 0 ${22 * k}px ${c}, 0 0 ${44 * k}px ${c}`;
+      var flicker = (f, at, salt) => {
+        const t = f - at;
+        if (t < 0) return 0;
+        if (t < 18) return random(`${salt}${t}`) > 0.45 ? 1 : 0.15;
+        return 0.93 + 0.07 * Math.sin(f * 0.9 + salt.length);
+      };
+      var Grid = ({ f }) => {
+        const scroll = f * 4 % 120;
+        return __h("div", { style: { position: "absolute", left: -600, right: -600, top: 1172, height: 1200, perspective: 700, perspectiveOrigin: "50% 0%", overflow: "hidden" } }, __h(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              inset: 0,
+              transform: "rotateX(68deg)",
+              transformOrigin: "top",
+              backgroundImage: `linear-gradient(${PAL.pink} 3px, transparent 3px), linear-gradient(90deg, ${PAL.pink} 3px, transparent 3px)`,
+              backgroundSize: "120px 120px",
+              backgroundPosition: `0 ${scroll}px`,
+              opacity: 0.55
+            }
+          }
+        ));
+      };
+      var NeonTemplate = () => {
+        const f = useCurrentFrame();
+        const sp = useSpring();
+        const sun = sp(f, 0, 20, 60);
+        const frame = ramp(f, 40, 80);
+        return __h(AbsoluteFill, { style: { width: W, height: H, background: `linear-gradient(${PAL.night} 0%, ${PAL.haze} 62%, ${PAL.night} 100%)`, fontFamily: FONT, overflow: "hidden" } }, __h("div", { style: { position: "absolute", left: 0, right: 0, top: 0, height: 1172, overflow: "hidden" } }, __h(
+          "div",
+          {
+            style: {
+              position: "absolute",
+              left: 540 - 330,
+              top: 1172 - 420 + (1 - sun) * 420,
+              width: 660,
+              height: 660,
+              borderRadius: "50%",
+              overflow: "hidden",
+              background: `linear-gradient(${PAL.lime}, ${PAL.pink} 60%)`,
+              opacity: 0.85 * sun
+            }
+          },
+          [0, 1, 2, 3, 4].map((k) => __h("div", { key: k, style: { position: "absolute", left: 0, right: 0, top: 250 + k * 36, height: 6 + k * 4, background: PAL.haze } }))
+        )), __h(Grid, { f }), __h("div", { style: { position: "absolute", left: 0, right: 0, top: 1170, height: 4, background: PAL.pink, boxShadow: glow(PAL.pink, 0.8) } }), __h("svg", { width: W, height: H, style: { position: "absolute", inset: 0 } }, [
+          [PAL.cyan, 12, 0.35],
+          [PAL.cyan, 4, 1],
+          ["#fff", 1.5, 1]
+        ].map(([c, w, o], i) => __h("rect", { key: i, x: 110, y: 240, width: 860, height: 760, rx: 60, fill: "none", stroke: c, strokeWidth: w, opacity: o * flicker(f, 40, "fr"), ...drawOn(frame) }))), __h("div", { style: { position: "absolute", top: 300, left: 0, right: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 10 } }, __h("div", { style: { fontSize: 70, fontWeight: 700, letterSpacing: "0.5em", color: "#fff", textShadow: glow(PAL.lime, 0.8), opacity: flicker(f, 10, "top"), paddingLeft: "0.5em" } }, COPY.top), COPY.main.map((w, i) => __h(
+          "div",
+          {
+            key: w,
+            style: {
+              fontSize: 230,
+              fontWeight: 900,
+              lineHeight: 1,
+              letterSpacing: "0.02em",
+              color: "#fff",
+              textShadow: glow(i ? PAL.cyan : PAL.pink, 1.2),
+              opacity: flicker(f, 24 + i * 16, w),
+              transform: `scale(${0.9 + 0.1 * sp(f, 24 + i * 16, 14)})`
+            }
+          },
+          w
+        )), __h("div", { style: { marginTop: 30, fontSize: 40, fontWeight: 500, letterSpacing: "0.4em", color: PAL.cyan, textShadow: glow(PAL.cyan, 0.5), opacity: interpolate(f, [80, 96], [0, 1], clamp), paddingLeft: "0.4em" } }, COPY.sub)), __h(Sfx, { at: 10, src: "tick", v: 0.25 }), __h(Sfx, { at: 24, src: "tick", v: 0.25 }), __h(Sfx, { at: 40, src: "tick", v: 0.25 }), __h(Sfx, { at: 0, src: "riser", v: 0.18 }));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = NeonTemplate;
+      window.__HFK_LEN = NEON_DURATION;
+    })();
+    HFK.mount('video', window.__HFK_SCENE, {fps: 30, width: 1080, height: 1920, duration: 8});
+  </script>
+</template>

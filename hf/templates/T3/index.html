@@ -1,0 +1,35 @@
+<!doctype html>
+<!-- T3: HyperFrames project. Picture: compositions/video.html. Sound: the <audio> clips below. -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="assets/hfk/kit.js"></script>
+    <style>
+      @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+      @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+      @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+      @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; font-family: 'Noto Sans KR', sans-serif; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="7.667" data-fps="30" data-width="1080" data-height="1920">
+      <div id="video" data-composition-id="video" data-composition-src="compositions/video.html" data-start="0" data-duration="7.667"
+        data-track-index="1" data-track-kind="graphics" data-width="1080" data-height="1920"></div>
+      <audio id="sfx0" class="clip" src="assets/shared/sfx/impact.wav" data-start="0" data-duration="7.667" data-volume="0.3" data-track-index="3"></audio>
+      <audio id="sfx1" class="clip" src="assets/shared/sfx/swipe.wav" data-start="0.733" data-duration="6.933" data-volume="0.18" data-track-index="4"></audio>
+      <audio id="sfx2" class="clip" src="assets/shared/sfx/swipe.wav" data-start="1.6" data-duration="6.067" data-volume="0.18" data-track-index="5"></audio>
+      <audio id="sfx3" class="clip" src="assets/shared/sfx/swipe.wav" data-start="2.2" data-duration="5.467" data-volume="0.18" data-track-index="6"></audio>
+      <audio id="sfx4" class="clip" src="assets/shared/sfx/swipe.wav" data-start="2.8" data-duration="4.867" data-volume="0.18" data-track-index="7"></audio>
+      <audio id="sfx5" class="clip" src="assets/shared/sfx/whoosh.wav" data-start="4" data-duration="3.667" data-volume="0.18" data-track-index="8"></audio>
+      <audio id="sfx6" class="clip" src="assets/shared/sfx/swipe.wav" data-start="5.333" data-duration="2.333" data-volume="0.18" data-track-index="3"></audio>
+      <audio id="sfx7" class="clip" src="assets/shared/sfx/impact.wav" data-start="6" data-duration="1.667" data-volume="0.3" data-track-index="4"></audio>
+    </div>
+    <script>
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

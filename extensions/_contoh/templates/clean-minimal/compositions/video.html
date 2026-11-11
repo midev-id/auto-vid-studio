@@ -1,0 +1,90 @@
+<!-- Ported from src/templates/KineticTemplate.tsx (KineticTemplate) by hf/tools/port-video.mjs.
+     The whole picture is one function of the frame (30fps), rendered by HFK.mount(); audio clips live in index.html. -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #000; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="video" data-width="1080" data-height="1920" data-layout-allow-overflow></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/font.js
+      var loadFont = () => ({ fontFamily: "'Noto Sans KR', sans-serif" });
+    
+      // src/templates/common.tsx
+      var { fontFamily: FONT } = loadFont("normal", { weights: ["400", "500", "700", "900"], subsets: ["latin"] });
+      var W = 1080;
+      var H = 1920;
+      var clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" };
+      var SMOOTH = Easing.bezier(0.7, 0, 0.3, 1);
+      var useSpring = () => {
+        const { fps } = useVideoConfig();
+        return (f, at = 0, damping = 16, stiffness = 140, mass = 0.7) => spring({ frame: f - at, fps, config: { damping, stiffness, mass } });
+      };
+      var Sfx = ({ at, src, v = 0.25 }) => __h(Sequence, { from: at, layout: "none" }, __h(Audio, { src: staticFile(`shared/sfx/${src}.wav`), volume: v }));
+    
+      // src/templates/KineticTemplate.tsx
+      var PAL = { black: "#0E0E0E", white: "#F2F2F2", red: "#FF2E2E" };
+      var WORDS = [
+        { at: 0, text: "STOP", size: 380, mode: "slam", color: PAL.red },
+        { at: 22, text: "SCROLLING", size: 170, mode: "slide" },
+        { at: 48, text: "THIS", size: 300, mode: "spin" },
+        { at: 66, text: "IS", size: 300, mode: "spin", color: PAL.red },
+        { at: 84, text: "KINETIC", size: 200, mode: "stack" },
+        { at: 120, text: "TYPE", size: 420, mode: "invert" },
+        { at: 160, text: "THAT", size: 220, mode: "slide" },
+        { at: 180, text: "MOVES", size: 260, mode: "slam", color: PAL.red }
+      ];
+      var KINETIC_DURATION = 230;
+      var KineticTemplate = () => {
+        const f = useCurrentFrame();
+        const sp = useSpring();
+        let i = 0;
+        while (i + 1 < WORDS.length && WORDS[i + 1].at <= f) i++;
+        const w = WORDS[i];
+        const local = f - w.at;
+        const inverted = w.mode === "invert";
+        const bg = inverted ? PAL.white : PAL.black;
+        const ink = inverted ? PAL.black : PAL.white;
+        const p = sp(f, w.at, w.mode === "slam" ? 9 : 16, w.mode === "slam" ? 260 : 150);
+        const prev = WORDS[i - 1];
+        const ghost = interpolate(local, [0, 10], [0.25, 0], clamp);
+        let transform = "";
+        if (w.mode === "slam") transform = `scale(${2.6 - 1.6 * p})`;
+        if (w.mode === "slide") transform = `translateX(${(1 - p) * 900}px) skewX(${(1 - p) * -18}deg)`;
+        if (w.mode === "spin") transform = `rotate(${(1 - p) * -90}deg) scale(${0.4 + 0.6 * p})`;
+        if (w.mode === "stack") transform = "none";
+        if (w.mode === "invert") transform = `scale(${0.8 + 0.2 * p})`;
+        const shake = w.mode === "slam" ? Math.sin(local * 3) * 16 * Math.exp(-local / 4) : 0;
+        return __h(AbsoluteFill, { style: { width: W, height: H, background: bg, fontFamily: FONT, alignItems: "center", justifyContent: "center", overflow: "hidden" } }, inverted ? __h("div", { style: { position: "absolute", width: 2400, height: 2400, borderRadius: "50%", background: PAL.white, transform: `scale(${sp(f, w.at, 20, 120)})` } }) : null, prev ? __h("div", { style: { position: "absolute", fontSize: prev.size * 0.9, fontWeight: 900, color: ink, opacity: ghost, letterSpacing: "-0.04em" } }, prev.text) : null, w.mode === "stack" ? __h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", lineHeight: 0.86 } }, [0, 1, 2, 3].map((k) => {
+          const s = sp(f, w.at + k * 4, 14, 170);
+          return __h("div", { key: k, style: { fontSize: w.size, fontWeight: 900, letterSpacing: "-0.04em", color: k === 3 ? PAL.red : "transparent", WebkitTextStroke: k === 3 ? void 0 : `3px ${ink}`, transform: `translateY(${(1 - s) * 300}px)`, opacity: s } }, w.text);
+        })) : __h("div", { style: { position: "relative", fontSize: w.size, fontWeight: 900, letterSpacing: "-0.04em", color: w.color ?? ink, transform: `translate(${shake}px, ${shake * 0.4}px) ${transform}`, opacity: Math.min(1, p * 2) } }, w.text), __h("div", { style: { position: "absolute", bottom: 120, left: 80, right: 80, display: "flex", gap: 12 } }, WORDS.map((x, k) => __h("div", { key: k, style: { flex: 1, height: 10, borderRadius: 5, background: k <= i ? PAL.red : inverted ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.15)" } }))), WORDS.map((x, k) => __h(Sfx, { key: k, at: x.at, src: x.mode === "slam" ? "impact" : x.mode === "invert" ? "whoosh" : "swipe", v: x.mode === "slam" ? 0.3 : 0.18 })));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = KineticTemplate;
+      window.__HFK_LEN = KINETIC_DURATION;
+    })();
+    HFK.mount('video', window.__HFK_SCENE, {fps: 30, width: 1080, height: 1920, duration: 7.667});
+  </script>
+</template>

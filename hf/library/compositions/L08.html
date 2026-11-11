@@ -1,0 +1,98 @@
+<!-- L08 Glitch (Digital): RGB split, irisan offset, scanline, teks SIGNAL LOST diketik.
+     Palette #050507 #00FFE0 #FF1F6E - best for hook, tech, gaming.
+     Ported from src/library/scenes/scenes1.tsx (Glitch). Drawn on a 1920x1080 stage; in 9:16 the stage is
+     scaled/offset by V below. The scene is a pure function of its frame f (60fps), rendered by HFK.mount(). -->
+<template>
+  <style>
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-400.woff2') format('woff2'); font-weight: 400; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-500.woff2') format('woff2'); font-weight: 500; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-700.woff2') format('woff2'); font-weight: 700; }
+    @font-face { font-family: 'Noto Sans KR'; src: url('assets/hfk/fonts/NotoSansKR-900.woff2') format('woff2'); font-weight: 900; }
+    #root { position: absolute; inset: 0; overflow: hidden; background: #050507; font-family: 'Noto Sans KR', sans-serif; }
+  </style>
+  <div id="root" data-composition-id="L08" data-width="1080" data-height="1920" data-layout-allow-overflow
+    data-composition-variables='[{"id":"aspect","type":"enum","label":"Aspect","default":"9:16","options":[{"value":"9:16","label":"9:16 vertical"},{"value":"16:9","label":"16:9 landscape"}]},{"id":"tin","type":"enum","label":"Entrance","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]},{"id":"tout","type":"enum","label":"Exit","default":"none","options":[{"value":"none","label":"none"},{"value":"left","label":"left"},{"value":"right","label":"right"},{"value":"up","label":"up"},{"value":"down","label":"down"},{"value":"zoom","label":"zoom"},{"value":"spin","label":"spin"}]}]'></div>
+  <script>
+    (() => {
+      // hf/tools/shims/react.js
+      var K = window.HFK;
+      var createElement = K.h;
+      var __h = K.h;
+      var Fragment = K.Fragment;
+      var createContext = K.createContext;
+      var useContext = K.useContext;
+      var useMemo = (fn) => fn();
+      var useCallback = (fn) => fn;
+      var react_default = { createElement, Fragment, createContext, useContext, useMemo, useCallback };
+    
+      // hf/tools/shims/remotion.js
+      var K2 = window.HFK;
+      var { Easing, interpolate, interpolateColors, spring, random, useCurrentFrame, useVideoConfig, AbsoluteFill, Sequence, Img, Audio, OffthreadVideo, staticFile } = K2;
+      var Video = K2.OffthreadVideo;
+    
+      // hf/tools/shims/kit.js
+      var K3 = window.HFK;
+      var { FPS, W, H, sec, clamp, SMOOTH, OUT, WHIP, ramp, sp, mix, rnd, step, MotionBlur, Slot, StageCtx, useStage, useFrameInset, Full, FONT, icon } = K3;
+    
+      // src/library/scenes/scenes1.tsx
+      var t = (f) => f / FPS;
+      var C30 = Math.cos(Math.PI / 6);
+      var BURSTS = [
+        [0.12, 0.36],
+        [0.9, 1.05],
+        [1.5, 1.76],
+        [2.08, 2.2]
+      ];
+      var Glitch = ({ f }) => {
+        const tt = t(f);
+        const s = step(f, 3);
+        const I = BURSTS.reduce((m, [a, b]) => tt >= a && tt <= b ? 1 : m, 0.12);
+        const off = (k) => (rnd(`${k}${s}`) - 0.5) * 70 * I;
+        const sub = "SIGNAL LOST // 0x7F";
+        const typed = sub.slice(0, Math.floor(Math.max(0, tt - 0.5) * 26));
+        const slices = 9;
+        const textStyle = { fontSize: 300, fontWeight: 900, letterSpacing: -10, lineHeight: 1 };
+        const appear = ramp(f, 0.05, 0.15);
+        return __h(Full, { bg: "#050507" }, __h("div", { style: { position: "absolute", inset: 0, transform: `translateX(${off("wx") * 0.3}px)` } }, __h("div", { style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", opacity: appear, mixBlendMode: "screen" } }, __h("div", { style: { ...textStyle, position: "absolute", color: "#00FFE0", transform: `translate(${off("c") - 8}px, ${off("cy") * 0.2}px)` } }, "GLITCH"), __h("div", { style: { ...textStyle, position: "absolute", color: "#FF1F6E", transform: `translate(${off("m") + 8}px, ${off("my") * 0.2}px)` } }, "GLITCH")), Array.from({ length: slices }, (_, i) => {
+          const top = i / slices * 100;
+          const bot = 100 - (i + 1) / slices * 100;
+          const dx = rnd(`sl${i}${s}`) > 0.6 ? off(`sx${i}`) * 2.2 : 0;
+          return __h(
+            "div",
+            {
+              key: i,
+              style: { position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", clipPath: `inset(${top}% 0 ${bot}% 0)`, transform: `translateX(${dx}px)`, opacity: appear }
+            },
+            __h("div", { style: { ...textStyle, color: "#F4F4F4" } }, "GLITCH")
+          );
+        }), I > 0.5 && Array.from({ length: 7 }, (_, i) => __h(
+          "div",
+          {
+            key: i,
+            style: {
+              position: "absolute",
+              left: rnd(`bx${i}${s}`) * 1800,
+              top: rnd(`by${i}${s}`) * 1e3,
+              width: 60 + rnd(`bw${i}${s}`) * 380,
+              height: 6 + rnd(`bh${i}${s}`) * 40,
+              background: ["#00FFE0", "#FF1F6E", "#FFFFFF", "#3D5AFE"][i % 4],
+              opacity: 0.85
+            }
+          }
+        ))), __h("div", { style: { position: "absolute", width: "100%", top: 720, textAlign: "center", fontSize: 40, fontWeight: 700, letterSpacing: 8, color: "#00FFE0" } }, typed, __h("span", { style: { opacity: Math.floor(tt * 4) % 2 ? 1 : 0 } }, "_")), __h("div", { style: { position: "absolute", inset: 0, background: "repeating-linear-gradient(0deg, #00000066 0 2px, transparent 2px 5px)" } }));
+      };
+    
+      // <stdin>
+      window.__HFK_SCENE = Glitch;
+    })();
+    (function () {
+      const V = {"s":0.62};
+      const vars = HFK.vars();
+      const aspect = vars.aspect || '9:16';
+      const size = aspect === '9:16' ? {width: 1080, height: 1920} : {width: 1920, height: 1080};
+      const slot = (vars.tin && vars.tin !== 'none') || (vars.tout && vars.tout !== 'none')
+        ? {tin: vars.tin !== 'none' ? vars.tin : null, tout: vars.tout !== 'none' ? vars.tout : null, T: 0.4} : null;
+      HFK.mount('L08', window.__HFK_SCENE, {...size, stage: HFK.stageFor(aspect, V), slot});
+    })();
+  </script>
+</template>
