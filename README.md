@@ -22,28 +22,28 @@ Setelah selesai: buka terminal baru, `cd auto-vid-studio`, ketik `claude`, login
 
 ```
 auto-vid-studio/
-├─ bahan/        ← SATU FOLDER = SATU VIDEO (voice-over, logo, screenshot, brief.txt)
-├─ referensi/    ← contoh-contoh, otomatis dibaca Claude
+├─ #bahan/       ← SATU FOLDER = SATU VIDEO (voice-over, logo, screenshot, brief.txt)
+├─ #referensi/   ← contoh-contoh, otomatis dibaca Claude
 │  ├─ sfx/         efek suara tambahan
 │  ├─ video/       video yang gayanya mau ditiru
 │  ├─ template/    desain/layout/brand kit (gambar, HTML, PDF)
 │  └─ gambar/      logo, screenshot produk yang sering dipakai
-├─ hasil/        ← video jadi (MP4) muncul di sini
-└─ (hf, public, scripts, extensions = mesin, jangan diutak-atik)
+├─ #hasil/       ← video jadi (MP4) muncul di sini
+└─ app/          ← mesin (style, template, SFX, tools), jangan diutak-atik
 ```
 
-Isi `referensi/` dan `bahan/` hanya ada di komputer kamu (tidak ikut GitHub). Mau berbagi ke tim? Lewat Drive.
+Isi `#referensi/` dan `#bahan/` hanya ada di komputer kamu (tidak ikut GitHub). Mau berbagi ke tim? Lewat Drive.
 
 ## 3. Cara bikin video
 
-1. Bikin folder di `bahan/`, mis. `bahan/promo-riset/`. Masukkan `audio.mp3` (voice-over) + gambar/logo kalau ada.
-   Opsional `brief.txt` (contoh isi di `bahan/contoh-video/brief.txt`).
+1. Bikin folder di `#bahan/`, mis. `#bahan/promo-riset/`. Masukkan `audio.mp3` (voice-over) + gambar/logo kalau ada.
+   Opsional `brief.txt` (contoh isi di `##bahan/contoh-video/brief.txt`).
 2. Buka Claude di folder repo (ketik `claude` di terminal), lalu ketik:
    ```
    /video-baru promo-riset
    ```
    Belum punya voice-over? Bilang saja, Claude bantu tulis naskahnya.
-3. Tunggu 5–20 menit. Video jadi di `hasil/promo-riset.mp4`.
+3. Tunggu 5–20 menit. Video jadi di `#hasil/promo-riset.mp4`.
 4. Mau ubah? Ketik misalnya:
    ```
    /revisi promo-riset judul scene 2 lebih besar, scene 3 kelamaan
@@ -51,11 +51,11 @@ Isi `referensi/` dan `bahan/` hanya ada di komputer kamu (tidak ikut GitHub). Ma
 5. Bingung pilih gaya? Ketik `/lihat-style`.
 
 Tips: brief makin spesifik makin bagus (durasi, target, poin wajib, teks yang harus muncul, nuansa).
-Mau meniru gaya video orang? Taruh videonya di `referensi/video/` lalu bilang "tiru gaya video <nama file>".
+Mau meniru gaya video orang? Taruh videonya di `#referensi/video/` lalu bilang "tiru gaya video <nama file>".
 
 ## 4. Pilihan style & template
 
-**Template dasar** (struktur video sudah jadi, Claude tinggal isi): `hf/templates/`
+**Template dasar** (struktur video sudah jadi, Claude tinggal isi): `app/hf/templates/`
 
 | ID | Gaya |
 |---|---|
@@ -65,9 +65,9 @@ Mau meniru gaya video orang? Taruh videonya di `referensi/video/` lalu bilang "t
 | T4 | Neon |
 | T5 | Glass (kaca transparan) |
 
-**Day Series** (`extensions/day-series`, kota/dunia dibangun Day 1, 2, 3... mengikuti komentar netizen): X10 Anime, X11 Pixel, X12 Avatar, X13 Brick, X14 Paper.
+**Day Series** (`app/extensions/day-series`, kota/dunia dibangun Day 1, 2, 3... mengikuti komentar netizen): X10 Anime, X11 Pixel, X12 Avatar, X13 Brick, X14 Paper.
 
-**Library style L01–L50** (acuan tampilan, detail di `hf/library/catalog.json`, preview: buka `hf/library/index.html` lewat `npx hyperframes preview` di folder `hf/library`):
+**Library style L01–L50** (acuan tampilan, detail di `app/hf/library/catalog.json`, preview: buka `app/hf/library/index.html` lewat `npx hyperframes preview` di folder `app/hf/library`):
 
 | ID | Nama | Tampilan | Cocok untuk |
 |---|---|---|---|
@@ -127,8 +127,8 @@ Mau meniru gaya video orang? Taruh videonya di `referensi/video/` lalu bilang "t
 | Folder | Isi |
 |---|---|
 | `CLAUDE.md` | Aturan kerja Claude (dibaca otomatis) |
-| `hf/library/`, `hf/templates/`, `extensions/` | Style, template, Day Series |
-| `public/hfk/` | Runtime animasi + font |
-| `public/sfx/` | Katalog SFX (audio dari zip Drive) |
-| `scripts/` | Transkrip (`transcribe.py`), deteksi beat (`beats.py`) |
+| `hf/library/`, `app/hf/templates/`, `extensions/` | Style, template, Day Series |
+| `app/public/hfk/` | Runtime animasi + font |
+| `app/public/sfx/core/` | 73 SFX buatan sendiri (bebas kredit) |
+| `app/scripts/` | Transkrip (`transcribe.py`), deteksi beat (`beats.py`) |
 | `setup.ps1` | Installer semua kebutuhan |

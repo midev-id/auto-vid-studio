@@ -1,33 +1,33 @@
 # CLAUDE.md: Auto Vid Studio workspace
 
-This folder makes short videos (default 9:16, 1080×1920, 60fps) as **HyperFrames** projects (HTML rendered to video).
+This repo makes short videos (default 9:16, 1080×1920, 60fps) as **HyperFrames** projects (HTML rendered to video).
 The user opens Claude Code in this repo and gives a brief (and usually a voice-over in `public/<name>/`).
-If `public/<name>/prompt.txt` exists, follow it. Read `hf/README.md` and the `/hyperframes` skill before writing any composition.
+If `public/<name>/prompt.txt` exists, follow it. Read `app/hf/README.md` and the `/hyperframes` skill before writing any composition.
 Reply in the user's language (usually casual Indonesian), short and clear.
 
 ## Folder untuk tim (user awam)
 
-Users never touch `hf/` or `public/` (engine). They only use:
-- `bahan/<nama>/`: the material for one video (audio.*, music.*, logo.*, brief.txt, images/videos, any names).
-  Before step 2 below, copy it into the engine: `public/<nama>/` (audio/music/logo at root as `audio.*`, `music.*`,
+The engine lives in `app/` (all paths below in Workflow/Rules/Gotchas are relative to `app/`; run engine commands from there). Users never touch `app/`. They only use:
+- `#bahan/<nama>/`: the material for one video (audio.*, music.*, logo.*, brief.txt, images/videos, any names).
+  Before step 2 below, copy it into the engine: `app/public/<nama>/` (audio/music/logo at root as `audio.*`, `music.*`,
   `logo.*`; everything else into `public/<nama>/assets/`; `brief.txt` → `concept.md`). Rename sensibly if the user
   named the voice-over differently (ask if unclear which file is the voice-over).
-- `referensi/` (local only, not in git). Check it at the start of every video:
-  - `referensi/sfx/`: extra SFX. Copy the ones you use into `public/sfx/user/` and reference `assets/sfx/user/<file>`.
+- `#referensi/` (local only, not in git). Check it at the start of every video:
+  - `#referensi/sfx/`: extra SFX. Copy the ones you use into `app/public/sfx/user/` and reference `assets/sfx/user/<file>`.
     Prefer them over `sfx/core` when they fit the action.
-  - `referensi/video/`: style references. Extract frames (`ffmpeg -vf fps=1/2,scale=360:-1,tile=4x3`) and transcribe
+  - `#referensi/video/`: style references. Extract frames (`ffmpeg -vf fps=1/2,scale=360:-1,tile=4x3`) and transcribe
     if needed; copy rhythm, layout, type, colour, transitions. Never copy their content, logos or footage.
-  - `referensi/template/`: design references (images, HTML, PDF brand kits). Follow their palette/fonts/layout.
-  - `referensi/gambar/`: shared assets (logo, screenshots). Copy what you use into `public/<nama>/assets/`.
+  - `#referensi/template/`: design references (images, HTML, PDF brand kits). Follow their palette/fonts/layout.
+  - `#referensi/gambar/`: shared assets (logo, screenshots). Copy what you use into `app/public/<nama>/assets/`.
   If the user names a reference ("tiru video X"), use that one; otherwise use whatever fits the brief and say which.
-- `hasil/`: rendered MP4s. Render to `hasil/<nama>.mp4`.
+- `#hasil/`: rendered MP4s. Render to `#hasil/<nama>.mp4` (from `app/hf/videos/<nama>`: `npx hyperframes render -o "../../../../#hasil/<nama>.mp4"`).
 
 Talk to these users in simple Indonesian: no file paths or commands unless they ask; tell them what to drop where.
 
 ## First run on a machine
 
 Before the first video, check `node`, `python`, `ffmpeg`, Chrome and `python -c "import faster_whisper"`, and that
-`public/sfx/` has audio files. If anything is missing, tell the user to run
+`app/public/sfx/` has audio files. If anything is missing, tell the user to run
 `powershell -ExecutionPolicy Bypass -File setup.ps1 -SfxZip <zip SFX>` (do not install things yourself without asking).
 If the user has no voice-over yet, help write the script first; offer to pick a style from README's table.
 
@@ -41,7 +41,7 @@ If the user has no voice-over yet, help write the script first; offer to pick a 
 4. Write one `compositions/<scene>.html` per scene (native GSAP, or an `HFK.mount` frame function; see `hf/README.md`).
    Start from the chosen style: `hf/library/compositions/<Lxx>.html` (metadata in `hf/library/catalog.json`) or
    `hf/templates/<T#>/`.
-5. `cd hf/videos/<name> && npx hyperframes check` until 0 errors. Then render only when the user asks: `npx hyperframes render -o ../../../hasil/<name>.mp4`.
+5. `cd hf/videos/<name> && npx hyperframes check` until 0 errors. Then render only when the user asks: `npx hyperframes render -o "../../../../#hasil/<name>.mp4"`.
 6. Preview: `cd hf/videos/<name> && npx hyperframes preview` (Studio in the browser), revise on request.
 
 ## Rules

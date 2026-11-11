@@ -1,30 +1,30 @@
 # SFX pihak ketiga (bukan core) tidak di-commit; core = buatan sendiri, ikut repo
-public/sfx/**/*.mp3
-public/sfx/**/*.wav
-!public/sfx/core/*.mp3
-public/shared/sfx/*.mp3
-public/shared/sfx/*.wav
+app/public/sfx/**/*.mp3
+app/public/sfx/**/*.wav
+!app/public/sfx/core/*.mp3
+app/public/shared/sfx/*.mp3
+app/public/shared/sfx/*.wav
 # project & output per orang
-hf/videos/
-public/*/
-!public/hfk/
-!public/icons/
-!public/library/
-!public/sfx/
-!public/shared/
+app/hf/videos/
+app/public/*/
+!app/public/hfk/
+!app/public/icons/
+!app/public/library/
+!app/public/sfx/
+!app/public/shared/
 node_modules/
 .waveform-cache/
 __pycache__/
 settings.json
 
 # folder tim: hanya panduan yang ikut repo
-bahan/*
-!bahan/BACA-SAYA.txt
-!bahan/contoh-video/
-referensi/**/*
-!referensi/*/
-!referensi/BACA-SAYA.txt
-!referensi/*/.gitkeep
-hasil/*
-!hasil/BACA-SAYA.txt
-public/sfx/user/
+\#bahan/*
+!\#bahan/BACA-SAYA.txt
+!\#bahan/contoh-video/
+\#referensi/**/*
+!\#referensi/*/
+!\#referensi/BACA-SAYA.txt
+!\#referensi/*/.gitkeep
+\#hasil/*
+!\#hasil/BACA-SAYA.txt
+app/public/sfx/user/

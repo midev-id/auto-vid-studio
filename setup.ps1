@@ -23,7 +23,7 @@ $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [En
 if (-not (Has claude)) { Write-Host "[..] install Claude Code" -f Yellow; npm install -g @anthropic-ai/claude-code } else { Write-Host "[ok] Claude Code" -f Green }
 
 Write-Host "[..] Python packages (transkrip)" -f Yellow
-python -m pip install -q -r requirements.txt
+python -m pip install -q -r appequirements.txt
 
 Write-Host "[..] plugin HyperFrames untuk Claude Code" -f Yellow
 claude plugin marketplace add heygen-com/hyperframes 2>$null
@@ -35,10 +35,10 @@ npx -y hyperframes --version | Out-Null
 if ($SfxZip) {
   $zip = $SfxZip
   if ($SfxZip -match '^https?://') { $zip = "$env:TEMP\autovid-sfx.zip"; Invoke-WebRequest $SfxZip -OutFile $zip }
-  Expand-Archive $zip -DestinationPath "public" -Force
+  Expand-Archive $zip -DestinationPath "app\public" -Force
 }
-$n = (Get-ChildItem public\sfx -Recurse -Include *.mp3,*.wav -ErrorAction SilentlyContinue).Count
-if ($n -gt 0) { Write-Host "[ok] SFX: $n file" -f Green } else { Write-Host "[!!] SFX belum ada: ekstrak zip SFX dari Drive tim ke folder public\ (jadi public\sfx\...)" -f Red }
+$n = (Get-ChildItem app\public\sfx -Recurse -Include *.mp3,*.wav -ErrorAction SilentlyContinue).Count
+if ($n -gt 0) { Write-Host "[ok] SFX: $n file" -f Green } else { Write-Host "[!!] SFX belum ada: ekstrak zip SFX dari Drive tim ke folder public\ (jadi app\public\sfx\...)" -f Red }
 
 Write-Host "`nSelesai. Buka terminal baru di folder ini, ketik: claude" -f Cyan
 Write-Host "Login Claude sekali (Pro/Max atau API key), lalu kasih brief videonya." -f Cyan
