@@ -367,8 +367,8 @@
   // mount(id, Component, opts): renders Component({f}) into the scene root on every timeline update.
   // opts: {fps, width, height, stage: {v,s,dx,dy,bleed}, slot: {tin, tout, T}, duration}
   function mount(id, Component, opts = {}) {
-    const root = document.querySelector(`[data-composition-id="${id}"]:not([data-composition-src])`) || document.getElementById(id);
-    const host = document.querySelector(`[data-composition-id="${id}"][data-composition-src]`);
+    const root = document.querySelector('[data-composition-id="' + id + '"]:not([data-composition-src])') || document.getElementById(id);
+    const host = document.querySelector('[data-composition-id="' + id + '"][data-composition-src]');
     const fps = opts.fps || 60;
     const width = opts.width || Number(root.getAttribute('data-width')) || root.clientWidth || 1920;
     const height = opts.height || Number(root.getAttribute('data-height')) || root.clientHeight || 1080;
