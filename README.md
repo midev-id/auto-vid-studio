@@ -24,14 +24,15 @@ Setelah selesai: buka terminal baru, `cd auto-vid-studio`, ketik `claude`, login
 auto-vid-studio/
 ├─ #bahan/       ← SATU FOLDER = SATU VIDEO (voice-over, logo, screenshot, brief.txt)
 ├─ #referensi/   ← contoh-contoh, otomatis dibaca Claude
-│  ├─ sfx/         efek suara tambahan
+│  ├─ sfx/         efek suara (+ _bawaan: 73 SFX bawaan)
 │  ├─ video/       video yang gayanya mau ditiru
-│  ├─ template/    desain/layout/brand kit (gambar, HTML, PDF)
-│  └─ gambar/      logo, screenshot produk yang sering dipakai
+│  ├─ template/    desain/brand kit (+ _style-L01-L50, _template-T1-T5, _day-series)
+│  └─ gambar/      logo, screenshot (+ _ikon-bawaan)
 ├─ #hasil/       ← video jadi (MP4) muncul di sini
 └─ app/          ← mesin (style, template, SFX, tools), jangan diutak-atik
 ```
 
+Folder berawalan `_` di `#referensi` adalah jalan pintas ke isi bawaan (dibuat otomatis oleh `setup.ps1`), jadi semua bisa dilihat di satu tempat.
 Isi `#referensi/` dan `#bahan/` hanya ada di komputer kamu (tidak ikut GitHub). Mau berbagi ke tim? Lewat Drive.
 
 ## 3. Cara bikin video

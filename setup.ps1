@@ -23,7 +23,8 @@ $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [En
 if (-not (Has claude)) { Write-Host "[..] install Claude Code" -f Yellow; npm install -g @anthropic-ai/claude-code } else { Write-Host "[ok] Claude Code" -f Green }
 
 Write-Host "[..] Python packages (transkrip)" -f Yellow
-python -m pip install -q -r appequirements.txt
+python -m pip install -q -r app
+equirements.txt
 
 Write-Host "[..] plugin HyperFrames untuk Claude Code" -f Yellow
 claude plugin marketplace add heygen-com/hyperframes 2>$null
@@ -39,6 +40,19 @@ if ($SfxZip) {
 }
 $n = (Get-ChildItem app\public\sfx -Recurse -Include *.mp3,*.wav -ErrorAction SilentlyContinue).Count
 if ($n -gt 0) { Write-Host "[ok] SFX: $n file" -f Green } else { Write-Host "[!!] SFX belum ada: ekstrak zip SFX dari Drive tim ke folder public\ (jadi app\public\sfx\...)" -f Red }
+
+# Jalan pintas: isi bawaan app/ ditampilkan di #referensi (folder link, file asli tetap di app/)
+$links = @{
+  "#referensi\sfx\_bawaan"                 = "app\public\sfx\core"
+  "#referensi\gambar\_ikon-bawaan"         = "app\public\icons"
+  "#referensi	emplate\_style-L01-L50"     = "app\public\library\previews"
+  "#referensi	emplate\_template-T1-T5"    = "app\hf	emplates"
+  "#referensi	emplate\_day-series-X10-X14" = "app\extensions\day-series\previews"
+}
+foreach ($k in $links.Keys) {
+  if (-not (Test-Path -LiteralPath $k)) { New-Item -ItemType Junction -Path $k -Target (Resolve-Path $links[$k]) | Out-Null }
+}
+Write-Host "[ok] jalan pintas bawaan di #referensi" -f Green
 
 Write-Host "`nSelesai. Buka terminal baru di folder ini, ketik: claude" -f Cyan
 Write-Host "Login Claude sekali (Pro/Max atau API key), lalu kasih brief videonya." -f Cyan

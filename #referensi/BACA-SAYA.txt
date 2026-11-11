@@ -7,5 +7,14 @@ video/     -> video contoh yang gayanya mau ditiru (.mp4). Claude membedah ritme
 template/  -> desain/template: gambar layout (.png/.jpg), file HTML, atau PDF brand kit.
 gambar/    -> aset umum yang sering dipakai: logo, screenshot produk, foto.
 
+Folder berawalan _ (mis. sfx\_bawaan, template\_style-L01-L50) = isi BAWAAN yang sudah ada:
+  _bawaan               73 SFX bawaan (bebas kredit)
+  _ikon-bawaan          ikon siap pakai
+  _style-L01-L50        gambar contoh 50 style (L01.jpg = 16:9, L01-v.jpg = 9:16)
+  _template-T1-T5       5 template dasar
+  _day-series-X10-X14   contoh 5 gaya Day Series
+Sebut kodenya ke Claude, mis. "pakai style L26" atau "pakai SFX whoosh bawaan".
+Jangan hapus atau ubah isi folder _ (itu file asli mesin). Punya file sendiri? Taruh di luar folder _.
+
 Catatan: isi folder ini TIDAK ikut ke GitHub (hanya di komputer kamu),
 jadi aman untuk file berlisensi. Mau dibagikan ke tim? Taruh di Drive tim.

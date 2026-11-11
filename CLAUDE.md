@@ -19,6 +19,10 @@ The engine lives in `app/` (all paths below in Workflow/Rules/Gotchas are relati
     if needed; copy rhythm, layout, type, colour, transitions. Never copy their content, logos or footage.
   - `#referensi/template/`: design references (images, HTML, PDF brand kits). Follow their palette/fonts/layout.
   - `#referensi/gambar/`: shared assets (logo, screenshots). Copy what you use into `app/public/<nama>/assets/`.
+  Folders starting with `_` inside `#referensi/` (`sfx/_bawaan`, `gambar/_ikon-bawaan`, `template/_style-L01-L50`,
+  `template/_template-T1-T5`, `template/_day-series-X10-X14`) are junction shortcuts to the built-ins in `app/`
+  (made by setup.ps1). Treat them as built-ins: reference them by their engine path (`assets/sfx/core/...`,
+  `assets/icons/...`), never copy them. A file the user dropped *inside* a `_` shortcut is a new built-in.
   If the user names a reference ("tiru video X"), use that one; otherwise use whatever fits the brief and say which.
 - `#hasil/`: rendered MP4s. Render to `#hasil/<nama>.mp4` (from `app/hf/videos/<nama>`: `npx hyperframes render -o "../../../../#hasil/<nama>.mp4"`).
 
