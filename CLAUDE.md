@@ -36,9 +36,9 @@ If the user has no voice-over yet, help write the script first; offer to pick a 
 - Clear hierarchy, balanced white space, every visual supports what is said. No unrelated filler.
 - Smooth motion: springs / eased bezier, overlapping scenes, motion blur on fast transitions (ghost copies or a short
   blur only while moving).
-- SFX from `assets/sfx/` (check the file exists). The maker's main SFX set is `assets/sfx/core/` (73 files, described in
-  `assets/sfx/core/catalog.json`); prefer it and use many: every visual action gets one, volume 0.15–0.3. Clicks: `sfx/mouse-click-sound.mp3`,
-  typing: `sfx/typing-sound-efffect.mp3`. Icons from `assets/icons/`.
+- SFX from `assets/sfx/` (check the file exists). Main SFX set is `assets/sfx/core/` (73 self-made files, no credit needed, described in
+  `assets/sfx/core/catalog.json`); prefer it and use many: every visual action gets one, volume 0.15–0.3. Clicks: `sfx/core/sfx-mouse-click.mp3`,
+  typing: `sfx/core/sfx-typing.mp3`. Icons from `assets/icons/`.
 - Performance: no large static `filter: blur()`, no `backdropFilter`, no full-screen `maskImage`.
 - Deterministic scenes: no `Date.now()`, `Math.random()` (use `HFK.random(seed)`), timers or fetch.
 - No third-party product photos or brand logos unless the user supplied them.

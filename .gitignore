@@ -1,6 +1,7 @@
-# SFX: lisensi tidak boleh didistribusikan, ambil dari Drive tim
+# SFX pihak ketiga (bukan core) tidak di-commit; core = buatan sendiri, ikut repo
 public/sfx/**/*.mp3
 public/sfx/**/*.wav
+!public/sfx/core/*.mp3
 public/shared/sfx/*.mp3
 public/shared/sfx/*.wav
 # project & output per orang
