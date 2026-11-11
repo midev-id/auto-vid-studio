@@ -1,0 +1,1 @@
+Video yang sudah dirender (MP4) muncul di sini, namanya sama dengan nama folder bahannya.

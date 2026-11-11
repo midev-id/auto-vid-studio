@@ -1,0 +1,12 @@
+FOLDER BAHAN: satu folder = satu video.
+
+1. Bikin folder baru di sini, namanya tanpa spasi. Contoh: promo-riset
+2. Masukkan bahannya:
+   - voice-over  -> namai audio.mp3 (atau .wav/.m4a)
+   - musik latar -> namai music.mp3 (opsional)
+   - logo        -> namai logo.png (opsional)
+   - gambar/screenshot/video pendukung -> taruh bebas di folder itu
+   - brief       -> tulis di brief.txt (opsional, bisa juga langsung ngetik ke Claude)
+3. Di Claude ketik:  /video-baru promo-riset
+
+Contoh struktur ada di folder contoh-video.

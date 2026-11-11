@@ -18,22 +18,42 @@ Setelah selesai: buka terminal baru, `cd auto-vid-studio`, ketik `claude`, login
 
 > SFX tidak ada di repo (lisensi). Minta zip SFX ke mahdi / Drive tim.
 
-## 2. Workflow bikin video
+## 2. Folder yang kamu pakai
 
-1. **Siapkan bahan** di `public/<nama-video>/` (nama tanpa spasi, mis. `promo-riset`):
-   - `audio.mp3` voice-over (wajib kalau mau sinkron ke suara)
-   - opsional: `logo.png`, `music.mp3`, gambar/screenshot di `assets/`
-2. **Pilih style** dari tabel di bawah (atau template T1–T5 / Day Series). Belum yakin? Biarkan Claude yang pilih.
-3. **Brief ke Claude** di terminal, contoh:
-   > Bikin video `promo-riset` 9:16 dari voice-over di public/promo-riset. Style L26. Target seller Shopee pemula. Tonjolkan: riset kompetitor 5 menit, data omzet 30 hari. Akhiri CTA "link di bio".
-4. Claude bekerja sendiri (5–20 menit): transkrip → susun scene → tulis animasi + SFX → cek error.
-5. **Preview** di browser: `cd hf/videos/promo-riset` lalu `npx hyperframes preview`.
-6. **Revisi** cukup chat: "judul scene 2 lebih besar", "scene 3 kelamaan", "tambah SFX pop tiap angka muncul". Satu-dua permintaan per chat.
-7. **Render**: minta "render" ke Claude, atau `npx hyperframes render -o ../../../out/promo-riset.mp4`. Hasil di `out/`.
+```
+auto-vid-studio/
+├─ bahan/        ← SATU FOLDER = SATU VIDEO (voice-over, logo, screenshot, brief.txt)
+├─ referensi/    ← contoh-contoh, otomatis dibaca Claude
+│  ├─ sfx/         efek suara tambahan
+│  ├─ video/       video yang gayanya mau ditiru
+│  ├─ template/    desain/layout/brand kit (gambar, HTML, PDF)
+│  └─ gambar/      logo, screenshot produk yang sering dipakai
+├─ hasil/        ← video jadi (MP4) muncul di sini
+└─ (hf, public, scripts, extensions = mesin, jangan diutak-atik)
+```
 
-Tips: brief makin spesifik (durasi, target, poin wajib, teks yang harus muncul, nuansa) makin bagus. Voice-over direkam di tempat sepi. Punya video contoh? Taruh di `public/<nama>/` dan bilang "tiru gaya video referensi ini".
+Isi `referensi/` dan `bahan/` hanya ada di komputer kamu (tidak ikut GitHub). Mau berbagi ke tim? Lewat Drive.
 
-## 3. Pilihan style & template
+## 3. Cara bikin video
+
+1. Bikin folder di `bahan/`, mis. `bahan/promo-riset/`. Masukkan `audio.mp3` (voice-over) + gambar/logo kalau ada.
+   Opsional `brief.txt` (contoh isi di `bahan/contoh-video/brief.txt`).
+2. Buka Claude di folder repo (ketik `claude` di terminal), lalu ketik:
+   ```
+   /video-baru promo-riset
+   ```
+   Belum punya voice-over? Bilang saja, Claude bantu tulis naskahnya.
+3. Tunggu 5–20 menit. Video jadi di `hasil/promo-riset.mp4`.
+4. Mau ubah? Ketik misalnya:
+   ```
+   /revisi promo-riset judul scene 2 lebih besar, scene 3 kelamaan
+   ```
+5. Bingung pilih gaya? Ketik `/lihat-style`.
+
+Tips: brief makin spesifik makin bagus (durasi, target, poin wajib, teks yang harus muncul, nuansa).
+Mau meniru gaya video orang? Taruh videonya di `referensi/video/` lalu bilang "tiru gaya video <nama file>".
+
+## 4. Pilihan style & template
 
 **Template dasar** (struktur video sudah jadi, Claude tinggal isi): `hf/templates/`
 

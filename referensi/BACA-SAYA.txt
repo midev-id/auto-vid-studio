@@ -1,0 +1,11 @@
+FOLDER REFERENSI: taruh contoh di sini, Claude otomatis membaca dan memakainya.
+
+sfx/       -> efek suara (.mp3/.wav). Dipakai sebagai SFX tambahan di video.
+             Beri nama yang jelas, mis. "whoosh-cepat.mp3", "klik-tombol.wav".
+video/     -> video contoh yang gayanya mau ditiru (.mp4). Claude membedah ritme,
+             transisi, font, warna, lalu membuat versi milik kita (tidak menyalin isinya).
+template/  -> desain/template: gambar layout (.png/.jpg), file HTML, atau PDF brand kit.
+gambar/    -> aset umum yang sering dipakai: logo, screenshot produk, foto.
+
+Catatan: isi folder ini TIDAK ikut ke GitHub (hanya di komputer kamu),
+jadi aman untuk file berlisensi. Mau dibagikan ke tim? Taruh di Drive tim.

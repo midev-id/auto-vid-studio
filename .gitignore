@@ -6,7 +6,6 @@ public/shared/sfx/*.mp3
 public/shared/sfx/*.wav
 # project & output per orang
 hf/videos/
-out/
 public/*/
 !public/hfk/
 !public/icons/
@@ -17,3 +16,15 @@ node_modules/
 .waveform-cache/
 __pycache__/
 settings.json
+
+# folder tim: hanya panduan yang ikut repo
+bahan/*
+!bahan/BACA-SAYA.txt
+!bahan/contoh-video/
+referensi/**/*
+!referensi/*/
+!referensi/BACA-SAYA.txt
+!referensi/*/.gitkeep
+hasil/*
+!hasil/BACA-SAYA.txt
+public/sfx/user/
