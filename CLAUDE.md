@@ -5,6 +5,13 @@ The user opens Claude Code in this repo and gives a brief (and usually a voice-o
 If `public/<name>/prompt.txt` exists, follow it. Read `hf/README.md` and the `/hyperframes` skill before writing any composition.
 Reply in the user's language (usually casual Indonesian), short and clear.
 
+## First run on a machine
+
+Before the first video, check `node`, `python`, `ffmpeg`, Chrome and `python -c "import faster_whisper"`, and that
+`public/sfx/` has audio files. If anything is missing, tell the user to run
+`powershell -ExecutionPolicy Bypass -File setup.ps1 -SfxZip <zip SFX>` (do not install things yourself without asking).
+If the user has no voice-over yet, help write the script first; offer to pick a style from README's table.
+
 ## Workflow (what prompt.txt asks)
 
 1. Bahan is in `public/<name>/`: `audio.*` (voice-over), optional `music.*`, `assets/`, optional `logo.*`,
